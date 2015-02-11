@@ -6,9 +6,9 @@ using Constants;
 public class PieceCtrl : MonoBehaviour {
 
 	public PieceState state;
-	public Material emptyMaterial;
-	public Material currentMaterial;
-	public Material fullMaterial;
+	public Color emptyColor;
+	public Color currentColor;
+	public Color fullColor;
 
 	// Use this for initialization
 	void Awake () {
@@ -32,13 +32,13 @@ public class PieceCtrl : MonoBehaviour {
 	void UpdateMaterial() {
 		switch (state) {
 			case PieceState.Current:
-				renderer.material = currentMaterial;
+				renderer.material.color = currentColor;
 				break;
 			case PieceState.Full:
-				renderer.material = fullMaterial;
+				renderer.material.color = fullColor;
 				break;
 			case PieceState.Empty:
-				renderer.material = emptyMaterial;
+				renderer.material.color = emptyColor;
 				break;
 		}
 	}
