@@ -7,7 +7,7 @@ public class GridCtrl : MonoBehaviour {
 	public int columns;
 	public int rows;
 	public float width, height;
-	public float fallDelay;
+	public float fallDelay, fallTurbo;
 	public GameObject piecePrefab;
 
 	float pieceWidth, pieceHeight;
@@ -44,6 +44,16 @@ public class GridCtrl : MonoBehaviour {
 		} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
 			MoveLeft();
 		}
+
+		if (Input.GetKeyDown (KeyCode.DownArrow)) {
+			Debug.Log("turbo on");
+			fallDelay /= fallTurbo;
+		}
+
+		if (Input.GetKeyUp (KeyCode.DownArrow)) {
+			Debug.Log("turbo off");
+			fallDelay *= fallTurbo;
+		}
 	}
 
 	void MoveRight() {
@@ -56,7 +66,6 @@ public class GridCtrl : MonoBehaviour {
 		for(int y = 0; y < rows; ++y) {
 			for(int x = columns - 2; x >= 0; --x) {
 				PieceCtrl currentPiece = grid[x, y].GetComponent<PieceCtrl>();
-				Debug.Log(x);
 				PieceCtrl nextPiece = grid[x+1, y].GetComponent<PieceCtrl>();
 				if (currentPiece.state == PieceState.Current) {
 					currentPiece.UpdateState(PieceState.Empty);
@@ -116,6 +125,12 @@ public class GridCtrl : MonoBehaviour {
 	}
 
 	bool CanFall() {
+		for(int x = 0; x < columns; ++x) {
+			if (grid[x, 0].GetComponent<PieceCtrl>().state == PieceState.Current) {
+				return false;
+			}
+		}
+
 		for(int y = 1; y < rows; ++y) {
 			for(int x = 0; x < columns; ++x) {
 				PieceCtrl currentPiece = grid[x, y].GetComponent<PieceCtrl>();
@@ -133,6 +148,7 @@ public class GridCtrl : MonoBehaviour {
 			for(int x = 0; x < columns; ++x) {
 				PieceCtrl currentPiece = grid[x, y].GetComponent<PieceCtrl>();
 				if (currentPiece.state == PieceState.Current) {
+					Debug.Log("finishing");
 					currentPiece.UpdateState(PieceState.Full);
 				}
 			}
