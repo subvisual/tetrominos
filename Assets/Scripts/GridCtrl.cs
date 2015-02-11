@@ -39,26 +39,51 @@ public class GridCtrl : MonoBehaviour {
 	}
 
 	void Update() {
-		//if (Input.GetKeyDown (KeyCode.RightArrow)) {
-			//MoveRight();
-		//} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-			//MoveLeft();
-		//}
+		if (Input.GetKeyDown (KeyCode.RightArrow)) {
+			MoveRight();
+		} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+			MoveLeft();
+		}
 	}
 
 	void MoveRight() {
-		/*if (fallingPieceX == x - 1) {
-			return;
+		for(int y = 0; y < rows; ++y) {
+			if (grid[columns-1, y].GetComponent<PieceCtrl>().state == PieceState.Current) {
+				return;
+			}
 		}
-		if (grid[fallingPieceX + 1, fallingPieceY] == null) {
-			grid[fallingPieceX + 1, fallingPieceY] = grid[fallingPieceX, fallingPieceY];
-			grid[fallingPieceX, fallingPieceY] = null;
-			grid[fallingPieceX + 1, fallingPieceY].transform.Translate(Vector3.right * pieceWidth);
-			fallingPieceX++;
-		}*/
+
+		for(int y = 0; y < rows; ++y) {
+			for(int x = columns - 2; x >= 0; --x) {
+				PieceCtrl currentPiece = grid[x, y].GetComponent<PieceCtrl>();
+				Debug.Log(x);
+				PieceCtrl nextPiece = grid[x+1, y].GetComponent<PieceCtrl>();
+				if (currentPiece.state == PieceState.Current) {
+					currentPiece.UpdateState(PieceState.Empty);
+					nextPiece.UpdateState(PieceState.Current);
+				}
+			}
+		}
 	}
 
 	void MoveLeft() {
+		for(int y = 0; y < rows; ++y) {
+			if (grid[0, y].GetComponent<PieceCtrl>().state == PieceState.Current) {
+				return;
+			}
+		}
+
+		for(int y = 0; y < rows; ++y) {
+			for(int x = 1; x < columns; ++x) {
+				PieceCtrl currentPiece = grid[x, y].GetComponent<PieceCtrl>();
+				PieceCtrl nextPiece = grid[x-1, y].GetComponent<PieceCtrl>();
+				if (currentPiece.state == PieceState.Current) {
+					currentPiece.UpdateState(PieceState.Empty);
+					nextPiece.UpdateState(PieceState.Current);
+				}
+			}
+		}
+	}
 		/*if (fallingPieceX == 0) {
 			return;
 		}
@@ -68,7 +93,6 @@ public class GridCtrl : MonoBehaviour {
 			grid[fallingPieceX - 1, fallingPieceY].transform.Translate(Vector3.left * pieceWidth);
 			fallingPieceX--;
 		}*/
-	}
 
 	void AddPiece(int x, int y) {
 		grid[x, y].GetComponent<PieceCtrl>().UpdateState(PieceState.Current);
