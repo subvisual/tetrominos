@@ -46,9 +46,9 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\GridController.cs" />
-     <Compile Include="Assets\InputController.cs" />
-     <Compile Include="Assets\PieceDrop.cs" />
+     <Compile Include="Assets\GridCtrl.cs" />
+     <Compile Include="Assets\PieceCtrl.cs" />
+     <Compile Include="Assets\PieceList.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
