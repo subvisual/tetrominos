@@ -13,7 +13,6 @@ public class GridCtrl : MonoBehaviour {
 	float pieceWidth, pieceHeight;
 	GameObject[,] grid;
 
-	// Use this for initialization
 	void Awake () {
 		pieceWidth = width / columns;
 		pieceHeight = height / rows;
@@ -63,13 +62,15 @@ public class GridCtrl : MonoBehaviour {
 			}
 		}
 
-		for(int y = 0; y < rows; ++y) {
-			for(int x = columns - 2; x >= 0; --x) {
-				PieceCtrl currentPiece = grid[x, y].GetComponent<PieceCtrl>();
-				PieceCtrl nextPiece = grid[x+1, y].GetComponent<PieceCtrl>();
-				if (currentPiece.state == PieceState.Current) {
-					currentPiece.UpdateState(PieceState.Empty);
-					nextPiece.UpdateState(PieceState.Current);
+		if (CanMove(1)) {
+			for(int y = 0; y < rows; ++y) {
+				for(int x = columns - 2; x >= 0; --x) {
+					PieceCtrl currentPiece = grid[x, y].GetComponent<PieceCtrl>();
+					PieceCtrl nextPiece = grid[x+1, y].GetComponent<PieceCtrl>();
+					if (currentPiece.state == PieceState.Current) {
+						currentPiece.UpdateState(PieceState.Empty);
+						nextPiece.UpdateState(PieceState.Current);
+					}
 				}
 			}
 		}
@@ -82,26 +83,32 @@ public class GridCtrl : MonoBehaviour {
 			}
 		}
 
-		for(int y = 0; y < rows; ++y) {
-			for(int x = 1; x < columns; ++x) {
-				PieceCtrl currentPiece = grid[x, y].GetComponent<PieceCtrl>();
-				PieceCtrl nextPiece = grid[x-1, y].GetComponent<PieceCtrl>();
-				if (currentPiece.state == PieceState.Current) {
-					currentPiece.UpdateState(PieceState.Empty);
-					nextPiece.UpdateState(PieceState.Current);
+		if (CanMove(-1)) {
+			for(int y = 0; y < rows; ++y) {
+				for(int x = 1; x < columns; ++x) {
+					PieceCtrl currentPiece = grid[x, y].GetComponent<PieceCtrl>();
+					PieceCtrl nextPiece = grid[x-1, y].GetComponent<PieceCtrl>();
+					if (currentPiece.state == PieceState.Current) {
+						currentPiece.UpdateState(PieceState.Empty);
+						nextPiece.UpdateState(PieceState.Current);
+					}
 				}
 			}
 		}
 	}
-		/*if (fallingPieceX == 0) {
-			return;
+
+	bool CanMove(int direction) {
+		for(int y = 0; y < rows; ++y) {
+			for(int x = 1; x < columns - 1; ++x) {
+				PieceCtrl currentPiece = grid[x, y].GetComponent<PieceCtrl>();
+				PieceCtrl nextPiece = grid[x + direction, y].GetComponent<PieceCtrl>();
+				if (currentPiece.state == PieceState.Current && nextPiece.state == PieceState.Full) {
+					return false;
+				}
+			}
 		}
-		if (grid[fallingPieceX - 1, fallingPieceY] == null) {
-			grid[fallingPieceX - 1, fallingPieceY] = grid[fallingPieceX, fallingPieceY];
-			grid[fallingPieceX, fallingPieceY] = null;
-			grid[fallingPieceX - 1, fallingPieceY].transform.Translate(Vector3.left * pieceWidth);
-			fallingPieceX--;
-		}*/
+		return true;
+	}
 
 	void AddPiece(int x, int y) {
 		grid[x, y].GetComponent<PieceCtrl>().UpdateState(PieceState.Current);
@@ -115,6 +122,7 @@ public class GridCtrl : MonoBehaviour {
 				FallPieces(PieceState.Current);
 			} else {
 				FinishPiece();
+				GetComponent<PieceFactory>().AddNext(grid);
 			}
 		}
 		yield return true;
