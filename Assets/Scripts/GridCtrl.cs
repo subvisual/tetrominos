@@ -20,7 +20,7 @@ public class GridCtrl : MonoBehaviour {
 	}
 
 	void Start() {
-		AddPiece(1, rows-1);
+		GetComponent<PieceFactory>().AddNext(grid);
 		StartCoroutine(Fall());
 	}
 
@@ -116,7 +116,6 @@ public class GridCtrl : MonoBehaviour {
 
 	IEnumerator Fall() {
 		while (true) {
-			yield return new WaitForSeconds (fallDelay);
 			// refactor this out of here
 			if (CanFall()) {
 				FallPieces(PieceState.Current);
@@ -124,6 +123,7 @@ public class GridCtrl : MonoBehaviour {
 				FinishPiece();
 				GetComponent<PieceFactory>().AddNext(grid);
 			}
+			yield return new WaitForSeconds (fallDelay);
 		}
 		yield return true;
 	}
