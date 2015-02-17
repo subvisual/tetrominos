@@ -31,6 +31,5 @@ public class PieceFactory : MonoBehaviour {
 
 	void RollNext() {
 		nextIndex = Random.Range(0, templates.GetLength(0));
-		Debug.Log("That's how we roll", nextIndex);
 	}
 }
