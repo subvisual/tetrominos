@@ -28,7 +28,9 @@ public class GridCtrl : MonoBehaviour {
 		grid = new GameObject[columns, rows];
 		for(int y = 0; y < rows; ++y) {
 			for(int x = 0; x < columns; ++x) {
-				Vector3 coords = new Vector3 (x * pieceWidth + pieceWidth / 2 - width / 2, y * pieceHeight + pieceHeight / 2 - width / 2, 0);
+				Vector3 coords = new Vector3 (x * pieceWidth + pieceWidth / 2 - width / 2,
+				                              y * pieceHeight + pieceHeight / 2 - width / 2,
+				                              0);
 				GameObject piece = Instantiate (piecePrefab, coords, Quaternion.identity) as GameObject;
 				piece.transform.localScale = new Vector3 (width / columns, height / rows, 1);
 				piece.transform.parent = transform;
@@ -45,12 +47,10 @@ public class GridCtrl : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown (KeyCode.DownArrow)) {
-			Debug.Log("turbo on");
 			fallDelay /= fallTurbo;
 		}
 
 		if (Input.GetKeyUp (KeyCode.DownArrow)) {
-			Debug.Log("turbo off");
 			fallDelay *= fallTurbo;
 		}
 	}
@@ -156,7 +156,6 @@ public class GridCtrl : MonoBehaviour {
 			for(int x = 0; x < columns; ++x) {
 				PieceCtrl currentPiece = grid[x, y].GetComponent<PieceCtrl>();
 				if (currentPiece.state == PieceState.Current) {
-					Debug.Log("finishing");
 					currentPiece.UpdateState(PieceState.Full);
 				}
 			}
