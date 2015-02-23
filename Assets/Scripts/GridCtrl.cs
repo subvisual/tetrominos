@@ -6,14 +6,18 @@ public class GridCtrl : MonoBehaviour {
 
 	public int columns;
 	public int rows;
-	public float width, height;
 	public float fallDelay, fallTurbo;
 	public GameObject piecePrefab;
-
+	
+	float width, height;
 	float pieceWidth, pieceHeight;
 	GameObject[,] grid;
 
 	void Awake () {
+		SpriteRenderer sr = GetComponent<SpriteRenderer>();
+		height = Camera.main.orthographicSize * 2;
+		width = height / Screen.height * Screen.width;
+
 		pieceWidth = width / columns;
 		pieceHeight = height / rows;
 		SetupGrid();
@@ -29,7 +33,7 @@ public class GridCtrl : MonoBehaviour {
 		for(int y = 0; y < rows; ++y) {
 			for(int x = 0; x < columns; ++x) {
 				Vector3 coords = new Vector3 (x * pieceWidth + pieceWidth / 2 - width / 2,
-				                              y * pieceHeight + pieceHeight / 2 - width / 2,
+				                              y * pieceHeight + pieceHeight / 2 - height / 2,
 				                              0);
 				GameObject piece = Instantiate (piecePrefab, coords, Quaternion.identity) as GameObject;
 				piece.transform.localScale = new Vector3 (width / columns, height / rows, 1);
