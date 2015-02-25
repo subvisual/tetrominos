@@ -86,14 +86,15 @@ public class PieceFactory : MonoBehaviour {
 	}
 
 	void SetupTemplates() {
-		PieceDescription smallSquare = new PieceDescription(PieceType.SmallSquare, 1, 1).Fill (0, 0);
-		PieceDescription largeSquare = new PieceDescription(PieceType.LargeSquare, 2, 2).Fill (0, 0).Fill (0, 1).Fill (1, 0).Fill (1, 1);
-		PieceDescription lLeft       = new PieceDescription(PieceType.LLeft,       3, 2).Fill (0, 0).Fill (1, 0).Fill (2, 0).Fill (0, 1);
-		PieceDescription lRight      = new PieceDescription(PieceType.LRight,      3, 2).Fill (0, 0).Fill (1, 0).Fill (2, 0).Fill (2, 1);
-		PieceDescription t           = new PieceDescription(PieceType.T,           3, 3).Fill (0, 0).Fill (1, 0).Fill (2, 0).Fill (1, 1).Fill (1, 2);
-		PieceDescription i           = new PieceDescription(PieceType.I,           1, 3).Fill (0, 0).Fill (0, 1).Fill (0, 2);
+		//PieceDescription smallSquare = new PieceDescription(PieceType.SmallSquare, 1, 1).Fill (0, 0);
+		PieceDescription largeSquare = new PieceDescription(PieceType.LargeSquare, 2, 2).Fill(0, 0).Fill(0, 1).Fill(1, 0).Fill(1, 1);
+		PieceDescription lLeft       = new PieceDescription(PieceType.LLeft,       3, 2).Fill(0, 0).Fill(1, 0).Fill(2, 0).Fill(0, 1);
+		PieceDescription lRight      = new PieceDescription(PieceType.LRight,      3, 2).Fill(0, 0).Fill(1, 0).Fill(2, 0).Fill(2, 1);
+		PieceDescription t           = new PieceDescription(PieceType.T,           3, 2).Fill(0, 0).Fill(1, 0).Fill(2, 0).Fill(1, 1);
+		PieceDescription i           = new PieceDescription(PieceType.I,           1, 4).Fill(0, 0).Fill(0, 1).Fill(0, 2).Fill(0, 3);
+		PieceDescription s           = new PieceDescription(PieceType.S,           3, 2).Fill(0, 1).Fill(0, 1).Fill(1, 1).Fill(2, 0);
 
-		templates = new PieceDescription[] { smallSquare, largeSquare, lLeft, lRight, t, i };
+		templates = new PieceDescription[] { /*smallSquare, */largeSquare, lLeft, lRight, t, i };
 	}
 
 	PieceDescription Next() {

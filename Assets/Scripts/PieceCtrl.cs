@@ -7,9 +7,9 @@ public class PieceCtrl : MonoBehaviour {
 
 	public PieceType type;
 	public PieceState state;
-	public Color emptyColor;
-	public Color currentColor;
-	public Color fullColor;
+
+	public Color emptyColor, currentColor;
+	public Color[] typeColors;
 
 	// Use this for initialization
 	void Awake () {
@@ -42,6 +42,10 @@ public class PieceCtrl : MonoBehaviour {
 		UpdateState(PieceState.Current);
 	}
 
+	public bool IsEmpty() {
+		return state == PieceState.Empty;
+	}
+
 	public bool IsCurrent() {
 		return state == PieceState.Current;
 	}
@@ -67,16 +71,17 @@ public class PieceCtrl : MonoBehaviour {
 	}
 
 	void UpdateMaterial() {
-		switch (state) {
-			case PieceState.Current:
-				renderer.material.color = currentColor;
-				break;
-			case PieceState.Full:
-				renderer.material.color = fullColor;
-				break;
-			case PieceState.Empty:
-				renderer.material.color = emptyColor;
-				break;
+		renderer.material.color = PieceColor();
+	}
+
+	Color PieceColor() {
+		if (IsCurrent()) {
+			return currentColor;
+		} else if (IsEmpty()) {
+			return emptyColor;
+		} else {
+			if (state == PieceState.Full) Debug.Log(type);
+			return typeColors[(int) type];
 		}
 	}
 }

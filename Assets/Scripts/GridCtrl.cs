@@ -72,8 +72,9 @@ public class GridCtrl : MonoBehaviour {
 					PieceCtrl currentPiece = grid[x, y].GetComponent<PieceCtrl>();
 					PieceCtrl nextPiece = grid[x+1, y].GetComponent<PieceCtrl>();
 					if (currentPiece.IsCurrent()) {
-						currentPiece.UpdateState(PieceState.Empty);
-						nextPiece.UpdateState(PieceState.Current);
+						//currentPiece.UpdateState(PieceState.Empty);
+						//nextPiece.UpdateState(PieceState.Current);
+						nextPiece.Replace(currentPiece);
 					}
 				}
 			}
@@ -93,8 +94,9 @@ public class GridCtrl : MonoBehaviour {
 					PieceCtrl currentPiece = grid[x, y].GetComponent<PieceCtrl>();
 					PieceCtrl nextPiece = grid[x-1, y].GetComponent<PieceCtrl>();
 					if (currentPiece.IsCurrent()) {
-						currentPiece.UpdateState(PieceState.Empty);
-						nextPiece.UpdateState(PieceState.Current);
+						//currentPiece.UpdateState(PieceState.Empty);
+						//nextPiece.UpdateState(PieceState.Current);
+						nextPiece.Replace(currentPiece);
 					}
 				}
 			}
