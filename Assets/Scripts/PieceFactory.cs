@@ -2,12 +2,15 @@
 using System.Collections;
 using Constants;
 
+
 class PieceDescription {
 	public int width;
 	public int height;
+	public PieceType type;
 	bool[,] pieceGrid;
 
-	public PieceDescription(int width, int height) {
+	public PieceDescription(PieceType type, int width, int height) {
+		this.type = type;
 		this.width  = width;
 		this.height = height;
 		pieceGrid = new bool[width, height];
@@ -72,7 +75,9 @@ public class PieceFactory : MonoBehaviour {
 					int yBoard = grid.GetLength (1)-1 - y;
 
 					GameObject newPiece = grid[xBoard, yBoard];
-					newPiece.GetComponent<PieceCtrl>().UpdateState(PieceState.Current);
+					PieceCtrl pieceCtrl = newPiece.GetComponent<PieceCtrl>();
+					pieceCtrl.MakeCurrent();
+					pieceCtrl.SetType(current.type);
 				}
 			}
 		}
@@ -81,12 +86,12 @@ public class PieceFactory : MonoBehaviour {
 	}
 
 	void SetupTemplates() {
-		PieceDescription smallSquare = new PieceDescription (1, 1).Fill (0, 0);
-		PieceDescription largeSquare = new PieceDescription (2, 2).Fill (0, 0).Fill (0, 1).Fill (1, 0).Fill (1, 1);
-		PieceDescription lLeft       = new PieceDescription (3, 2).Fill (0, 0).Fill (1, 0).Fill (2, 0).Fill (0, 1);
-		PieceDescription lRight      = new PieceDescription (3, 2).Fill (0, 0).Fill (1, 0).Fill (2, 0).Fill (2, 1);
-		PieceDescription t           = new PieceDescription (3, 3).Fill (0, 0).Fill (1, 0).Fill (2, 0).Fill (1, 1).Fill (1, 2);
-		PieceDescription i           = new PieceDescription (1, 3).Fill (0, 0).Fill (0, 1).Fill (0, 2);
+		PieceDescription smallSquare = new PieceDescription(PieceType.SmallSquare, 1, 1).Fill (0, 0);
+		PieceDescription largeSquare = new PieceDescription(PieceType.LargeSquare, 2, 2).Fill (0, 0).Fill (0, 1).Fill (1, 0).Fill (1, 1);
+		PieceDescription lLeft       = new PieceDescription(PieceType.LLeft,       3, 2).Fill (0, 0).Fill (1, 0).Fill (2, 0).Fill (0, 1);
+		PieceDescription lRight      = new PieceDescription(PieceType.LRight,      3, 2).Fill (0, 0).Fill (1, 0).Fill (2, 0).Fill (2, 1);
+		PieceDescription t           = new PieceDescription(PieceType.T,           3, 3).Fill (0, 0).Fill (1, 0).Fill (2, 0).Fill (1, 1).Fill (1, 2);
+		PieceDescription i           = new PieceDescription(PieceType.I,           1, 3).Fill (0, 0).Fill (0, 1).Fill (0, 2);
 
 		templates = new PieceDescription[] { smallSquare, largeSquare, lLeft, lRight, t, i };
 	}

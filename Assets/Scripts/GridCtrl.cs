@@ -61,7 +61,7 @@ public class GridCtrl : MonoBehaviour {
 
 	void MoveRight() {
 		for(int y = 0; y < rows; ++y) {
-			if (grid[columns-1, y].GetComponent<PieceCtrl>().state == PieceState.Current) {
+			if (grid[columns-1, y].GetComponent<PieceCtrl>().IsCurrent()) {
 				return;
 			}
 		}
@@ -71,7 +71,7 @@ public class GridCtrl : MonoBehaviour {
 				for(int x = columns - 2; x >= 0; --x) {
 					PieceCtrl currentPiece = grid[x, y].GetComponent<PieceCtrl>();
 					PieceCtrl nextPiece = grid[x+1, y].GetComponent<PieceCtrl>();
-					if (currentPiece.state == PieceState.Current) {
+					if (currentPiece.IsCurrent()) {
 						currentPiece.UpdateState(PieceState.Empty);
 						nextPiece.UpdateState(PieceState.Current);
 					}
@@ -92,7 +92,7 @@ public class GridCtrl : MonoBehaviour {
 				for(int x = 1; x < columns; ++x) {
 					PieceCtrl currentPiece = grid[x, y].GetComponent<PieceCtrl>();
 					PieceCtrl nextPiece = grid[x-1, y].GetComponent<PieceCtrl>();
-					if (currentPiece.state == PieceState.Current) {
+					if (currentPiece.IsCurrent()) {
 						currentPiece.UpdateState(PieceState.Empty);
 						nextPiece.UpdateState(PieceState.Current);
 					}
@@ -106,7 +106,7 @@ public class GridCtrl : MonoBehaviour {
 			for(int x = 1; x < columns - 1; ++x) {
 				PieceCtrl currentPiece = grid[x, y].GetComponent<PieceCtrl>();
 				PieceCtrl nextPiece = grid[x + direction, y].GetComponent<PieceCtrl>();
-				if (currentPiece.state == PieceState.Current && nextPiece.state == PieceState.Full) {
+				if (currentPiece.IsCurrent() && nextPiece.IsFull()) {
 					return false;
 				}
 			}
@@ -115,7 +115,7 @@ public class GridCtrl : MonoBehaviour {
 	}
 
 	void AddPiece(int x, int y) {
-		grid[x, y].GetComponent<PieceCtrl>().UpdateState(PieceState.Current);
+		grid[x, y].GetComponent<PieceCtrl>().MakeCurrent();
 	}
 
 	IEnumerator Fall() {
@@ -138,7 +138,7 @@ public class GridCtrl : MonoBehaviour {
 
 	bool CanFall() {
 		for(int x = 0; x < columns; ++x) {
-			if (grid[x, 0].GetComponent<PieceCtrl>().state == PieceState.Current) {
+			if (grid[x, 0].GetComponent<PieceCtrl>().IsCurrent()) {
 				return false;
 			}
 		}
@@ -147,7 +147,7 @@ public class GridCtrl : MonoBehaviour {
 			for(int x = 0; x < columns; ++x) {
 				PieceCtrl currentPiece = grid[x, y].GetComponent<PieceCtrl>();
 				PieceCtrl nextPiece = grid[x, y-1].GetComponent<PieceCtrl>();
-				if (currentPiece.state == PieceState.Current && nextPiece.state == PieceState.Full) {
+				if (currentPiece.IsCurrent() && nextPiece.IsFull()) {
 					return false;
 				}
 			}
@@ -159,8 +159,8 @@ public class GridCtrl : MonoBehaviour {
 		for(int y = 0; y < rows; ++y) {
 			for(int x = 0; x < columns; ++x) {
 				PieceCtrl currentPiece = grid[x, y].GetComponent<PieceCtrl>();
-				if (currentPiece.state == PieceState.Current) {
-					currentPiece.UpdateState(PieceState.Full);
+				if (currentPiece.IsCurrent()) {
+					currentPiece.MakeFull();
 				}
 			}
 		}
@@ -172,8 +172,7 @@ public class GridCtrl : MonoBehaviour {
 				PieceCtrl currentPiece = grid[x, y].GetComponent<PieceCtrl>();
 				PieceCtrl nextPiece = grid[x, y-1].GetComponent<PieceCtrl>();
 				if (currentPiece.state == state) {
-					currentPiece.UpdateState(PieceState.Empty);
-					nextPiece.UpdateState(state);
+					nextPiece.Replace(currentPiece);
 				}
 			}
 		}

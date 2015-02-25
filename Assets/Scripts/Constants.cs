@@ -6,5 +6,15 @@ namespace Constants {
 		Empty,
 		Full,
 		Current
+	};
+
+	public enum PieceType {
+		Empty,
+		SmallSquare,
+		LargeSquare,
+		LLeft,
+		LRight,
+		T,
+		I
 	}
 }
