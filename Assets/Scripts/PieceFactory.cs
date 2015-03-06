@@ -2,20 +2,19 @@
 using System.Collections;
 using Constants;
 
-
 class PieceDescription {
-	public int width;
-	public int height;
+	public int columns;
+	public int rows;
 	public PieceType type;
 	bool[,] pieceGrid;
 
-	public PieceDescription(PieceType type, int width, int height) {
+	public PieceDescription(PieceType type, int columns, int rows) {
 		this.type = type;
-		this.width  = width;
-		this.height = height;
-		pieceGrid = new bool[width, height];
-		for (int x = 0; x < width; ++x) {
-			for(int y = 0; y < height; ++y) {
+		this.columns  = columns;
+		this.rows = rows;
+		pieceGrid = new bool[columns, rows];
+		for (int x = 0; x < columns; ++x) {
+			for(int y = 0; y < rows; ++y) {
 				pieceGrid[x, y] = false;
 			}
 		}
@@ -31,16 +30,16 @@ class PieceDescription {
 	}
 
 	public PieceDescription Rotate() {
-		bool[,] newGrid = new bool[height, width];
-		for (int x = 0; x < height; ++x) {
-			for(int y = 0; y < width; ++y) {
+		bool[,] newGrid = new bool[rows, columns];
+		for (int x = 0; x < rows; ++x) {
+			for(int y = 0; y < columns; ++y) {
 				newGrid[x, y] = pieceGrid[y, x];
 			}
 		}
 
-		int newWidth = height;
-		height = width;
-		width = newWidth;
+		int tmp = rows;
+		rows = columns;
+		columns = tmp;
 		pieceGrid = newGrid;
 
 		return this;
@@ -59,25 +58,22 @@ public class PieceFactory : MonoBehaviour {
 		RollNext();
 	}
 
-	public void AddNext(GameObject[,] grid) {
+	public void AddNext(Grid grid) {
 		PieceDescription current = Next ();
-		int xStart = (grid.GetLength (1) / 2) - (current.width / 2);
+		int xStart = (grid.columns / 2) - (current.columns/ 2);
 
 		while (nextRotation > 0) {
 			current.Rotate();
 			nextRotation--;
 		}
 
-		for (int x = 0; x < current.width; ++x) {
-			for (int y = 0; y < current.height; ++y) {
+		for (int x = 0; x < current.columns; ++x) {
+			for (int y = 0; y < current.rows; ++y) {
 				if (current.CheckFilled(x, y)) {
 					int xBoard = x + xStart;
-					int yBoard = grid.GetLength (1)-1 - y;
+					int yBoard = grid.rows - 1 - y;
 
-					GameObject newPiece = grid[xBoard, yBoard];
-					PieceCtrl pieceCtrl = newPiece.GetComponent<PieceCtrl>();
-					pieceCtrl.MakeCurrent();
-					pieceCtrl.SetType(current.type);
+					grid.AddCurrent(current.type, xBoard, yBoard);
 				}
 			}
 		}
