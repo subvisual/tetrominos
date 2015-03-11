@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Constants;
+using System.Linq;
 
 public class Grid {
 
@@ -24,75 +26,125 @@ public class Grid {
 		SetupGrid(parent);
 	}
 
-	public void MoveRight() {
-		for (int y = 0; y < rows; ++y) {
-			if (objects[columns - 1, y].GetComponent<PieceCtrl>().IsCurrent()) {
-				return;
-			}
-		}
-
-		if (CanMove(1)) {
-			for (int y = 0; y < rows; ++y) {
-				for (int x = columns - 2; x >= 0; --x) {
-					PieceCtrl currentPiece = objects[x, y].GetComponent<PieceCtrl>();
-					PieceCtrl nextPiece = objects[x + 1, y].GetComponent<PieceCtrl>();
-					if (currentPiece.IsCurrent()) {
-						nextPiece.Replace(currentPiece);
-					}
-				}
-			}
-		}
+	public bool MoveRight() {
+		return Move(PieceState.Current, 1, 0);
 	}
 
-	public void MoveLeft() {
-		for (int y = 0; y < rows; ++y) {
-			if (objects[0, y].GetComponent<PieceCtrl>().state == PieceState.Current) {
-				return;
-			}
-		}
-
-		if (CanMove(-1)) {
-			for (int y = 0; y < rows; ++y) {
-				for (int x = 1; x < columns; ++x) {
-					PieceCtrl currentPiece = objects[x, y].GetComponent<PieceCtrl>();
-					PieceCtrl nextPiece = objects[x - 1, y].GetComponent<PieceCtrl>();
-					if (currentPiece.IsCurrent()) {
-						nextPiece.Replace(currentPiece);
-					}
-				}
-			}
-		}
+	public bool MoveLeft() {
+		return Move(PieceState.Current, -1, 0);
 	}
 
-	bool CanMove(int direction) {
-		for (int y = 0; y < rows; ++y) {
-			for (int x = 1; x < columns - 1; ++x) {
-				PieceCtrl currentPiece = objects[x, y].GetComponent<PieceCtrl>();
-				PieceCtrl nextPiece = objects[x + direction, y].GetComponent<PieceCtrl>();
-				if (currentPiece.IsCurrent() && nextPiece.IsFull()) {
-					return false;
-				}
-			}
-		}
-		return true;
+	public bool Fall(PieceState state) {
+		return Move(state, 0, -1);
 	}
 
-	public bool CanFall() {
-		for (int x = 0; x < columns; ++x) {
-			if (objects[x, 0].GetComponent<PieceCtrl>().IsCurrent()) {
-				return false;
-			}
-		}
+	public void CollapseFull() {
+		while (Move(PieceState.Full, 0, -1))
+			;
+	}
 
-		for (int y = 1; y < rows; ++y) {
+	public void FinishPiece() {
+		for (int y = 0; y < rows; ++y) {
 			for (int x = 0; x < columns; ++x) {
 				PieceCtrl currentPiece = objects[x, y].GetComponent<PieceCtrl>();
-				PieceCtrl nextPiece = objects[x, y - 1].GetComponent<PieceCtrl>();
-				if (currentPiece.IsCurrent() && nextPiece.IsFull()) {
-					return false;
+				if (currentPiece.IsCurrent()) {
+					currentPiece.MakeFull();
 				}
 			}
 		}
+	}
+
+	public void AddCurrent(PieceType type, int x, int y) {
+		GameObject newPiece = objects[x, y];
+		PieceCtrl pieceCtrl = newPiece.GetComponent<PieceCtrl>();
+		pieceCtrl.MakeCurrent();
+		pieceCtrl.SetType(type);
+	}
+
+	public int DestroyFullRows() {
+		int fullCount = 0;
+
+		for (int y = 0; y < rows; ++y) {
+			bool isFull = true;
+			for (int x = 0; x < columns; ++x) {
+				PieceCtrl currentPiece = objects[x, y].GetComponent<PieceCtrl>();
+				if (!currentPiece.IsFull()) {
+					isFull = false;
+					break;
+				}
+			}
+			if (isFull) {
+				fullCount++;
+				for (int x = 0; x < columns; ++x) {
+					PieceCtrl currentPiece = objects[x, y].GetComponent<PieceCtrl>();
+					currentPiece.MakeEmpty();
+				}
+			}
+		}
+
+		return fullCount;
+	}
+
+	bool Move(PieceState state, int offX, int offY) {
+		var oldCoords = new List<Pair<int, int>>();
+		var newCoords = new List<Pair<Pair<int, int>, PieceType>>();
+
+		for (int y = 0; y < rows; ++y) {
+			for (int x = 0; x < columns; ++x) {
+				PieceCtrl currentPiece = objects[x, y].GetComponent<PieceCtrl>();
+
+				// if we're not interested in this piece
+				if (currentPiece.state != state) {
+					continue;
+				}
+
+				int nextX = x + offX;
+				int nextY = y + offY;
+
+				// check if nextPiece is at the boundaries
+				// if not, the move can't happen
+				if ((nextX < 0 || nextX >= columns) ||
+						(nextY < 0 || nextY >= rows)) {
+					return false;
+				}
+
+				// check if nextPiece is Full
+				PieceCtrl nextPiece = objects[nextX, nextY].GetComponent<PieceCtrl>();
+				if (nextPiece.state == PieceState.Full) {
+					if (state == PieceState.Current) {
+						return false; // If we're moving the current piece, we cancel. It's all or nothing
+					} else {
+						continue; // The Full pieces can move independently, so we just skip this one
+					}
+				}
+
+				// otherwise, use the new coords
+				oldCoords.Add(new Pair<int, int>(x, y));
+				newCoords.Add(new Pair<Pair<int, int>, PieceType>(new Pair<int, int>(nextX, nextY), currentPiece.type));
+			}
+		}
+
+		var coordsToAdd    = newCoords.Where(newCoord => !oldCoords.Contains(newCoord.First));
+		var coordsToRemove = oldCoords.Where(oldCoord => !newCoords.Any(newCoord => newCoord.First.Equals(oldCoord)));
+
+		if (coordsToAdd.Count() == 0) {
+			return false;
+		}
+
+		foreach(Pair<Pair<int, int>, PieceType> coord in coordsToAdd.ToList()) {
+			var x = coord.First.First;
+			var y = coord.First.Second;
+			var type = coord.Second;
+			var piece = objects[x, y].GetComponent<PieceCtrl>();
+			piece.SetType(type);
+			piece.Make(state);
+		}
+
+		foreach (Pair<int, int> coord in coordsToRemove.ToList()) {
+			var piece = objects[coord.First, coord.Second].GetComponent<PieceCtrl>();
+			piece.MakeEmpty();
+		}
+
 		return true;
 	}
 
@@ -110,35 +162,5 @@ public class Grid {
 				objects[x, y] = piece;
 			}
 		}
-	}
-
-	public void FinishPiece() {
-		for (int y = 0; y < rows; ++y) {
-			for (int x = 0; x < columns; ++x) {
-				PieceCtrl currentPiece = objects[x, y].GetComponent<PieceCtrl>();
-				if (currentPiece.IsCurrent()) {
-					currentPiece.MakeFull();
-				}
-			}
-		}
-	}
-
-	public void FallPieces(PieceState state) {
-		for (int y = 1; y < rows; ++y) {
-			for (int x = 0; x < columns; ++x) {
-				PieceCtrl currentPiece = objects[x, y].GetComponent<PieceCtrl>();
-				PieceCtrl nextPiece = objects[x, y - 1].GetComponent<PieceCtrl>();
-				if (currentPiece.state == state) {
-					nextPiece.Replace(currentPiece);
-				}
-			}
-		}
-	}
-
-	public void AddCurrent(PieceType type, int x, int y) {
-		GameObject newPiece = objects[x, y];
-		PieceCtrl pieceCtrl = newPiece.GetComponent<PieceCtrl>();
-		pieceCtrl.MakeCurrent();
-		pieceCtrl.SetType(type);
 	}
 }

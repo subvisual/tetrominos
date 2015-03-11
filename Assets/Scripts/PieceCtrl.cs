@@ -29,29 +29,39 @@ public class PieceCtrl : MonoBehaviour {
 		transform.Translate (Vector3.down * transform.localScale.y);
 	}
 
+	public void Make(PieceState state) {
+		if (state == PieceState.Empty) {
+			type = PieceType.Empty;
+		}
+		UpdateState(state);
+	}
+
 	public void MakeEmpty() {
-		type = PieceType.Empty;
-		UpdateState(PieceState.Empty);
+		Make(PieceState.Empty);
 	}
 
 	public void MakeFull() {
-		UpdateState(PieceState.Full);
+		Make(PieceState.Full);
 	}
 
 	public void MakeCurrent() {
-		UpdateState(PieceState.Current);
+		Make(PieceState.Current);
+	}
+
+	public bool Is(PieceState state) {
+		return this.state == state;
 	}
 
 	public bool IsEmpty() {
-		return state == PieceState.Empty;
+		return Is(PieceState.Empty);
 	}
 
 	public bool IsCurrent() {
-		return state == PieceState.Current;
+		return Is(PieceState.Current);
 	}
 
 	public bool IsFull() {
-		return state == PieceState.Full;
+		return Is(PieceState.Full);
 	}
 
 	public void Replace(PieceCtrl previousPiece) {
@@ -80,7 +90,6 @@ public class PieceCtrl : MonoBehaviour {
 		} else if (IsEmpty()) {
 			return emptyColor;
 		} else {
-			if (state == PieceState.Full) Debug.Log(type);
 			return typeColors[(int) type];
 		}
 	}

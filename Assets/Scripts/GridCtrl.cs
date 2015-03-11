@@ -40,28 +40,20 @@ public class GridCtrl : MonoBehaviour {
 		}
 	}
 
-	/*void AddPiece(int x, int y) {
-		grid[x, y].GetComponent<PieceCtrl>().MakeCurrent();
-	}*/
-
 	IEnumerator Fall() {
 		while (true) {
 			// refactor this out of here
-			if (grid.CanFall()) {
-				grid.FallPieces(PieceState.Current);
-			} else {
+			if (!grid.Fall(PieceState.Current)) {
 				grid.FinishPiece();
 				GetComponent<PieceFactory>().AddNext(grid);
 			}
-			yield return new WaitForSeconds (fallDelay);
+			
+			var destroyedRows = grid.DestroyFullRows();
+			if (destroyedRows > 0)
+				grid.CollapseFull();
+
+			yield return new WaitForSeconds(fallDelay);
 		}
 		yield return true;
 	}
-
-	/*public GameObject Get(int x, int y) {
-		return grid[x, y];
-	}*/
-
-	
-
 }

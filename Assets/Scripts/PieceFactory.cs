@@ -90,7 +90,7 @@ public class PieceFactory : MonoBehaviour {
 		PieceDescription i           = new PieceDescription(PieceType.I,           1, 4).Fill(0, 0).Fill(0, 1).Fill(0, 2).Fill(0, 3);
 		PieceDescription s           = new PieceDescription(PieceType.S,           3, 2).Fill(0, 1).Fill(0, 1).Fill(1, 1).Fill(2, 0);
 
-		templates = new PieceDescription[] { /*smallSquare, */largeSquare, lLeft, lRight, t, i };
+		templates = new PieceDescription[] { /*smallSquare, */largeSquare/*, lLeft, lRight, t, i*/ };
 	}
 
 	PieceDescription Next() {
