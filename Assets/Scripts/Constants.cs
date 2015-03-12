@@ -10,7 +10,7 @@ namespace Constants {
 
 	public enum PieceType {
 		Empty,
-		//SmallSquare,
+		SmallSquare,
 		LargeSquare,
 		LLeft,
 		LRight,

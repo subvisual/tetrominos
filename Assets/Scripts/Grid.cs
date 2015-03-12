@@ -1,28 +1,28 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using Constants;
 using System.Linq;
 
 public class Grid {
 
-	GridCtrl gridCtrl;
+	readonly GameObject _piecePrefab;
+	GameObject[,] _objects;
 
-	GameObject piecePrefab;
-	GameObject[,] objects;
+	readonly int _columns, _rows;
+	readonly float _width, _height;
+	readonly float _pieceWidth, _pieceHeight;
 
-	public int columns, rows;
-	public float width, height;
-	float pieceWidth, pieceHeight;
+	public int Columns { get { return _columns; } }
+	public int Rows    { get { return _rows; } }
 
 	public Grid (GameObject piecePrefab, Transform parent, int columns, int rows, float width, float height) {
-		this.piecePrefab = piecePrefab;
-		this.columns = columns;
-		this.rows = rows;
-		this.width = width;
-		this.height = height;
-		this.pieceWidth = width / columns;
-		this.pieceHeight = height / rows;
+		_piecePrefab = piecePrefab;
+		_columns = columns;
+		_rows = rows;
+		_width = width;
+		_height = height;
+		_pieceWidth = width / columns;
+		_pieceHeight = height / rows;
 		SetupGrid(parent);
 	}
 
@@ -39,24 +39,21 @@ public class Grid {
 	}
 
 	public void CollapseFull() {
-		while (Move(PieceState.Full, 0, -1))
-			;
-	}
-
-	public void FinishPiece() {
-		for (int y = 0; y < rows; ++y) {
-			for (int x = 0; x < columns; ++x) {
-				PieceCtrl currentPiece = objects[x, y].GetComponent<PieceCtrl>();
-				if (currentPiece.IsCurrent()) {
-					currentPiece.MakeFull();
-				}
-			}
+		while (Move(PieceState.Full, 0, -1)) {
 		}
 	}
 
+	public void FinishPiece() {
+		ForEachPiece((x, y, currentPiece) => {
+			if (currentPiece.IsCurrent()) {
+				currentPiece.MakeFull();
+			}
+			return true;
+		});
+	}
+
 	public void AddCurrent(PieceType type, int x, int y) {
-		GameObject newPiece = objects[x, y];
-		PieceCtrl pieceCtrl = newPiece.GetComponent<PieceCtrl>();
+		var pieceCtrl = GetPieceCtrl(x, y);
 		pieceCtrl.MakeCurrent();
 		pieceCtrl.SetType(type);
 	}
@@ -64,10 +61,10 @@ public class Grid {
 	public int DestroyFullRows() {
 		int fullCount = 0;
 
-		for (int y = 0; y < rows; ++y) {
+		for (int y = 0; y < _rows; ++y) {
 			bool isFull = true;
-			for (int x = 0; x < columns; ++x) {
-				PieceCtrl currentPiece = objects[x, y].GetComponent<PieceCtrl>();
+			for (int x = 0; x < _columns; ++x) {
+				PieceCtrl currentPiece = GetPieceCtrl(x, y);
 				if (!currentPiece.IsFull()) {
 					isFull = false;
 					break;
@@ -75,8 +72,8 @@ public class Grid {
 			}
 			if (isFull) {
 				fullCount++;
-				for (int x = 0; x < columns; ++x) {
-					PieceCtrl currentPiece = objects[x, y].GetComponent<PieceCtrl>();
+				for (int x = 0; x < _columns; ++x) {
+					PieceCtrl currentPiece = GetPieceCtrl(x, y);
 					currentPiece.MakeEmpty();
 				}
 			}
@@ -84,83 +81,103 @@ public class Grid {
 
 		return fullCount;
 	}
+	
+	// Iterates all pieces
+	// If one of the delegates returns false, all subsequent iterations are cancelled
+	delegate bool PieceFunc(int x, int y, PieceCtrl piece);
+	bool ForEachPiece(PieceFunc func) {
+		for (var y = 0; y < _rows; ++y) {
+			for (var x = 0; x < _columns; ++x) {
+				var currentPiece = GetPieceCtrl(x, y);
 
-	bool Move(PieceState state, int offX, int offY) {
-		var oldCoords = new List<Pair<int, int>>();
-		var newCoords = new List<Pair<Pair<int, int>, PieceType>>();
-
-		for (int y = 0; y < rows; ++y) {
-			for (int x = 0; x < columns; ++x) {
-				PieceCtrl currentPiece = objects[x, y].GetComponent<PieceCtrl>();
-
-				// if we're not interested in this piece
-				if (currentPiece.state != state) {
-					continue;
-				}
-
-				int nextX = x + offX;
-				int nextY = y + offY;
-
-				// check if nextPiece is at the boundaries
-				// if not, the move can't happen
-				if ((nextX < 0 || nextX >= columns) ||
-						(nextY < 0 || nextY >= rows)) {
+				if (!func(x, y, currentPiece)) {
+					Debug.Log("canceling");
 					return false;
 				}
-
-				// check if nextPiece is Full
-				PieceCtrl nextPiece = objects[nextX, nextY].GetComponent<PieceCtrl>();
-				if (nextPiece.state == PieceState.Full) {
-					if (state == PieceState.Current) {
-						return false; // If we're moving the current piece, we cancel. It's all or nothing
-					} else {
-						continue; // The Full pieces can move independently, so we just skip this one
-					}
-				}
-
-				// otherwise, use the new coords
-				oldCoords.Add(new Pair<int, int>(x, y));
-				newCoords.Add(new Pair<Pair<int, int>, PieceType>(new Pair<int, int>(nextX, nextY), currentPiece.type));
 			}
 		}
+		return true;
+	}
+	
+	bool Move(PieceState state, int offX, int offY) {
+		var oldCoords = new List<Triple<int, int, PieceType>>();
+		var newCoords = new List<Triple<int, int, PieceType>>();
 
-		var coordsToAdd    = newCoords.Where(newCoord => !oldCoords.Contains(newCoord.First));
-		var coordsToRemove = oldCoords.Where(oldCoord => !newCoords.Any(newCoord => newCoord.First.Equals(oldCoord)));
+		var moveAllowed = ForEachPiece((x, y, currentPiece) => {
+			// if we're not interested in this piece
+			if (currentPiece.State != state) {
+				return true;
+			}
+
+			int nextX = x + offX;
+			int nextY = y + offY;
+
+			// check if nextPiece is at the boundaries. if not, the move can't happen
+			if (nextX < 0 || nextX >= _columns || nextY < 0 || nextY >= _rows) {
+				// If we're moving the current piece, we cancel. It's all or nothing
+				// The Full pieces can move independently, so we just skip this one
+				return (state != PieceState.Current);
+			}
+
+			// check if nextPiece is Full
+			PieceCtrl nextPiece = GetPieceCtrl(nextX, nextY);
+			if (nextPiece.State == PieceState.Full) {
+				// If we're moving the current piece, we cancel. It's all or nothing
+				// The Full pieces can move independently, so we just skip this one
+				return (state != PieceState.Current);
+			}
+
+			// otherwise, use the new coords
+			oldCoords.Add(new Triple<int, int, PieceType>(x, y, PieceType.Empty));
+			newCoords.Add(new Triple<int, int, PieceType>(nextX, nextY, currentPiece.Type));
+
+			return true;
+		});
+
+		if (!moveAllowed) {
+			return false;
+		}
+
+		// diff both lists
+
+		var coordsToAdd    = newCoords.Where(newCoord => !oldCoords.Any(oldCoord => newCoord.PairXY().Equals(oldCoord.PairXY())));
+		var coordsToRemove = oldCoords.Where(oldCoord => !newCoords.Any(newCoord => newCoord.PairXY().Equals(oldCoord.PairXY())));
 
 		if (coordsToAdd.Count() == 0) {
 			return false;
 		}
 
-		foreach(Pair<Pair<int, int>, PieceType> coord in coordsToAdd.ToList()) {
-			var x = coord.First.First;
-			var y = coord.First.Second;
-			var type = coord.Second;
-			var piece = objects[x, y].GetComponent<PieceCtrl>();
-			piece.SetType(type);
-			piece.Make(state);
-		}
-
-		foreach (Pair<int, int> coord in coordsToRemove.ToList()) {
-			var piece = objects[coord.First, coord.Second].GetComponent<PieceCtrl>();
-			piece.MakeEmpty();
-		}
-
+		// apply both diffs
+		SetCoords(coordsToAdd.ToList(),    state);
+		SetCoords(coordsToRemove.ToList(), PieceState.Empty);
 		return true;
 	}
 
-	void SetupGrid(Transform parent) {
-		objects = new GameObject[columns, rows];
+	void SetCoords(IEnumerable<Triple<int, int, PieceType>> coordsInfo, PieceState state) {
+		foreach(var coordInfo in coordsInfo) {
+			var piece = GetPieceCtrl(coordInfo.First, coordInfo.Second);
+			piece.SetType(coordInfo.Third);
+			piece.Make(state);
+		}
+	}
 
-		for (int y = 0; y < rows; ++y) {
-			for (int x = 0; x < columns; ++x) {
-				Vector3 coords = new Vector3(x * pieceWidth + pieceWidth / 2 - width / 2,
-																			y * pieceHeight + pieceHeight / 2 - height / 2,
-																			0);
-				GameObject piece = GameObject.Instantiate(piecePrefab, coords, Quaternion.identity) as GameObject;
-				piece.transform.localScale = new Vector3(width / columns, height / rows, 1);
+	void SetupGrid(Transform parent) {
+		_objects = new GameObject[Columns, Rows];
+
+		for (var y = 0; y < _rows; ++y) {
+			for (var x = 0; x < _columns; ++x) {
+				var coords = new Vector3((x + 0.5f) * _pieceWidth - 0.5f * _width,
+																 (y + 0.5f) * _pieceHeight - 0.5f * _height,
+																	0);
+				GameObject piece = GameObject.Instantiate(_piecePrefab, coords, Quaternion.identity) as GameObject;
+				piece.transform.localScale = new Vector3(_width / _columns, _height / _rows, 1);
 				piece.transform.parent = parent;
-				objects[x, y] = piece;
+				_objects[x, y] = piece;
 			}
 		}
+	}
+
+	PieceCtrl GetPieceCtrl(int x, int y) {
+		return _objects[x, y].GetComponent<PieceCtrl>();
 	}
 }

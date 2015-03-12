@@ -60,7 +60,7 @@ public class PieceFactory : MonoBehaviour {
 
 	public void AddNext(Grid grid) {
 		PieceDescription current = Next ();
-		int xStart = (grid.columns / 2) - (current.columns/ 2);
+		int xStart = (grid.Columns / 2) - (current.columns/ 2);
 
 		while (nextRotation > 0) {
 			current.Rotate();
@@ -71,7 +71,7 @@ public class PieceFactory : MonoBehaviour {
 			for (int y = 0; y < current.rows; ++y) {
 				if (current.CheckFilled(x, y)) {
 					int xBoard = x + xStart;
-					int yBoard = grid.rows - 1 - y;
+					int yBoard = grid.Rows - 1 - y;
 
 					grid.AddCurrent(current.type, xBoard, yBoard);
 				}
@@ -90,7 +90,7 @@ public class PieceFactory : MonoBehaviour {
 		PieceDescription i           = new PieceDescription(PieceType.I,           1, 4).Fill(0, 0).Fill(0, 1).Fill(0, 2).Fill(0, 3);
 		PieceDescription s           = new PieceDescription(PieceType.S,           3, 2).Fill(0, 1).Fill(0, 1).Fill(1, 1).Fill(2, 0);
 
-		templates = new PieceDescription[] { /*smallSquare, */largeSquare/*, lLeft, lRight, t, i*/ };
+		templates = new PieceDescription[] { /*smallSquare, */largeSquare, lLeft, lRight, t, i };
 	}
 
 	PieceDescription Next() {

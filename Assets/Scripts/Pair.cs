@@ -1,27 +1,59 @@
 ﻿using System;
 
-class Pair<F,S> {
+class Pair<TF, TS> {
 
-	public F First { get; set; }
-	public S Second { get; set; }
+	public TF First { get; set; }
+	public TS Second { get; set; }
 
-	public Pair(F first, S second) {
-		this.First = first;
-		this.Second = second;
+	public Pair(TF first, TS second) {
+		First = first;
+		Second = second;
 	}
 
 	public override bool Equals(object obj) {
 		if (Object.ReferenceEquals(this, obj)) {
 			return true;
 		}
-		Pair<F, S> instance = obj as Pair<F, S>;
+		var instance = obj as Pair<TF, TS>;
 		if (instance == null) {
 			return false;
 		}
-		return this.First.Equals(instance.First) && this.Second.Equals(instance.Second);
+		return First.Equals(instance.First) && Second.Equals(instance.Second);
 	}
 
 	public override int GetHashCode() {
-		return this.First.GetHashCode() ^ this.Second.GetHashCode();
+		return First.GetHashCode() ^ Second.GetHashCode();
+	}
+}
+
+class Triple<TF, TS, TT> {
+
+	public TF First { get; set; }
+	public TS Second { get; set; }
+	public TT Third { get; set; }
+
+	public Triple(TF first, TS second, TT third) {
+		First = first;
+		Second = second;
+		Third = third;
+	}
+
+	public override bool Equals(object obj) {
+		if (Object.ReferenceEquals(this, obj)) {
+			return true;
+		}
+		var instance = obj as Triple<TF, TS, TT>;
+		if (instance == null) {
+			return false;
+		}
+		return First.Equals(instance.First) && Second.Equals(instance.Second) && Third.Equals(instance.Third);
+	}
+
+	public override int GetHashCode() {
+		return First.GetHashCode() ^ Second.GetHashCode() ^ Third.GetHashCode();
+	}
+
+	public Pair<TF, TS> PairXY() {
+		return new Pair<TF, TS>(First, Second);
 	}
 }

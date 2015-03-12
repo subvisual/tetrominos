@@ -5,24 +5,24 @@ using Constants;
 
 public class PieceCtrl : MonoBehaviour {
 
-	public PieceType type;
-	public PieceState state;
+	public PieceType Type;
+	public PieceState State;
 
-	public Color emptyColor, currentColor;
-	public Color[] typeColors;
+	public Color EmptyColor, CurrentColor;
+	public Color[] TypeColors;
 
 	// Use this for initialization
 	void Awake () {
-		state = PieceState.Empty;
+		State = PieceState.Empty;
 		UpdateMaterial();
 	}
 
 	public void SetType(PieceType type) {
-		this.type = type;
+		this.Type = type;
 	}
 
 	public void Fall() {
-		if (state != PieceState.Current) {
+		if (State != PieceState.Current) {
 			return;
 		}
 
@@ -31,7 +31,7 @@ public class PieceCtrl : MonoBehaviour {
 
 	public void Make(PieceState state) {
 		if (state == PieceState.Empty) {
-			type = PieceType.Empty;
+			Type = PieceType.Empty;
 		}
 		UpdateState(state);
 	}
@@ -49,7 +49,7 @@ public class PieceCtrl : MonoBehaviour {
 	}
 
 	public bool Is(PieceState state) {
-		return this.state == state;
+		return this.State == state;
 	}
 
 	public bool IsEmpty() {
@@ -65,18 +65,18 @@ public class PieceCtrl : MonoBehaviour {
 	}
 
 	public void Replace(PieceCtrl previousPiece) {
-		UpdateState(previousPiece.state);
-		UpdateType(previousPiece.type);
+		UpdateState(previousPiece.State);
+		UpdateType(previousPiece.Type);
 		previousPiece.MakeEmpty();
 	}
 
 	public void UpdateType(PieceType type) {
-		this.type = type;
+		this.Type = type;
 		UpdateMaterial();
 	}
 
 	public void UpdateState(PieceState state) {
-		this.state = state;
+		this.State = state;
 		UpdateMaterial();
 	}
 
@@ -86,11 +86,11 @@ public class PieceCtrl : MonoBehaviour {
 
 	Color PieceColor() {
 		if (IsCurrent()) {
-			return currentColor;
+			return CurrentColor;
 		} else if (IsEmpty()) {
-			return emptyColor;
+			return EmptyColor;
 		} else {
-			return typeColors[(int) type];
+			return TypeColors[(int) Type];
 		}
 	}
 }
