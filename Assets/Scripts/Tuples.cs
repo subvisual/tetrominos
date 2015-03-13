@@ -1,6 +1,4 @@
-﻿using System;
-
-class Pair<TF, TS> {
+﻿class Pair<TF, TS> {
 
 	public TF First { get; set; }
 	public TS Second { get; set; }
@@ -11,7 +9,7 @@ class Pair<TF, TS> {
 	}
 
 	public override bool Equals(object obj) {
-		if (Object.ReferenceEquals(this, obj)) {
+		if (ReferenceEquals(this, obj)) {
 			return true;
 		}
 		var instance = obj as Pair<TF, TS>;
@@ -39,7 +37,7 @@ class Triple<TF, TS, TT> {
 	}
 
 	public override bool Equals(object obj) {
-		if (Object.ReferenceEquals(this, obj)) {
+		if (ReferenceEquals(this, obj)) {
 			return true;
 		}
 		var instance = obj as Triple<TF, TS, TT>;

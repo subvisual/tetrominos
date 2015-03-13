@@ -140,16 +140,16 @@ public class Grid {
 
 		// diff both lists
 
-		var coordsToAdd    = newCoords.Where(newCoord => !oldCoords.Any(oldCoord => newCoord.PairXY().Equals(oldCoord.PairXY())));
-		var coordsToRemove = oldCoords.Where(oldCoord => !newCoords.Any(newCoord => newCoord.PairXY().Equals(oldCoord.PairXY())));
+		var coordsToAdd    = newCoords.Where(newCoord => !oldCoords.Any(oldCoord => newCoord.PairXY().Equals(oldCoord.PairXY()))).ToList();
+		var coordsToRemove = oldCoords.Where(oldCoord => !newCoords.Any(newCoord => newCoord.PairXY().Equals(oldCoord.PairXY()))).ToList();
 
-		if (coordsToAdd.Count() == 0) {
+		if (!coordsToAdd.Any()) {
 			return false;
 		}
 
 		// apply both diffs
-		SetCoords(coordsToAdd.ToList(),    state);
-		SetCoords(coordsToRemove.ToList(), PieceState.Empty);
+		SetCoords(coordsToAdd,    state);
+		SetCoords(coordsToRemove, PieceState.Empty);
 		return true;
 	}
 
@@ -169,7 +169,7 @@ public class Grid {
 				var coords = new Vector3((x + 0.5f) * _pieceWidth - 0.5f * _width,
 																 (y + 0.5f) * _pieceHeight - 0.5f * _height,
 																	0);
-				GameObject piece = GameObject.Instantiate(_piecePrefab, coords, Quaternion.identity) as GameObject;
+				var piece = GameObject.Instantiate(_piecePrefab, coords, Quaternion.identity) as GameObject;
 				piece.transform.localScale = new Vector3(_width / _columns, _height / _rows, 1);
 				piece.transform.parent = parent;
 				_objects[x, y] = piece;

@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using Constants;
 
 public class PieceCtrl : MonoBehaviour {
@@ -18,7 +16,7 @@ public class PieceCtrl : MonoBehaviour {
 	}
 
 	public void SetType(PieceType type) {
-		this.Type = type;
+		Type = type;
 	}
 
 	public void Fall() {
@@ -49,7 +47,7 @@ public class PieceCtrl : MonoBehaviour {
 	}
 
 	public bool Is(PieceState state) {
-		return this.State == state;
+		return State == state;
 	}
 
 	public bool IsEmpty() {
@@ -71,12 +69,12 @@ public class PieceCtrl : MonoBehaviour {
 	}
 
 	public void UpdateType(PieceType type) {
-		this.Type = type;
+		Type = type;
 		UpdateMaterial();
 	}
 
 	public void UpdateState(PieceState state) {
-		this.State = state;
+		State = state;
 		UpdateMaterial();
 	}
 

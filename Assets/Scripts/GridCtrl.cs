@@ -4,55 +4,54 @@ using Constants;
 
 public class GridCtrl : MonoBehaviour {
 
-	public int columns;
-	public int rows;
-	public float fallDelay, fallTurbo;
-	public GameObject piecePrefab;
-	public Grid grid;
+	public int Columns;
+	public int Rows;
+	public float FallDelay, FallTurbo;
+	public GameObject PiecePrefab;
+	public Grid Grid;
 	
 
 	void Awake () {
-		SpriteRenderer sr = GetComponent<SpriteRenderer>();
-		float height = Camera.main.orthographicSize * 2;
-		float width = height / Screen.height * Screen.width;
-		grid = new Grid(piecePrefab, transform, columns, rows, width, height);
+		var height = Camera.main.orthographicSize * 2;
+		var width = height / Screen.height * Screen.width;
+		Grid = new Grid(PiecePrefab, transform, Columns, Rows, width, height);
 
 	}
 
 	void Start() {
-		GetComponent<PieceFactory>().AddNext(grid);
+		GetComponent<PieceFactory>().AddNext(Grid);
 		StartCoroutine(Fall());
 	}
 
 	void Update() {
 		if (Input.GetKeyDown (KeyCode.RightArrow)) {
-			grid.MoveRight();
+			Grid.MoveRight();
 		} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-			grid.MoveLeft();
+			Grid.MoveLeft();
 		}
 
 		if (Input.GetKeyDown (KeyCode.DownArrow)) {
-			fallDelay /= fallTurbo;
+			FallDelay /= FallTurbo;
 		}
 
 		if (Input.GetKeyUp (KeyCode.DownArrow)) {
-			fallDelay *= fallTurbo;
+			FallDelay *= FallTurbo;
 		}
 	}
 
 	IEnumerator Fall() {
 		while (true) {
 			// refactor this out of here
-			if (!grid.Fall(PieceState.Current)) {
-				grid.FinishPiece();
-				GetComponent<PieceFactory>().AddNext(grid);
+			if (!Grid.Fall(PieceState.Current)) {
+				Grid.FinishPiece();
+				GetComponent<PieceFactory>().AddNext(Grid);
 			}
 			
-			var destroyedRows = grid.DestroyFullRows();
+			var destroyedRows = Grid.DestroyFullRows();
 			if (destroyedRows > 0)
-				grid.CollapseFull();
+				Grid.CollapseFull();
 
-			yield return new WaitForSeconds(fallDelay);
+			yield return new WaitForSeconds(FallDelay);
 		}
 		yield return true;
 	}

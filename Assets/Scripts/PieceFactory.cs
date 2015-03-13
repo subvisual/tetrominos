@@ -3,54 +3,53 @@ using System.Collections;
 using Constants;
 
 class PieceDescription {
-	public int columns;
-	public int rows;
-	public PieceType type;
-	bool[,] pieceGrid;
+	public int Columns;
+	public int Rows;
+	public PieceType Type;
+	bool[,] _pieceGrid;
 
 	public PieceDescription(PieceType type, int columns, int rows) {
-		this.type = type;
-		this.columns  = columns;
-		this.rows = rows;
-		pieceGrid = new bool[columns, rows];
+		Type = type;
+		Columns  = columns;
+		Rows = rows;
+		_pieceGrid = new bool[columns, rows];
 		for (int x = 0; x < columns; ++x) {
 			for(int y = 0; y < rows; ++y) {
-				pieceGrid[x, y] = false;
+				_pieceGrid[x, y] = false;
 			}
 		}
 	}
 
 	public PieceDescription Fill(int x, int y) {
-		pieceGrid[x, y] = true;
+		_pieceGrid[x, y] = true;
 		return this;
 	}
 
 	public bool CheckFilled(int x, int y) {
-		return pieceGrid [x, y];
+		return _pieceGrid [x, y];
 	}
 
 	public PieceDescription Rotate() {
-		bool[,] newGrid = new bool[rows, columns];
-		for (int x = 0; x < rows; ++x) {
-			for(int y = 0; y < columns; ++y) {
-				newGrid[x, y] = pieceGrid[y, x];
+		bool[,] newGrid = new bool[Rows, Columns];
+		for (int x = 0; x < Rows; ++x) {
+			for(int y = 0; y < Columns; ++y) {
+				newGrid[x, y] = _pieceGrid[y, x];
 			}
 		}
 
-		int tmp = rows;
-		rows = columns;
-		columns = tmp;
-		pieceGrid = newGrid;
+		var tmp = Rows;
+		Rows = Columns;
+		Columns = tmp;
+		_pieceGrid = newGrid;
 
 		return this;
 	}
 }
 
 public class PieceFactory : MonoBehaviour {
-	private PieceDescription[] templates;
-
-	private int nextIndex;
-	private int nextRotation;
+	private PieceDescription[] _templates;
+	private int _nextIndex;
+	private int _nextRotation;
 
 	// Use this for initialization
 	void Awake () {
@@ -59,21 +58,21 @@ public class PieceFactory : MonoBehaviour {
 	}
 
 	public void AddNext(Grid grid) {
-		PieceDescription current = Next ();
-		int xStart = (grid.Columns / 2) - (current.columns/ 2);
+		var current = Next ();
+		var xStart = (grid.Columns / 2) - (current.Columns / 2);
 
-		while (nextRotation > 0) {
+		while (_nextRotation > 0) {
 			current.Rotate();
-			nextRotation--;
+			_nextRotation--;
 		}
 
-		for (int x = 0; x < current.columns; ++x) {
-			for (int y = 0; y < current.rows; ++y) {
+		for (int x = 0; x < current.Columns; ++x) {
+			for (int y = 0; y < current.Rows; ++y) {
 				if (current.CheckFilled(x, y)) {
-					int xBoard = x + xStart;
-					int yBoard = grid.Rows - 1 - y;
+					var xBoard = x + xStart;
+					var yBoard = grid.Rows - 1 - y;
 
-					grid.AddCurrent(current.type, xBoard, yBoard);
+					grid.AddCurrent(current.Type, xBoard, yBoard);
 				}
 			}
 		}
@@ -83,26 +82,34 @@ public class PieceFactory : MonoBehaviour {
 
 	void SetupTemplates() {
 		//PieceDescription smallSquare = new PieceDescription(PieceType.SmallSquare, 1, 1).Fill (0, 0);
-		PieceDescription largeSquare = new PieceDescription(PieceType.LargeSquare, 2, 2).Fill(0, 0).Fill(0, 1).Fill(1, 0).Fill(1, 1);
-		PieceDescription lLeft       = new PieceDescription(PieceType.LLeft,       3, 2).Fill(0, 0).Fill(1, 0).Fill(2, 0).Fill(0, 1);
-		PieceDescription lRight      = new PieceDescription(PieceType.LRight,      3, 2).Fill(0, 0).Fill(1, 0).Fill(2, 0).Fill(2, 1);
-		PieceDescription t           = new PieceDescription(PieceType.T,           3, 2).Fill(0, 0).Fill(1, 0).Fill(2, 0).Fill(1, 1);
-		PieceDescription i           = new PieceDescription(PieceType.I,           1, 4).Fill(0, 0).Fill(0, 1).Fill(0, 2).Fill(0, 3);
-		PieceDescription s           = new PieceDescription(PieceType.S,           3, 2).Fill(0, 1).Fill(0, 1).Fill(1, 1).Fill(2, 0);
+		var largeSquare = new PieceDescription(PieceType.LargeSquare, 2, 2).Fill(0, 0).Fill(0, 1).Fill(1, 0).Fill(1, 1);
+		var lLeft       = new PieceDescription(PieceType.LLeft,       3, 2).Fill(0, 0).Fill(1, 0).Fill(2, 0).Fill(0, 1);
+		var lRight      = new PieceDescription(PieceType.LRight,      3, 2).Fill(0, 0).Fill(1, 0).Fill(2, 0).Fill(2, 1);
+		var t           = new PieceDescription(PieceType.T,           3, 2).Fill(0, 0).Fill(1, 0).Fill(2, 0).Fill(1, 1);
+		var i           = new PieceDescription(PieceType.I,           1, 4).Fill(0, 0).Fill(0, 1).Fill(0, 2).Fill(0, 3);
+		var sLeft       = new PieceDescription(PieceType.S,           2, 3).Fill(0, 0).Fill(0, 1).Fill(1, 1).Fill(1, 2);
+		var sRight      = new PieceDescription(PieceType.S,           2, 3).Fill(1, 0).Fill(1, 1).Fill(0, 1).Fill(0, 2);
 
-		templates = new PieceDescription[] { /*smallSquare, */largeSquare, lLeft, lRight, t, i };
+		_templates = new []
+		{
+			/*smallSquare, */
+			largeSquare,
+			lLeft,
+			lRight,
+			t,
+			i,
+			sLeft,
+			sRight
+		};
+		
 	}
 
 	PieceDescription Next() {
-		return templates[nextIndex];
+		return _templates[_nextIndex];
 	}
 
 	void RollNext() {
-		nextIndex = Random.Range(0, templates.GetLength(0));
-		nextRotation = Random.Range (0, 4);
-	}
-
-	void Coord(int x, int y) {
-		new ArrayList (new[] { x, y });
+		_nextIndex = Random.Range(0, _templates.GetLength(0));
+		_nextRotation = Random.Range (0, 4);
 	}
 }
