@@ -66,8 +66,8 @@ public class PieceFactory : MonoBehaviour {
 			_nextRotation--;
 		}
 
-		for (int x = 0; x < current.Columns; ++x) {
-			for (int y = 0; y < current.Rows; ++y) {
+		for (var x = 0; x < current.Columns; ++x) {
+			for (var y = 0; y < current.Rows; ++y) {
 				if (current.CheckFilled(x, y)) {
 					var xBoard = x + xStart;
 					var yBoard = grid.Rows - 1 - y;

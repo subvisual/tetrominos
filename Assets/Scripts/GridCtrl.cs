@@ -9,18 +9,19 @@ public class GridCtrl : MonoBehaviour {
 	public float FallDelay, FallTurbo;
 	public GameObject PiecePrefab;
 	public Grid Grid;
-	
+
+	private IEnumerator _fallRoutine;
 
 	void Awake () {
 		var height = Camera.main.orthographicSize * 2;
 		var width = height / Screen.height * Screen.width;
 		Grid = new Grid(PiecePrefab, transform, Columns, Rows, width, height);
-
+		_fallRoutine = FallAndWait();
 	}
 
 	void Start() {
 		GetComponent<PieceFactory>().AddNext(Grid);
-		StartCoroutine(Fall());
+		StartCoroutine(_fallRoutine);
 	}
 
 	void Update() {
@@ -34,15 +35,17 @@ public class GridCtrl : MonoBehaviour {
 
 		if (Input.GetKeyDown (KeyCode.DownArrow)) {
 			FallDelay /= FallTurbo;
+			ResetFallCoroutine();
 		}
-
+		
 		if (Input.GetKeyUp (KeyCode.DownArrow)) {
 			FallDelay *= FallTurbo;
+			ResetFallCoroutine();
 		}
 
 	}
 
-	IEnumerator Fall() {
+	IEnumerator FallAndWait() {
 		while (true) {
 			// refactor this out of here
 			if (!Grid.Fall(PieceState.Current)) {
@@ -55,5 +58,10 @@ public class GridCtrl : MonoBehaviour {
 			yield return new WaitForSeconds(FallDelay);
 		}
 		yield return true;
+	}
+
+	void ResetFallCoroutine() {
+		StopCoroutine(_fallRoutine);
+		StartCoroutine(_fallRoutine);
 	}
 }
