@@ -50,9 +50,7 @@ public class GridCtrl : MonoBehaviour {
 				GetComponent<PieceFactory>().AddNext(Grid);
 			}
 			
-			var destroyedRows = Grid.DestroyFullRows();
-			if (destroyedRows > 0)
-				Grid.CollapseFull();
+			Grid.DestroyFullRows();
 
 			yield return new WaitForSeconds(FallDelay);
 		}

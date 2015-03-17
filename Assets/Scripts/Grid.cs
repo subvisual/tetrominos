@@ -46,11 +46,6 @@ public class Grid {
 		return Move(state, 0, -1);
 	}
 
-	public void CollapseFull() {
-		while (Move(PieceState.Full, 0, -1)) {
-		}
-	}
-
 	public void FinishPiece() {
 		ForEachPiece((x, y, currentPiece) => {
 			if (currentPiece.IsCurrent()) {
@@ -65,25 +60,37 @@ public class Grid {
 		pieceCtrl.MakeCurrent();
 		pieceCtrl.SetType(type);
 	} 
+	
 	public int DestroyFullRows() {
-		int fullCount = 0;
+		var fullCount = 0;
 
-		for (int y = 0; y < _rows; ++y) {
-			bool isFull = true;
-			for (int x = 0; x < _columns; ++x) {
-				PieceCtrl currentPiece = GetPieceCtrl(x, y);
+		for (var y = 0; y < _rows; ++y) {
+			var isFull = true;
+			for (var x = 0; x < _columns; ++x) {
+				var currentPiece = GetPieceCtrl(x, y);
 				if (!currentPiece.IsFull()) {
 					isFull = false;
 					break;
 				}
 			}
-			if (isFull) {
+
+			if (isFull) { // if this row is full, empty it
 				fullCount++;
-				for (int x = 0; x < _columns; ++x) {
-					PieceCtrl currentPiece = GetPieceCtrl(x, y);
+				for (var x = 0; x < _columns; ++x) {
+					var currentPiece = GetPieceCtrl(x, y);
 					currentPiece.MakeEmpty();
 				}
+
+			} else if (fullCount > 0) { //otherwise, collapse all full pieces by `fullCount` rows
+				for (var x = 0; x < _columns; ++x) {
+					var currentPiece = GetPieceCtrl(x, y);
+					if (currentPiece.IsFull()) {
+						var newPiece = GetPieceCtrl(x, y - fullCount);
+						newPiece.Replace(currentPiece);
+					}
+				}
 			}
+
 		}
 
 		return fullCount;
