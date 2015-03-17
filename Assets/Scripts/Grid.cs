@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using Constants;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Net.NetworkInformation;
-using System.Security.Cryptography.X509Certificates;
 
 public class Grid {
 
