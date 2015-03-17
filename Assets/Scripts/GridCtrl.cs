@@ -26,8 +26,10 @@ public class GridCtrl : MonoBehaviour {
 	void Update() {
 		if (Input.GetKeyDown (KeyCode.RightArrow)) {
 			Grid.MoveRight();
-		} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+		} else if (Input.GetKeyDown(KeyCode.LeftArrow)) {
 			Grid.MoveLeft();
+		} else if (Input.GetKeyUp(KeyCode.UpArrow)) {
+			Grid.Rotate();
 		}
 
 		if (Input.GetKeyDown (KeyCode.DownArrow)) {
@@ -37,6 +39,7 @@ public class GridCtrl : MonoBehaviour {
 		if (Input.GetKeyUp (KeyCode.DownArrow)) {
 			FallDelay *= FallTurbo;
 		}
+
 	}
 
 	IEnumerator Fall() {
