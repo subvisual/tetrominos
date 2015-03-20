@@ -21,7 +21,7 @@ public class GridCtrl : MonoBehaviour {
 
 	void Start() {
 		GetComponent<PieceFactory>().AddNext(Grid);
-		StartCoroutine(_fallRoutine);
+		//StartCoroutine(_fallRoutine);
 	}
 
 	void Update() {

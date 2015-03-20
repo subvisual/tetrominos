@@ -37,7 +37,19 @@ public class Grid {
 	}
 
 	public bool Rotate() {
-		return RotateCurrentLeft();
+		var attempts = new int[][] {
+			new int[] { 0, 0},
+			new int[] {-1, 0},
+			new int[] { 1, 0},
+		};
+
+		foreach (var attempt in attempts) {
+			if (RotateCurrentLeft(attempt[0], attempt[1])) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public bool Fall(PieceState state) {
@@ -213,17 +225,16 @@ public class Grid {
 		return result;
 	}
 
-	private bool RotateCurrentLeft() {
+	private bool RotateCurrentLeft(int offX, int offY) {
 		var oldCoords = GetCurrentCoords().ToList();
 
 		// find gravity center
-		var gravityCenter = new Pair<float, float>(0, 0);
+		var gravityCenter = Vector3.zero;
 		foreach (var coord in oldCoords) {
-			gravityCenter.First += coord.First;
-			gravityCenter.Second += coord.Second;
+			gravityCenter.x += coord.First;
+			gravityCenter.y += coord.Second;
 		}
-		gravityCenter.First /= (float) oldCoords.Count();
-		gravityCenter.Second /= (float) oldCoords.Count();
+		gravityCenter = gravityCenter/(float) oldCoords.Count();
 
 		// we want to rotate 90 degrees clockwise
 		// this is equivalent to multiplying the vector with the matrix:
@@ -234,40 +245,27 @@ public class Grid {
 		//  | 1     0 |
 		// so rotating (x, y) yields (-y, x)
 		var rotatedCoords = oldCoords.Select(coord => {
-			var rotationVector = new Pair<float, float>((float) coord.First - gravityCenter.First, (float) coord.Second - gravityCenter.Second);
-			return new Pair<int, int>((int) (gravityCenter.First - rotationVector.Second), (int) (gravityCenter.Second + rotationVector.First));
+			var rotationVector = new Vector3(coord.First, coord.Second, 0) - gravityCenter;
+			var rotatedVector = new Vector3(-rotationVector.y, rotationVector.x, 0) + gravityCenter;
+			var newX = offX + Math.Round(rotatedVector.x, MidpointRounding.AwayFromZero);
+			var newY = offY + Math.Round(rotatedVector.y, MidpointRounding.AwayFromZero);
+			return new Pair<int, int>((int) newX, (int) newY);
 		}).ToList();
 
-		Func<IEnumerable<Pair<int, int>>, bool> isLegalMove = (coords => {
-			return !coords.Any(coord => {
-				var ctrl = GetPieceCtrl(coord);
-				return ctrl == null || ctrl.IsFull();
-			});
-		});
-
-		var newCoords = rotatedCoords;
-
 		// first we try the raw rotated coods
-		if (isLegalMove(newCoords)) {
-			ApplyRotation(oldCoords, newCoords);
-			return true;
+		if (!IsLegalRotation(rotatedCoords)) {
+			return false;
 		}
 
-		//// if they don't work, we shift them once to the left
-		//newCoords = rotatedCoords.Select(coord => new Pair<int, int>(coord.First - 1, coord.Second)).ToList();
-		//if (isLegalMove(newCoords)) {
-		//	ApplyRotation(oldCoords, newCoords);
-		//	return true;
-		//}
+		ApplyRotation(oldCoords, rotatedCoords);
+		return true;
+	}
 
-		//// if those don't work either, try the right side
-		//newCoords = rotatedCoords.Select(coord => new Pair<int, int>(coord.First + 1, coord.Second)).ToList();
-		//if (isLegalMove(newCoords)) {
-		//	ApplyRotation(oldCoords, newCoords);
-		//	return true;
-		//}
-
-		return false;
+	bool IsLegalRotation(IEnumerable<Pair<int, int>> coords) {
+		return !coords.Any(coord => {
+			var ctrl = GetPieceCtrl(coord);
+			return ctrl == null || ctrl.IsFull();
+		});
 	}
 
 	void ApplyRotation(IEnumerable<Pair<int, int>> oldCoords, IEnumerable<Pair<int, int>> newCoords) {
