@@ -79,7 +79,7 @@ public class PieceCtrl : MonoBehaviour {
 	}
 
 	void UpdateMaterial() {
-		renderer.material.color = PieceColor();
+		GetComponent<Renderer>().material.color = PieceColor();
 	}
 
 	Color PieceColor() {
