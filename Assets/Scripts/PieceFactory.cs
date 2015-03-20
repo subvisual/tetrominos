@@ -93,13 +93,13 @@ public class PieceFactory : MonoBehaviour {
 		_templates = new []
 		{
 			/*smallSquare, */
-			/*largeSquare,
+			largeSquare,
 			lLeft,
 			lRight,
-			t,*/
+			t,
 			sLeft,
-			/*sLeft,
-			sRight*/
+			sLeft,
+			sRight
 		};
 		
 	}

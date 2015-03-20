@@ -79,16 +79,28 @@ public class PieceCtrl : MonoBehaviour {
 	}
 
 	void UpdateMaterial() {
-		GetComponent<Renderer>().material.color = PieceColor();
+		var newColor = PieceColor();
+		var newDarkenedColor = DarkenedPieceColor();
+
+		transform.Find("TopHalf").GetComponent<Renderer>().material.color = newColor;
+		transform.Find("BottomHalf").GetComponent<Renderer>().material.color = newDarkenedColor;
 	}
 
 	Color PieceColor() {
-		if (IsCurrent()) {
-			return CurrentColor;
-		} else if (IsEmpty()) {
+		if (IsEmpty()) {
 			return EmptyColor;
+		} else if (IsCurrent()) {
+			return CurrentColor;
 		} else {
 			return TypeColors[(int) Type];
+		}
+	}
+
+	Color DarkenedPieceColor() {
+		if (IsEmpty()) {
+			return EmptyColor;
+		} else {
+			return PieceColor() - new Color(0.05f, 0.05f, 0.05f);
 		}
 	}
 }
