@@ -65,10 +65,13 @@ public class Grid {
 		});
 	}
 
-	public void AddCurrent(PieceType type, int x, int y) {
+	public void AddCurrent(PieceType type, int rotation, int x, int y) {
 		var pieceCtrl = GetPieceCtrl(x, y);
 		pieceCtrl.MakeCurrent();
 		pieceCtrl.SetType(type);
+		for (; rotation > 0; --rotation) {
+			pieceCtrl.Rotate();
+		}
 	} 
 	
 	public int DestroyFullRows() {
@@ -125,6 +128,7 @@ public class Grid {
 	bool Move(PieceState state, int offX, int offY) {
 		var oldCoords = new List<Triple<int, int, PieceType>>();
 		var newCoords = new List<Triple<int, int, PieceType>>();
+		int rotation = 0;
 
 		var moveAllowed = ForEachPiece((x, y, currentPiece) => {
 			// if we're not interested in this piece
@@ -153,6 +157,8 @@ public class Grid {
 			// otherwise, use the new coords
 			oldCoords.Add(new Triple<int, int, PieceType>(x, y, PieceType.Empty));
 			newCoords.Add(new Triple<int, int, PieceType>(nextX, nextY, currentPiece.Type));
+			rotation = currentPiece.Rotation;
+			Debug.Log(currentPiece.Rotation);
 
 			return true;
 		});
@@ -171,16 +177,19 @@ public class Grid {
 		}
 
 		// apply both diffs
-		SetCoords(coordsToAdd,    state);
-		SetCoords(coordsToRemove, PieceState.Empty);
+		Debug.Log(rotation);
+		SetCoords(coordsToAdd,    state, rotation);
+		SetCoords(coordsToRemove, PieceState.Empty, 0);
 		return true;
 	}
 
-	void SetCoords(IEnumerable<Triple<int, int, PieceType>> coordsInfo, PieceState state) {
+	void SetCoords(IEnumerable<Triple<int, int, PieceType>> coordsInfo, PieceState state, int rotation) {
 		foreach(var coordInfo in coordsInfo) {
 			var piece = GetPieceCtrl(coordInfo.First, coordInfo.Second);
 			piece.SetType(coordInfo.Third);
 			piece.Make(state);
+			piece.ResetRotation();
+			piece.Rotate(rotation);
 		}
 	}
 
@@ -269,8 +278,13 @@ public class Grid {
 	}
 
 	void ApplyRotation(IEnumerable<Pair<int, int>> oldCoords, IEnumerable<Pair<int, int>> newCoords) {
+		foreach(var coords in GetCurrentCoords()) {
+			GetPieceCtrl(coords).Rotate();
+		}
+
 		// all pieces from oldCoords are the same type, we just need one of them
 		var type = GetPieceCtrl(oldCoords.First()).Type;
+		var rotation = GetPieceCtrl(oldCoords.First()).Rotation;
 
 		foreach (var oldCoord in oldCoords) {
 			GetPieceCtrl(oldCoord).MakeEmpty();
@@ -279,6 +293,8 @@ public class Grid {
 		foreach (var newCoord in newCoords) {
 			var ctrl = GetPieceCtrl(newCoord);
 			ctrl.SetType(type);
+			ctrl.ResetRotation();
+			ctrl.Rotate(rotation);
 			GetPieceCtrl(newCoord).MakeCurrent();
 		}
 	}

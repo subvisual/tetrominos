@@ -6,12 +6,14 @@ class PieceDescription {
 	public int Columns;
 	public int Rows;
 	public PieceType Type;
+	public int Rotation;
 	bool[,] _pieceGrid;
 
 	public PieceDescription(PieceType type, int columns, int rows) {
 		Type = type;
 		Columns  = columns;
 		Rows = rows;
+		Rotation = 0;
 		_pieceGrid = new bool[columns, rows];
 		for (int x = 0; x < columns; ++x) {
 			for(int y = 0; y < rows; ++y) {
@@ -30,6 +32,7 @@ class PieceDescription {
 	}
 
 	public PieceDescription Rotate() {
+		++Rotation; 
 		bool[,] newGrid = new bool[Rows, Columns];
 		for (int x = 0; x < Rows; ++x) {
 			for(int y = 0; y < Columns; ++y) {
@@ -61,9 +64,8 @@ public class PieceFactory : MonoBehaviour {
 		var current = Next ();
 		var xStart = (grid.Columns / 2) - (current.Columns / 2);
 
-		while (_nextRotation > 0) {
+		for (var i = 0; i < _nextRotation; ++i) {
 			current.Rotate();
-			_nextRotation--;
 		}
 
 		for (var x = 0; x < current.Columns; ++x) {
@@ -71,8 +73,7 @@ public class PieceFactory : MonoBehaviour {
 				if (current.CheckFilled(x, y)) {
 					var xBoard = x + xStart;
 					var yBoard = grid.Rows - 1 - y;
-
-					grid.AddCurrent(current.Type, xBoard, yBoard);
+					grid.AddCurrent(current.Type, current.Rotation, xBoard, yBoard);
 				}
 			}
 		}

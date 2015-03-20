@@ -1,18 +1,21 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Constants;
 
 public class PieceCtrl : MonoBehaviour {
 
 	public PieceType Type;
 	public PieceState State;
-
 	public Color EmptyColor, CurrentColor;
 	public Color[] TypeColors;
+
+	public int Rotation;
 
 	// Use this for initialization
 	void Awake () {
 		State = PieceState.Empty;
 		UpdateMaterial();
+		Rotation = 0;
 	}
 
 	public void SetType(PieceType type) {
@@ -36,6 +39,7 @@ public class PieceCtrl : MonoBehaviour {
 
 	public void MakeEmpty() {
 		Make(PieceState.Empty);
+		ResetRotation();
 	}
 
 	public void MakeFull() {
@@ -44,6 +48,18 @@ public class PieceCtrl : MonoBehaviour {
 
 	public void MakeCurrent() {
 		Make(PieceState.Current);
+	}
+
+	public void Rotate(int rotations = 1) {
+		Rotation = (Rotation + rotations) % 4;
+		for (var i = 0; i < rotations; ++i) {
+			transform.Rotate(0, 0, 90);
+		}
+	}
+
+	public void ResetRotation() {
+		Rotation = 0;
+		transform.rotation = Quaternion.identity;
 	}
 
 	public bool Is(PieceState state) {
@@ -65,6 +81,7 @@ public class PieceCtrl : MonoBehaviour {
 	public void Replace(PieceCtrl previousPiece) {
 		UpdateState(previousPiece.State);
 		UpdateType(previousPiece.Type);
+		Rotate(previousPiece.Rotation);
 		previousPiece.MakeEmpty();
 	}
 
