@@ -25,8 +25,9 @@ public class Grid {
 		_rows = rows;
 		_width = width;
 		_height = height;
-		_pieceWidth = width / columns;
-		_pieceHeight = height / rows;
+		_pieceWidth = width / (float) columns;
+		_pieceHeight = height / (float) rows;
+		Debug.Log(_pieceWidth + " " + _pieceHeight);
 		SetupGrid(parent.Find("Pieces"));
 		SetupLines(parent.Find("Separators"));
 	}

@@ -12,38 +12,39 @@ public class GridCtrl : MonoBehaviour {
 	public Grid Grid;
 
 	private IEnumerator _fallRoutine;
+	private GridCommandsCtrl _commandsCtrl;
 
-	void Awake () {
-		var height = Camera.main.orthographicSize * 2;
-		var width = height / Screen.height * Screen.width;
-		Grid = new Grid(PiecePrefab, SeparatorPrefab, transform, Columns, Rows, width, height);
-		_fallRoutine = FallAndWait();
+	void Awake() {
+		_commandsCtrl = GetComponent<GridCommandsCtrl>();
 	}
 
 	void Start() {
+		var height = Camera.main.orthographicSize * 2f;
+		var width = height * Camera.main.aspect;
+		Grid = new Grid(PiecePrefab, SeparatorPrefab, transform, Columns, Rows, width, height);
+		_fallRoutine = FallAndWait();
 		GetComponent<PieceFactory>().AddNext(Grid);
 		StartCoroutine(_fallRoutine);
 	}
 
 	void Update() {
-		if (Input.GetKeyDown (KeyCode.RightArrow)) {
+		if (_commandsCtrl.IsMovingRight()) {
 			Grid.MoveRight();
-		} else if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+		} else if (_commandsCtrl.IsMovingLeft()) {
 			Grid.MoveLeft();
-		} else if (Input.GetKeyUp(KeyCode.UpArrow)) {
+		} else if (_commandsCtrl.IsRotating()) {
 			Grid.Rotate();
 		}
 
-		if (Input.GetKeyDown (KeyCode.DownArrow)) {
+		if (_commandsCtrl.IsEnteringTurboMode()) {
 			FallDelay /= FallTurbo;
 			ResetFallCoroutine();
 		}
-		
-		if (Input.GetKeyUp (KeyCode.DownArrow)) {
+
+		if (_commandsCtrl.IsExitingTurboMode()) {
 			FallDelay *= FallTurbo;
 			ResetFallCoroutine();
 		}
-
 	}
 
 	IEnumerator FallAndWait() {
