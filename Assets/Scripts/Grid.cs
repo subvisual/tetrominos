@@ -219,6 +219,7 @@ public class Grid {
 			separator.transform.localScale = new Vector3(1, _width, 1);
 			separator.transform.Rotate(0, 0, 90);
 			separator.transform.SetParent(parent, false);
+			_lines[y] = separator;
 		}
 
 		for (var x = 0; x <= _columns; ++x) {
@@ -226,6 +227,7 @@ public class Grid {
 			var separator = GameObject.Instantiate(_separatorPrefab, coords, Quaternion.identity) as GameObject;
 			separator.transform.localScale = new Vector3(1, _height, 1);
 			separator.transform.SetParent(parent, false);
+			_lines[x + _rows] = separator;
 		}
 	}
 

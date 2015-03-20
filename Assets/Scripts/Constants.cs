@@ -7,10 +7,10 @@
 
 	public enum PieceType {
 		Empty,
-		SmallSquare,
-		LargeSquare,
-		LLeft,
-		LRight,
+		SmallSquare, // Deprecated
+		Square,
+		L,
+		LRight, // Deprecated
 		T,
 		I,
 		S,
