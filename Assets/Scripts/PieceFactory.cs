@@ -96,11 +96,11 @@ public class PieceFactory : MonoBehaviour {
 			/*smallSquare, */
 			largeSquare,
 			lLeft,
-			lRight,
+			//lRight,
 			t,
+			i,
 			sLeft,
-			sLeft,
-			sRight
+			//sRight
 		};
 		
 	}

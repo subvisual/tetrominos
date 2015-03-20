@@ -7,8 +7,9 @@ using System.Linq.Expressions;
 
 public class Grid {
 
-	readonly GameObject _piecePrefab;
-	GameObject[,] _objects;
+	readonly GameObject _piecePrefab, _separatorPrefab;
+	private GameObject[,] _objects;
+	private GameObject[] _lines;
 
 	readonly int _columns, _rows;
 	readonly float _width, _height;
@@ -17,15 +18,17 @@ public class Grid {
 	public int Columns { get { return _columns; } }
 	public int Rows    { get { return _rows; } }
 
-	public Grid (GameObject piecePrefab, Transform parent, int columns, int rows, float width, float height) {
+	public Grid (GameObject piecePrefab, GameObject separatorPrefab, Transform parent, int columns, int rows, float width, float height) {
 		_piecePrefab = piecePrefab;
+		_separatorPrefab = separatorPrefab;
 		_columns = columns;
 		_rows = rows;
 		_width = width;
 		_height = height;
 		_pieceWidth = width / columns;
 		_pieceHeight = height / rows;
-		SetupGrid(parent);
+		SetupGrid(parent.Find("Pieces"));
+		SetupLines(parent.Find("Separators"));
 	}
 
 	public bool MoveRight() {
@@ -158,7 +161,6 @@ public class Grid {
 			oldCoords.Add(new Triple<int, int, PieceType>(x, y, PieceType.Empty));
 			newCoords.Add(new Triple<int, int, PieceType>(nextX, nextY, currentPiece.Type));
 			rotation = currentPiece.Rotation;
-			Debug.Log(currentPiece.Rotation);
 
 			return true;
 		});
@@ -177,7 +179,6 @@ public class Grid {
 		}
 
 		// apply both diffs
-		Debug.Log(rotation);
 		SetCoords(coordsToAdd,    state, rotation);
 		SetCoords(coordsToRemove, PieceState.Empty, 0);
 		return true;
@@ -206,6 +207,25 @@ public class Grid {
 				piece.transform.parent = parent;
 				_objects[x, y] = piece;
 			}
+		}
+	}
+
+	void SetupLines(Transform parent) {
+		_lines = new GameObject[Columns + Rows + 2];
+
+		for (var y = 0; y <= _rows; ++y) {
+			var coords = new Vector3(0, y * _pieceHeight - (_height / 2), 0);
+			var separator = GameObject.Instantiate(_separatorPrefab, coords, Quaternion.identity) as GameObject;
+			separator.transform.localScale = new Vector3(1, _width, 1);
+			separator.transform.Rotate(0, 0, 90);
+			separator.transform.SetParent(parent, false);
+		}
+
+		for (var x = 0; x <= _columns; ++x) {
+			var coords = new Vector3(x * _pieceWidth - (_width / 2), 0, 0);
+			var separator = GameObject.Instantiate(_separatorPrefab, coords, Quaternion.identity) as GameObject;
+			separator.transform.localScale = new Vector3(1, _height, 1);
+			separator.transform.SetParent(parent, false);
 		}
 	}
 

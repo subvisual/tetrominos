@@ -8,6 +8,7 @@ public class GridCtrl : MonoBehaviour {
 	public int Rows;
 	public float FallDelay, FallTurbo;
 	public GameObject PiecePrefab;
+	public GameObject SeparatorPrefab;
 	public Grid Grid;
 
 	private IEnumerator _fallRoutine;
@@ -15,13 +16,13 @@ public class GridCtrl : MonoBehaviour {
 	void Awake () {
 		var height = Camera.main.orthographicSize * 2;
 		var width = height / Screen.height * Screen.width;
-		Grid = new Grid(PiecePrefab, transform, Columns, Rows, width, height);
+		Grid = new Grid(PiecePrefab, SeparatorPrefab, transform, Columns, Rows, width, height);
 		_fallRoutine = FallAndWait();
 	}
 
 	void Start() {
 		GetComponent<PieceFactory>().AddNext(Grid);
-		//StartCoroutine(_fallRoutine);
+		StartCoroutine(_fallRoutine);
 	}
 
 	void Update() {
