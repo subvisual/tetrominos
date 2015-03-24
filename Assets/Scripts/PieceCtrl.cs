@@ -13,9 +13,15 @@ public class PieceCtrl : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		State = PieceState.Empty;
-		UpdateMaterial();
-		Rotation = 0;
+		//State = PieceState.Empty;
+		//UpdateMaterial();
+		//Rotation = 0;
+	}
+
+	void Start() {
+		foreach (var child in transform) {
+			Debug.Log(child);
+		}
 	}
 
 	public void SetType(PieceType type) {
