@@ -13,9 +13,11 @@ public class GridCtrl : MonoBehaviour {
 
 	private IEnumerator _fallRoutine;
 	private GridCommandsCtrl _commandsCtrl;
+	private bool _isInTurbo;
 
 	void Awake() {
 		_commandsCtrl = GetComponent<GridCommandsCtrl>();
+		_isInTurbo = false;
 	}
 
 	void Start() {
@@ -36,12 +38,12 @@ public class GridCtrl : MonoBehaviour {
 			Grid.Rotate();
 		}
 
-		if (_commandsCtrl.IsEnteringTurboMode()) {
+		if (_commandsCtrl.IsInTurboMode() && !_isInTurbo) {
+			_isInTurbo = true;
 			FallDelay /= FallTurbo;
 			ResetFallCoroutine();
-		}
-
-		if (_commandsCtrl.IsExitingTurboMode()) {
+		} else if (!_commandsCtrl.IsInTurboMode() && _isInTurbo) {
+			_isInTurbo = false;
 			FallDelay *= FallTurbo;
 			ResetFallCoroutine();
 		}
@@ -54,7 +56,7 @@ public class GridCtrl : MonoBehaviour {
 				Grid.FinishPiece();
 				GetComponent<PieceFactory>().AddNext(Grid);
 			}
-			
+
 			Grid.DestroyFullRows();
 
 			yield return new WaitForSeconds(FallDelay);
