@@ -7,7 +7,6 @@ public class GridCommandsCtrl : MonoBehaviour {
 	public float LongTouchThreshold;
 	public float SwipeDistanceThreshold;
 
-	private bool _isTouching;
 	private bool _isSwipe;
 	private bool _isNewSwipe;
 	private bool _isLongTouch;
@@ -84,7 +83,6 @@ public class GridCommandsCtrl : MonoBehaviour {
 	}
 
 	void StartTouch() {
-		_isTouching = true;
 		_touchBeginTime = Time.time;
 		_touchBeginCoords = Input.mousePosition;
 		_isNewSwipe = true;
@@ -98,7 +96,6 @@ public class GridCommandsCtrl : MonoBehaviour {
 	}
 
 	void EndTouch() {
-		_isTouching = false;
 		_touchEndTime = Time.time;
 		_touchEndCoords = Input.mousePosition;
 		_touchFinished = true;
@@ -107,8 +104,6 @@ public class GridCommandsCtrl : MonoBehaviour {
 
 	void DetectTouchType() {
 		if (TouchDistance() > SwipeDistanceThreshold) {
-			Debug.Log("in swipe");
-			Debug.Log(SwipeDirection());
 			_isSwipe = true;
 		} else if (TouchDuration() > LongTouchThreshold) {
 			_isLongTouch = true;
