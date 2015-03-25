@@ -10,7 +10,7 @@ public class GridCtrl : MonoBehaviour {
 	public float Height { get; private set; }
 	public float PieceWidth { get; private set; }
 	public float PieceHeight { get; private set; }
-
+	public Rect Boundaries { get; private set; }
 	//public float FallDelay, FallTurbo;
 	//public GameObject PiecePrefab;
 	//public GameObject SeparatorPrefab;
@@ -25,6 +25,7 @@ public class GridCtrl : MonoBehaviour {
 		Width = Height * Camera.main.aspect;
 		PieceWidth = Width / (float) Columns;
 		PieceHeight = Height / (float) Rows;
+		Boundaries = new Rect(- Width * 0.5f, - Height * 0.5f, Width, Height );
 		//_commandsCtrl = GetComponent<GridCommandsCtrl>();
 		//_isInTurbo = false;
 	}

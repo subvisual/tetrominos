@@ -1,51 +1,30 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Constants;
 
 public class PieceCtrl : MonoBehaviour {
 
 	public PieceType Type;
-	public PieceState State;
-	public Color EmptyColor, CurrentColor;
-	public Color[] TypeColors;
 
-	public int Rotation;
+	public Color CurrentColor;
+	public Color FullColor;
+	private PieceState _state;
 
-	// Use this for initialization
 	void Awake () {
-		//State = PieceState.Empty;
-		//UpdateMaterial();
-		//Rotation = 0;
+		MakeCurrent();
 	}
 
-	void Start() {
-		foreach (var child in transform) {
-			Debug.Log(child);
+	public bool CanFall(Rect boundaries) {
+		foreach (Transform piecePart in transform) {
+			var nextPosition = piecePart.position + (Vector3.down * transform.localScale.y);
+			if (!boundaries.Contains(nextPosition)) {
+				return false;
+			}
 		}
-	}
-
-	public void SetType(PieceType type) {
-		Type = type;
+		return true;
 	}
 
 	public void Fall() {
-		if (State != PieceState.Current) {
-			return;
-		}
-
-		transform.Translate (Vector3.down * transform.localScale.y);
-	}
-
-	public void Make(PieceState state) {
-		if (state == PieceState.Empty) {
-			Type = PieceType.Empty;
-		}
-		UpdateState(state);
-	}
-
-	public void MakeEmpty() {
-		Make(PieceState.Empty);
-		ResetRotation();
+		transform.Translate(Vector3.down * transform.localScale.y);
 	}
 
 	public void MakeFull() {
@@ -56,24 +35,13 @@ public class PieceCtrl : MonoBehaviour {
 		Make(PieceState.Current);
 	}
 
-	public void Rotate(int rotations = 1) {
-		Rotation = (Rotation + rotations) % 4;
-		for (var i = 0; i < rotations; ++i) {
-			transform.Rotate(0, 0, 90);
-		}
-	}
-
-	public void ResetRotation() {
-		Rotation = 0;
-		transform.rotation = Quaternion.identity;
+	public void Make(PieceState state) {
+		_state = state;
+		UpdateMaterial();
 	}
 
 	public bool Is(PieceState state) {
-		return State == state;
-	}
-
-	public bool IsEmpty() {
-		return Is(PieceState.Empty);
+		return _state == state;
 	}
 
 	public bool IsCurrent() {
@@ -84,46 +52,24 @@ public class PieceCtrl : MonoBehaviour {
 		return Is(PieceState.Full);
 	}
 
-	public void Replace(PieceCtrl previousPiece) {
-		UpdateState(previousPiece.State);
-		UpdateType(previousPiece.Type);
-		Rotate(previousPiece.Rotation);
-		previousPiece.MakeEmpty();
-	}
-
-	public void UpdateType(PieceType type) {
-		Type = type;
-		UpdateMaterial();
-	}
-
-	public void UpdateState(PieceState state) {
-		State = state;
-		UpdateMaterial();
-	}
-
 	void UpdateMaterial() {
 		var newColor = PieceColor();
 		var newDarkenedColor = DarkenedPieceColor();
 
-		transform.Find("TopHalf").GetComponent<Renderer>().material.color = newColor;
-		transform.Find("BottomHalf").GetComponent<Renderer>().material.color = newDarkenedColor;
+		var renderers = transform.GetChild(0).GetComponentsInChildren<Renderer>();
+		renderers[0].material.color = newColor;
+		renderers[1].material.color = newDarkenedColor;
 	}
 
 	Color PieceColor() {
-		if (IsEmpty()) {
-			return EmptyColor;
-		} else if (IsCurrent()) {
+		if (IsCurrent()) {
 			return CurrentColor;
 		} else {
-			return TypeColors[(int) Type];
+			return FullColor;
 		}
 	}
 
 	Color DarkenedPieceColor() {
-		if (IsEmpty()) {
-			return EmptyColor;
-		} else {
-			return PieceColor() - new Color(0.05f, 0.05f, 0.05f);
-		}
+		return PieceColor() - new Color(0.05f, 0.05f, 0.05f);
 	}
 }

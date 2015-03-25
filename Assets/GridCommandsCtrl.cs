@@ -57,7 +57,6 @@ public class GridCommandsCtrl : MonoBehaviour {
 		} else {
 			delta.x = 0;
 		}
-		Debug.Log(delta.normalized);
 
 		return delta.normalized;
 	}

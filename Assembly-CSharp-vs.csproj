@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\AspectRatioEnforcer.cs" />
+     <Compile Include="Assets\FallRoutine.cs" />
      <Compile Include="Assets\GridCommandsCtrl.cs" />
      <Compile Include="Assets\Scripts\Constants.cs" />
      <Compile Include="Assets\Scripts\Grid.cs" />
