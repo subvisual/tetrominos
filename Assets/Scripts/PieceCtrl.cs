@@ -56,9 +56,11 @@ public class PieceCtrl : MonoBehaviour {
 		var newColor = PieceColor();
 		var newDarkenedColor = DarkenedPieceColor();
 
-		var renderers = transform.GetChild(0).GetComponentsInChildren<Renderer>();
-		renderers[0].material.color = newColor;
-		renderers[1].material.color = newDarkenedColor;
+		foreach (Transform child in transform) {
+			var renderers = child.GetComponentsInChildren<Renderer>();
+			renderers[0].material.color = newColor;
+			renderers[1].material.color = newDarkenedColor;
+		}
 	}
 
 	Color PieceColor() {

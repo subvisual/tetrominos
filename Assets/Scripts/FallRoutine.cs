@@ -24,7 +24,7 @@ public class FallRoutine : MonoBehaviour {
 		GameObject result;
 		foreach (Transform child in _piecesHolder.transform) {
 			var pieceCtrl = child.GetComponent<PieceCtrl>();
-			if (pieceCtrl.IsCurrent()) {
+			if (pieceCtrl && pieceCtrl.IsCurrent()) {
 				return pieceCtrl;
 			}
 		}

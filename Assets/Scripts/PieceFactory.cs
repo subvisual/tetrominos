@@ -20,7 +20,10 @@ public class PieceFactory : MonoBehaviour {
 	}
 
 	public void AddNext() {
-		var position = new Vector3(- _gridCtrl.PieceWidth * 0.5f, (_gridCtrl.Height - _gridCtrl.PieceHeight) * 0.5f, 0);
+		var position = new Vector3(
+			- _gridCtrl.PieceWidth * 0.5f,
+			(_gridCtrl.Height - _gridCtrl.PieceHeight) * 0.5f,
+			0);
 		var scale = new Vector3(_gridCtrl.PieceWidth, _gridCtrl.PieceHeight, 1);
 
 		GameObject piece = Instantiate(Templates[_nextIndex], position, Quaternion.identity) as GameObject;
