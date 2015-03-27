@@ -68,11 +68,19 @@ public class PieceCtrl : MonoBehaviour {
 
 
 	public int Columns() {
-		return Size().First;
+		if (_rotated) {
+			return Size().Second;
+		} else {
+			return Size().First;
+		}
 	}
 
 	public int Rows() {
-		return Size().Second;
+		if (_rotated) {
+			return Size().First;
+		} else {
+			return Size().Second;
+		}
 	}
 
 	public Pair<int, int> Size() {
@@ -134,18 +142,28 @@ public class PieceCtrl : MonoBehaviour {
 	}
 
 	public void Rotate(int offset = 0) {
-
-		transform.Translate((Columns()) * Width(), 0, 0);
-		transform.Rotate(0, 0, 90);
 		_rotated = !_rotated;
 
+		float translation;
+		if (_rotated) {
+			translation = (offset + Columns() / 2) * Width();
+		} else {
+			translation = (offset + Rows() / 2) * Width();
+		}
+		transform.Translate(translation, translation, 0);
+		transform.Rotate(0, 0, 90);
 	}
 
 	public void Unrotate(int offset = 0) {
-
-		_rotated = !_rotated;
 		transform.Rotate(0, 0, -90);
-		transform.Translate(-(offset + Columns()) * Width(), 0, 0);
+		_rotated = !_rotated;
 
+		float translation;
+		if (_rotated) {
+			translation = - (offset + Columns() / 2) * Width();
+		} else {
+			translation = -(offset + Rows() / 2) * Width();
+		}
+		transform.Translate(translation, translation, 0);
 	}
 }

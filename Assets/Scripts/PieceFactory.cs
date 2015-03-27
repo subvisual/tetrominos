@@ -48,7 +48,6 @@ public class PieceFactory : MonoBehaviour {
 	void RollNext() {
 		_nextIndex = Random.Range(0, Templates.GetLength(0));
 		_nextRotation = Random.Range (0, 4);
-		var val = Random.value;
-		_nextTranspose = val >= 0.5f;
+		_nextTranspose = Random.value >= 0.5f;
 	}
 }
