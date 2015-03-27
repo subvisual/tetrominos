@@ -37,12 +37,23 @@ public class PieceFactory : MonoBehaviour {
 		piece.transform.localScale = new Vector3(_gridCtrl.PieceWidth, _gridCtrl.PieceHeight, 1);
 		piece.transform.parent = _piecesHolder.transform;
 
+		if (_nextTranspose) {
+			Debug.Log("transposing");
+			var newScale = piece.transform.localScale;
+			newScale.x *= -1;
+			piece.transform.localScale = newScale;
+		}
+
 		RollNext();
 	}
 
 	void RollNext() {
 		_nextIndex = Random.Range(0, Templates.GetLength(0));
 		_nextRotation = Random.Range (0, 4);
-		_nextTranspose = Random.Range(0, 1) == 1;
+		//_nextTranspose = Random.value >= 0.5f;
+		var val = Random.value;
+		_nextTranspose = val >= 0.5f;
+		Debug.Log(val);
+		Debug.Log(_nextTranspose);
 	}
 }

@@ -114,4 +114,8 @@ public class PieceCtrl : MonoBehaviour {
 	Color DarkenedPieceColor() {
 		return PieceColor() - new Color(0.05f, 0.05f, 0.05f);
 	}
+
+	public float Width() {
+		return Mathf.Abs(transform.localScale.x);
+	}
 }

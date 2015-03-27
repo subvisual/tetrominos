@@ -24,26 +24,26 @@ public class Movement : GridBehaviour {
 
 	void MoveLeft() {
 		if (CanMoveLeft()) {
-			_piece.transform.Translate(Vector3.left * _piece.transform.localScale.x);
+			_piece.transform.Translate(Vector3.left * _piece.Width(), Space.World);
 		}
 	}
 
 	void MoveRight() {
 		if (CanMoveRight()) {
-			_piece.transform.Translate(Vector3.right * _piece.transform.localScale.x);
+			_piece.transform.Translate(Vector3.right * _piece.Width(), Space.World);
 		}
 	}
 
 	bool CanMoveLeft() {
 		var currentCoords = _piece.PartPositions();
-		var nextCoords = currentCoords.Select(coord => coord + (Vector3.left * _piece.transform.localScale.x)).ToList();
+		var nextCoords = currentCoords.Select(coord => coord + (Vector3.left * _piece.Width())).ToList();
 
 		return nextCoords.All(IsWithinBounds) && nextCoords.All(IsCoordFree);
 	}
 
 	bool CanMoveRight() {
 		var currentCoords = _piece.PartPositions();
-		var nextCoords = currentCoords.Select(coord => coord + (Vector3.right * _piece.transform.localScale.x)).ToList();
+		var nextCoords = currentCoords.Select(coord => coord + (Vector3.right * _piece.Width())).ToList();
 
 		return nextCoords.All(IsWithinBounds) && nextCoords.All(IsCoordFree);
 	}
