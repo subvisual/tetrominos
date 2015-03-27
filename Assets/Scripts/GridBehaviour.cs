@@ -41,7 +41,7 @@ public class GridBehaviour : MonoBehaviour {
 	}
 
 	float CollisionThreshold() {
-		return PiecesHolder().transform.GetChild(0).localScale.y * 0.5f;
+		return PiecesHolder().transform.GetChild(0).GetComponent<PieceCtrl>().Height() * 0.5f;
 	}
 
 	protected bool IsWithinBounds(Vector3 coord) {

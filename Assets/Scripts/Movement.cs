@@ -6,12 +6,10 @@ public class Movement : GridBehaviour {
 	private InputCtrl _input;
 	private PieceCtrl _piece;
 
-	// Use this for initialization
 	void Awake() {
 		_input = GetComponent<InputCtrl>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		_piece = CurrentPiece();
 
@@ -19,6 +17,10 @@ public class Movement : GridBehaviour {
 			MoveLeft();
 		} else if (_input.IsMovingRight()) {
 			MoveRight();
+		}
+
+		if (_input.IsRotating()) {
+			Rotate();
 		}
 	}
 
@@ -34,6 +36,16 @@ public class Movement : GridBehaviour {
 		}
 	}
 
+	void Rotate() {
+		if (CanRotate(0)) {
+			_piece.Rotate(0);
+		//} else if (CanRotate(-1)) {
+		//	_piece.Rotate(-1);
+		//} else if (CanRotate(1)) {
+		//	_piece.Rotate(1);
+		}
+	}
+
 	bool CanMoveLeft() {
 		var currentCoords = _piece.PartPositions();
 		var nextCoords = currentCoords.Select(coord => coord + (Vector3.left * _piece.Width())).ToList();
@@ -46,5 +58,14 @@ public class Movement : GridBehaviour {
 		var nextCoords = currentCoords.Select(coord => coord + (Vector3.right * _piece.Width())).ToList();
 
 		return nextCoords.All(IsWithinBounds) && nextCoords.All(IsCoordFree);
+	}
+
+	bool CanRotate(int offset = 0) {
+		return true;
+		//_piece.Rotate(offset);
+		//var nextCoords = _piece.PartPositions();
+		//_piece.Unrotate(offset);
+
+		//return nextCoords.All(IsWithinBounds) && nextCoords.All(IsCoordFree);
 	}
 }

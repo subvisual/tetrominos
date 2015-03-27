@@ -11,14 +11,16 @@ public class PieceCtrl : MonoBehaviour {
 	public Color CurrentColor;
 	public Color FullColor;
 	private PieceState _state;
+	private bool _rotated;
 
 	void Awake () {
+		_rotated = false;
 		MakeCurrent();
 	}
 
 	public bool CanFall(Rect boundaries, Func<Vector3, bool> isCoordFree) {
 		foreach (Transform piecePart in transform) {
-			var nextPosition = piecePart.position + (Vector3.down * transform.localScale.y);
+			var nextPosition = piecePart.position + (Vector3.down * Height());
 			
 			if (!boundaries.Contains(nextPosition) || !isCoordFree(nextPosition)) {
 				return false;
@@ -36,7 +38,7 @@ public class PieceCtrl : MonoBehaviour {
 	}
 
 	public void Fall() {
-		transform.Translate(Vector3.down * transform.localScale.y);
+		transform.Translate(Vector3.down * Height(), Space.World);
 	}
 
 	public void MakeFull() {
@@ -116,6 +118,40 @@ public class PieceCtrl : MonoBehaviour {
 	}
 
 	public float Width() {
-		return Mathf.Abs(transform.localScale.x);
+		if (_rotated) {
+			return Mathf.Abs(transform.localScale.y);
+		} else {
+			return Mathf.Abs(transform.localScale.x);
+		}
 	}
+
+	public float Height() {
+		if (_rotated) {
+			return Mathf.Abs(transform.localScale.x);
+		} else {
+			return Mathf.Abs(transform.localScale.y);
+		}
+	}
+
+	public void Rotate(int offset = 0) {
+
+		transform.Translate((Columns()) * Width(), 0, 0);
+		transform.Rotate(0, 0, 90);
+		var scale = transform.localScale;
+		var newScale = new Vector3(scale.y, scale.x, scale.z);
+		transform.localScale = newScale;
+		_rotated = !_rotated;
+
+	}
+
+	//public void Unrotate(int offset = 0) {
+
+	//	transform.Rotate(0, 0, -90);
+	//	transform.Translate(- (offset + Columns()) * Width(), 0, 0);
+
+	//	_rotated = !_rotated;
+	//	var scale = transform.localScale;
+	//	var newScale = new Vector3(scale.y, scale.x, scale.z);
+	//	transform.localScale = newScale;
+	//}
 }

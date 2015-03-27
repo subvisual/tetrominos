@@ -6,8 +6,7 @@ public class GridCtrl : GridBehaviour {
 	public int Rows;
 	public float Width { get; private set; }
 	public float Height { get; private set; }
-	public float PieceWidth { get; private set; }
-	public float PieceHeight { get; private set; }
+	public float PieceSize { get; private set; }
 	public Rect Boundaries { get; private set; }
 	//public GameObject SeparatorPrefab;
 
@@ -16,9 +15,8 @@ public class GridCtrl : GridBehaviour {
 
 	void Awake() {
 		Height = Camera.main.orthographicSize * 2f;
-		Width = Height * Camera.main.aspect;
-		PieceWidth = Width / (float) Columns;
-		PieceHeight = Height / (float) Rows;
+		PieceSize = Height / (float) Rows;
+		Width = PieceSize * Columns;
 		Boundaries = new Rect(- Width * 0.5f, - Height * 0.5f, Width, Height );
 		//_commandsCtrl = GetComponent<GridCommandsCtrl>();
 	}

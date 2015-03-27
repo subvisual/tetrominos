@@ -13,7 +13,6 @@ public class FallRoutine : GridBehaviour {
 		_fallRoutine = FallAndWait();
 	}
 
-	// Use this for initialization
 	void Start () {
 		StartCoroutine(_fallRoutine);
 	}
