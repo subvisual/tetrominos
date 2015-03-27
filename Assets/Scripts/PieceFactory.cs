@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Random = UnityEngine.Random;
+
 public class PieceFactory : MonoBehaviour {
 	public GameObject[] Templates;
 
@@ -20,14 +23,18 @@ public class PieceFactory : MonoBehaviour {
 	}
 
 	public void AddNext() {
-		var position = new Vector3(
-			- _gridCtrl.PieceWidth,
-			(_gridCtrl.Height - _gridCtrl.PieceHeight) * 0.5f,
-			0);
-		var scale = new Vector3(_gridCtrl.PieceWidth, _gridCtrl.PieceHeight, 1);
+		GameObject piece = Instantiate(Templates[_nextIndex], Vector3.zero, Quaternion.identity) as GameObject;
+		var ctrl = piece.GetComponent<PieceCtrl>();
 
-		GameObject piece = Instantiate(Templates[_nextIndex], position, Quaternion.identity) as GameObject;
-		piece.transform.localScale = scale;
+		var x = -_gridCtrl.PieceWidth * ctrl.Columns() / 2;
+		if (ctrl.Columns() % 2 == 1) {
+			x -= _gridCtrl.PieceWidth * 0.5f;
+		}
+
+		var y = _gridCtrl.Height * 0.5f - ctrl.Rows() * _gridCtrl.PieceHeight;
+
+		piece.transform.Translate(new Vector3(x, y, 0));
+		piece.transform.localScale = new Vector3(_gridCtrl.PieceWidth, _gridCtrl.PieceHeight, 1);
 		piece.transform.parent = _piecesHolder.transform;
 
 		RollNext();

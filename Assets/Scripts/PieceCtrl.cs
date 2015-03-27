@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Constants;
 
@@ -62,6 +63,34 @@ public class PieceCtrl : MonoBehaviour {
 	public bool IsFull() {
 		return Is(PieceState.Full);
 	}
+
+
+	public int Columns() {
+		return Size().First;
+	}
+
+	public int Rows() {
+		return Size().Second;
+	}
+
+	public Pair<int, int> Size() {
+		var rowValues = new List<float>();
+		var colValues = new List<float>();
+		foreach (Transform child in transform) {
+			var col = child.localPosition.x;
+			var row = child.localPosition.y;
+
+			if (colValues.All(value => Mathf.Abs(value - col) > child.localScale.x * 0.5)) {
+				colValues.Add(col);
+			}
+
+			if (rowValues.All(value => Mathf.Abs(value - row) > child.localScale.y * 0.5)) {
+				rowValues.Add(row);
+			}
+		}
+
+		return new Pair<int, int>(colValues.Count, rowValues.Count);
+	} 
 
 	void UpdateMaterial() {
 		var newColor = PieceColor();

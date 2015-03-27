@@ -43,7 +43,7 @@ public class Movement : GridBehaviour {
 
 	bool CanMoveRight() {
 		var currentCoords = _piece.PartPositions();
-		var nextCoords = currentCoords.Select(coord => coord + (Vector3.right * _piece.transform.localScale.x));
+		var nextCoords = currentCoords.Select(coord => coord + (Vector3.right * _piece.transform.localScale.x)).ToList();
 
 		return nextCoords.All(IsWithinBounds) && nextCoords.All(IsCoordFree);
 	}
