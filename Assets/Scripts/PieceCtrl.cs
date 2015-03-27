@@ -137,21 +137,15 @@ public class PieceCtrl : MonoBehaviour {
 
 		transform.Translate((Columns()) * Width(), 0, 0);
 		transform.Rotate(0, 0, 90);
-		var scale = transform.localScale;
-		var newScale = new Vector3(scale.y, scale.x, scale.z);
-		transform.localScale = newScale;
 		_rotated = !_rotated;
 
 	}
 
-	//public void Unrotate(int offset = 0) {
+	public void Unrotate(int offset = 0) {
 
-	//	transform.Rotate(0, 0, -90);
-	//	transform.Translate(- (offset + Columns()) * Width(), 0, 0);
+		_rotated = !_rotated;
+		transform.Rotate(0, 0, -90);
+		transform.Translate(-(offset + Columns()) * Width(), 0, 0);
 
-	//	_rotated = !_rotated;
-	//	var scale = transform.localScale;
-	//	var newScale = new Vector3(scale.y, scale.x, scale.z);
-	//	transform.localScale = newScale;
-	//}
+	}
 }

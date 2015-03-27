@@ -39,10 +39,10 @@ public class Movement : GridBehaviour {
 	void Rotate() {
 		if (CanRotate(0)) {
 			_piece.Rotate(0);
-		//} else if (CanRotate(-1)) {
-		//	_piece.Rotate(-1);
-		//} else if (CanRotate(1)) {
-		//	_piece.Rotate(1);
+		} else if (CanRotate(-1)) {
+			_piece.Rotate(-1);
+		} else if (CanRotate(1)) {
+			_piece.Rotate(1);
 		}
 	}
 
@@ -61,11 +61,10 @@ public class Movement : GridBehaviour {
 	}
 
 	bool CanRotate(int offset = 0) {
-		return true;
-		//_piece.Rotate(offset);
-		//var nextCoords = _piece.PartPositions();
-		//_piece.Unrotate(offset);
+		_piece.Rotate(offset);
+		var nextCoords = _piece.PartPositions();
+		_piece.Unrotate(offset);
 
-		//return nextCoords.All(IsWithinBounds) && nextCoords.All(IsCoordFree);
+		return nextCoords.All(IsWithinBounds) && nextCoords.All(IsCoordFree);
 	}
 }
