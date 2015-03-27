@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
-using Constants;
 
-public class GridCtrl : MonoBehaviour {
+public class GridCtrl : GridBehaviour {
 
 	public int Columns;
 	public int Rows;
@@ -11,12 +9,8 @@ public class GridCtrl : MonoBehaviour {
 	public float PieceWidth { get; private set; }
 	public float PieceHeight { get; private set; }
 	public Rect Boundaries { get; private set; }
-	//public float FallDelay, FallTurbo;
-	//public GameObject PiecePrefab;
 	//public GameObject SeparatorPrefab;
-	//public Grid Grid;
 
-	//private IEnumerator _fallRoutine;
 	//private GridCommandsCtrl _commandsCtrl;
 	//private bool _isInTurbo;
 
@@ -27,14 +21,12 @@ public class GridCtrl : MonoBehaviour {
 		PieceHeight = Height / (float) Rows;
 		Boundaries = new Rect(- Width * 0.5f, - Height * 0.5f, Width, Height );
 		//_commandsCtrl = GetComponent<GridCommandsCtrl>();
-		//_isInTurbo = false;
 	}
 
 	void Start() {
 		//Grid = new Grid(PiecePrefab, SeparatorPrefab, transform, Columns, Rows, width, height);
 		//_fallRoutine = FallAndWait();
 		//GetComponent<PieceFactory>().AddNext(Grid);
-		//StartCoroutine(_fallRoutine);
 	}
 
 	void Update() {
@@ -71,9 +63,4 @@ public class GridCtrl : MonoBehaviour {
 		//}
 		//yield return true;
 	//}
-
-	void ResetFallCoroutine() {
-		//StopCoroutine(_fallRoutine);
-		//StartCoroutine(_fallRoutine);
-	}
 }

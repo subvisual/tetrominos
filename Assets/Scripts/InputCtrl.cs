@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class GridCommandsCtrl : MonoBehaviour {
+public class InputCtrl : GridBehaviour {
 
 	public float LongTouchThreshold;
 	public float SwipeDistanceThreshold;

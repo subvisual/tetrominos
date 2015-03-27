@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 using Constants;
 
 public class PieceCtrl : MonoBehaviour {
@@ -13,14 +15,23 @@ public class PieceCtrl : MonoBehaviour {
 		MakeCurrent();
 	}
 
-	public bool CanFall(Rect boundaries) {
+	public bool CanFall(Rect boundaries, Func<Vector3, bool> isCoordFree) {
 		foreach (Transform piecePart in transform) {
 			var nextPosition = piecePart.position + (Vector3.down * transform.localScale.y);
-			if (!boundaries.Contains(nextPosition)) {
+			
+			if (!boundaries.Contains(nextPosition) || !isCoordFree(nextPosition)) {
 				return false;
 			}
 		}
 		return true;
+	}
+
+	public List<Vector3> PartPositions() {
+		var result = new List<Vector3>();
+		foreach (Transform part in transform) {
+			result.Add(part.position);
+		}
+		return result;
 	}
 
 	public void Fall() {
