@@ -8,17 +8,12 @@ public class GridCtrl : GridBehaviour {
 	public float Height { get; private set; }
 	public float PieceSize { get; private set; }
 	public Rect Boundaries { get; private set; }
-	//public GameObject SeparatorPrefab;
-
-	//private GridCommandsCtrl _commandsCtrl;
-	//private bool _isInTurbo;
 
 	void Awake() {
 		Height = Camera.main.orthographicSize * 2f;
 		PieceSize = Height / (float) Rows;
 		Width = PieceSize * Columns;
 		Boundaries = new Rect(- Width * 0.5f, - Height * 0.5f, Width, Height );
-		//_commandsCtrl = GetComponent<GridCommandsCtrl>();
 	}
 
 	void Start() {
