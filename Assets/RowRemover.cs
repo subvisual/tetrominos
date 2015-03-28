@@ -21,10 +21,8 @@ public class RowRemover : GridBehaviour {
 		var count = 0;
 		float previousRow = 0.0f;
 		foreach (float row in rows) {
-			Debug.Log(Mathf.Abs(previousRow - row) + " " + _threshold);
 			if (count == 0 || Mathf.Abs(previousRow - row) < _threshold) {
 				count++;
-				Debug.Log("here");
 			} else {
 				count = 1;
 			}
@@ -57,7 +55,6 @@ public class RowRemover : GridBehaviour {
 			foreach (Transform part in child) {
 				// count how many rows were destroyed below this part
 				var collapseMultiplier = rows.Count(row => row < part.position.y);
-				Debug.Log(collapseMultiplier);
 				part.Translate(Vector3.down * part.lossyScale.y * collapseMultiplier, Space.World);
 			}
 		}
