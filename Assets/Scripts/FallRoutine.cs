@@ -9,12 +9,14 @@ public class FallRoutine : GridBehaviour {
 	private GridCtrl _gridCtrl;
 	private IEnumerator _fallRoutine;
 	private InputCtrl _inputCtrl;
+	private RowRemover _rowRemover;
 	private bool _isInTurbo;
 
 	void Awake() {
 		_isInTurbo = false;
 		_gridCtrl = GetComponent<GridCtrl>();
 		_inputCtrl = GetComponent<InputCtrl>();
+		_rowRemover = GetComponent<RowRemover>();
 		_fallRoutine = FallAndWait();
 	}
 
@@ -42,6 +44,8 @@ public class FallRoutine : GridBehaviour {
 					current.Fall();
 				} else {
 					current.MakeFull();
+					_rowRemover.Run();
+					//CollapseFullPieces();
 					GetComponent<PieceFactory>().AddNext();
 				}
 			}
@@ -49,6 +53,15 @@ public class FallRoutine : GridBehaviour {
 			yield return new WaitForSeconds(FallDelay);
 		}
 	}
+
+	//void CollapseFullPieces() {
+	//	foreach (Transform child in PiecesHolder().transform) {
+	//		var ctrl = child.GetComponent<PieceCtrl>();
+	//		if (ctrl.IsFull()) {
+	//			ctrl.Fall();
+	//		}
+	//	}
+	//}
 
 	void ResetCoroutine() {
 		StopCoroutine(_fallRoutine);

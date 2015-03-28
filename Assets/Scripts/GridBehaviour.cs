@@ -24,7 +24,7 @@ public class GridBehaviour : MonoBehaviour {
 	protected List<Vector3> FullCoords() {
 		var result = new List<Vector3>();
 
-		foreach (Transform child in _gridBehaviourPiecesHolder.transform) {
+		foreach (Transform child in PiecesHolder().transform) {
 			var pieceCtrl = child.GetComponent<PieceCtrl>();
 			if (pieceCtrl.IsFull()) {
 				result.AddRange(pieceCtrl.PartPositions());
