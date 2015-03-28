@@ -45,7 +45,7 @@ public class InputCtrl : GridBehaviour {
 	}
 
 	public bool IsInTurboMode() {
-		return Input.GetKeyDown(KeyCode.DownArrow) || IsInLongTouch();
+		return Input.GetKey(KeyCode.DownArrow) || IsInLongTouch();
 	}
 
 	Vector2 SwipeDirection() {

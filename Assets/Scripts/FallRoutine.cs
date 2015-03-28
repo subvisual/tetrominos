@@ -28,6 +28,7 @@ public class FallRoutine : GridBehaviour {
 			FallDelay /= FallTurbo;
 			ResetCoroutine();
 		} else if (!_inputCtrl.IsInTurboMode() && _isInTurbo) {
+			Debug.Log("no turbo");
 			_isInTurbo = false;
 			FallDelay *= FallTurbo;
 			ResetCoroutine();

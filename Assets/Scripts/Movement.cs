@@ -10,7 +10,7 @@ public class Movement : GridBehaviour {
 		_input = GetComponent<InputCtrl>();
 	}
 	
-	void Update () {
+	void Update() {
 		_piece = CurrentPiece();
 
 		if (_input.IsMovingLeft()) {
@@ -37,8 +37,8 @@ public class Movement : GridBehaviour {
 	}
 
 	void Rotate() {
-		if (CanRotate(0)) {
-			_piece.Rotate(0);
+		if (CanRotate()) {
+			_piece.Rotate();
 		} else if (CanRotate(-1)) {
 			_piece.Rotate(-1);
 		} else if (CanRotate(1)) {
