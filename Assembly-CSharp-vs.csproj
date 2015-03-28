@@ -46,11 +46,14 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\AspectRatioEnforcer.cs" />
-     <Compile Include="Assets\GridCommandsCtrl.cs" />
+     <Compile Include="Assets\Scripts\AspectRatioEnforcer.cs" />
      <Compile Include="Assets\Scripts\Constants.cs" />
+     <Compile Include="Assets\Scripts\FallRoutine.cs" />
      <Compile Include="Assets\Scripts\Grid.cs" />
+     <Compile Include="Assets\Scripts\GridBehaviour.cs" />
      <Compile Include="Assets\Scripts\GridCtrl.cs" />
+     <Compile Include="Assets\Scripts\InputCtrl.cs" />
+     <Compile Include="Assets\Scripts\Movement.cs" />
      <Compile Include="Assets\Scripts\PieceCtrl.cs" />
      <Compile Include="Assets\Scripts\PieceFactory.cs" />
      <Compile Include="Assets\Scripts\Tuples.cs" />

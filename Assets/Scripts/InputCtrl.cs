@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class GridCommandsCtrl : MonoBehaviour {
+public class InputCtrl : GridBehaviour {
 
 	public float LongTouchThreshold;
 	public float SwipeDistanceThreshold;
@@ -45,7 +45,7 @@ public class GridCommandsCtrl : MonoBehaviour {
 	}
 
 	public bool IsInTurboMode() {
-		return Input.GetKeyDown(KeyCode.DownArrow) || IsInLongTouch();
+		return Input.GetKey(KeyCode.DownArrow) || IsInLongTouch();
 	}
 
 	Vector2 SwipeDirection() {
@@ -57,7 +57,6 @@ public class GridCommandsCtrl : MonoBehaviour {
 		} else {
 			delta.x = 0;
 		}
-		Debug.Log(delta.normalized);
 
 		return delta.normalized;
 	}

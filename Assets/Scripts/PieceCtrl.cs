@@ -1,45 +1,44 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Constants;
 
 public class PieceCtrl : MonoBehaviour {
 
 	public PieceType Type;
-	public PieceState State;
-	public Color EmptyColor, CurrentColor;
-	public Color[] TypeColors;
 
-	public int Rotation;
+	public Color CurrentColor;
+	public Color FullColor;
+	private PieceState _state;
+	private bool _rotated;
 
-	// Use this for initialization
 	void Awake () {
-		State = PieceState.Empty;
-		UpdateMaterial();
-		Rotation = 0;
+		_rotated = false;
+		MakeCurrent();
 	}
 
-	public void SetType(PieceType type) {
-		Type = type;
+	public bool CanFall(Rect boundaries, Func<Vector3, bool> isCoordFree) {
+		foreach (Transform piecePart in transform) {
+			var nextPosition = piecePart.position + (Vector3.down * Height());
+			
+			if (!boundaries.Contains(nextPosition) || !isCoordFree(nextPosition)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public List<Vector3> PartPositions() {
+		var result = new List<Vector3>();
+		foreach (Transform part in transform) {
+			result.Add(part.position);
+		}
+		return result;
 	}
 
 	public void Fall() {
-		if (State != PieceState.Current) {
-			return;
-		}
-
-		transform.Translate (Vector3.down * transform.localScale.y);
-	}
-
-	public void Make(PieceState state) {
-		if (state == PieceState.Empty) {
-			Type = PieceType.Empty;
-		}
-		UpdateState(state);
-	}
-
-	public void MakeEmpty() {
-		Make(PieceState.Empty);
-		ResetRotation();
+		transform.Translate(Vector3.down * Height(), Space.World);
 	}
 
 	public void MakeFull() {
@@ -50,24 +49,13 @@ public class PieceCtrl : MonoBehaviour {
 		Make(PieceState.Current);
 	}
 
-	public void Rotate(int rotations = 1) {
-		Rotation = (Rotation + rotations) % 4;
-		for (var i = 0; i < rotations; ++i) {
-			transform.Rotate(0, 0, 90);
-		}
-	}
-
-	public void ResetRotation() {
-		Rotation = 0;
-		transform.rotation = Quaternion.identity;
+	public void Make(PieceState state) {
+		_state = state;
+		UpdateMaterial();
 	}
 
 	public bool Is(PieceState state) {
-		return State == state;
-	}
-
-	public bool IsEmpty() {
-		return Is(PieceState.Empty);
+		return _state == state;
 	}
 
 	public bool IsCurrent() {
@@ -78,46 +66,88 @@ public class PieceCtrl : MonoBehaviour {
 		return Is(PieceState.Full);
 	}
 
-	public void Replace(PieceCtrl previousPiece) {
-		UpdateState(previousPiece.State);
-		UpdateType(previousPiece.Type);
-		Rotate(previousPiece.Rotation);
-		previousPiece.MakeEmpty();
+
+	public int Columns() {
+		if (_rotated) {
+			return Size().Second;
+		} else {
+			return Size().First;
+		}
 	}
 
-	public void UpdateType(PieceType type) {
-		Type = type;
-		UpdateMaterial();
+	public int Rows() {
+		if (_rotated) {
+			return Size().First;
+		} else {
+			return Size().Second;
+		}
 	}
 
-	public void UpdateState(PieceState state) {
-		State = state;
-		UpdateMaterial();
-	}
+	public Pair<int, int> Size() {
+		var rowValues = new List<float>();
+		var colValues = new List<float>();
+		foreach (Transform child in transform) {
+			var col = child.localPosition.x;
+			var row = child.localPosition.y;
+
+			if (colValues.All(value => Mathf.Abs(value - col) > child.localScale.x * 0.5)) {
+				colValues.Add(col);
+			}
+
+			if (rowValues.All(value => Mathf.Abs(value - row) > child.localScale.y * 0.5)) {
+				rowValues.Add(row);
+			}
+		}
+
+		return new Pair<int, int>(colValues.Count, rowValues.Count);
+	} 
 
 	void UpdateMaterial() {
 		var newColor = PieceColor();
 		var newDarkenedColor = DarkenedPieceColor();
 
-		transform.Find("TopHalf").GetComponent<Renderer>().material.color = newColor;
-		transform.Find("BottomHalf").GetComponent<Renderer>().material.color = newDarkenedColor;
+		foreach (Transform child in transform) {
+			var renderers = child.GetComponentsInChildren<Renderer>();
+			renderers[0].material.color = newColor;
+			renderers[1].material.color = newDarkenedColor;
+		}
 	}
 
 	Color PieceColor() {
-		if (IsEmpty()) {
-			return EmptyColor;
-		} else if (IsCurrent()) {
+		if (IsCurrent()) {
 			return CurrentColor;
 		} else {
-			return TypeColors[(int) Type];
+			return FullColor;
 		}
 	}
 
 	Color DarkenedPieceColor() {
-		if (IsEmpty()) {
-			return EmptyColor;
+		return PieceColor() - new Color(0.05f, 0.05f, 0.05f);
+	}
+
+	public float Width() {
+		if (_rotated) {
+			return Mathf.Abs(transform.localScale.y);
 		} else {
-			return PieceColor() - new Color(0.05f, 0.05f, 0.05f);
+			return Mathf.Abs(transform.localScale.x);
 		}
+	}
+
+	public float Height() {
+		if (_rotated) {
+			return Mathf.Abs(transform.localScale.x);
+		} else {
+			return Mathf.Abs(transform.localScale.y);
+		}
+	}
+
+	public void Rotate(int offset = 0) {
+		_rotated = !_rotated;
+		transform.Rotate(0, 0, 90);
+	}
+
+	public void Unrotate(int offset = 0) {
+		_rotated = !_rotated;
+		transform.Rotate(0, 0, -90);
 	}
 }
