@@ -39,7 +39,7 @@ public class PieceFactory : MonoBehaviour {
 		if (_nextTranspose) {
 			var newScale = piece.transform.localScale;
 			newScale.x *= -1;
-			//piece.transform.localScale = newScale;
+			piece.transform.localScale = newScale;
 		}
 
 		RollNext();
