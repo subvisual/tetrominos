@@ -3,9 +3,11 @@ using System.Collections;
 
 public class FallRoutine : GridBehaviour {
 
+	public float RespawnDelay;
 	public float FallDelay;
 	public float FallTurbo;
 
+	private bool _playing;
 	private GridCtrl _gridCtrl;
 	private IEnumerator _fallRoutine;
 	private InputCtrl _inputCtrl;
@@ -13,6 +15,7 @@ public class FallRoutine : GridBehaviour {
 	private bool _isInTurbo;
 
 	void Awake() {
+		_playing = true;
 		_isInTurbo = false;
 		_gridCtrl = GetComponent<GridCtrl>();
 		_inputCtrl = GetComponent<InputCtrl>();
@@ -37,7 +40,7 @@ public class FallRoutine : GridBehaviour {
 	}
 
 	IEnumerator FallAndWait() {
-		while (true) {
+		while (_playing) {
 			PieceCtrl current = CurrentPiece();
 			if (current) {
 				if (current.CanFall(_gridCtrl.Boundaries, IsCoordFree)) {
@@ -45,23 +48,14 @@ public class FallRoutine : GridBehaviour {
 				} else {
 					current.MakeFull();
 					_rowRemover.Run();
-					//CollapseFullPieces();
 					GetComponent<PieceFactory>().AddNext();
+					yield return new WaitForSeconds(RespawnDelay);
 				}
 			}
 
 			yield return new WaitForSeconds(FallDelay);
 		}
 	}
-
-	//void CollapseFullPieces() {
-	//	foreach (Transform child in PiecesHolder().transform) {
-	//		var ctrl = child.GetComponent<PieceCtrl>();
-	//		if (ctrl.IsFull()) {
-	//			ctrl.Fall();
-	//		}
-	//	}
-	//}
 
 	void ResetCoroutine() {
 		StopCoroutine(_fallRoutine);

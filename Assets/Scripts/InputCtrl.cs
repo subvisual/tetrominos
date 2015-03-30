@@ -12,7 +12,6 @@ public class InputCtrl : GridBehaviour {
 	private bool _isLongTouch;
 	private bool _touchFinished;
 	private float _touchBeginTime;
-	private float _touchEndTime;
 	private Vector3 _touchBeginCoords;
 	private Vector3 _touchEndCoords;
 
@@ -89,13 +88,11 @@ public class InputCtrl : GridBehaviour {
 	}
 
 	void DuringTouch() {
-		_touchEndTime = Time.time;
 		_touchEndCoords = Input.mousePosition;
 		DetectTouchType();
 	}
 
 	void EndTouch() {
-		_touchEndTime = Time.time;
 		_touchEndCoords = Input.mousePosition;
 		_touchFinished = true;
 		DetectTouchType();
