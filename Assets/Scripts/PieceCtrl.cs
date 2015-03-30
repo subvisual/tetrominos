@@ -13,9 +13,25 @@ public class PieceCtrl : MonoBehaviour {
 	private PieceState _state;
 	private bool _rotated;
 
+	private bool _falling;
+	private float _fallStart;
+	private float _fallOrigin;
+
 	void Awake () {
 		_rotated = false;
 		MakeCurrent();
+	}
+
+	void Update() {
+		if (_falling) {
+			var timeElapsed = Time.time - _fallStart;
+			if (timeElapsed >= 0.2f) {
+				_falling = false;
+			}
+			var newPosition = transform.position;
+			newPosition.y = Mathf.Lerp(_fallOrigin, _fallOrigin - Height(), timeElapsed / 0.2f);
+			transform.position = newPosition;
+		}
 	}
 
 	public bool CanFall(Rect boundaries, Func<Vector3, bool> isCoordFree) {
@@ -38,6 +54,9 @@ public class PieceCtrl : MonoBehaviour {
 	}
 
 	public void Fall() {
+		//_falling = true;
+		//_fallStart = Time.time;
+		//_fallOrigin = transform.position.y;
 		transform.Translate(Vector3.down * Height(), Space.World);
 	}
 

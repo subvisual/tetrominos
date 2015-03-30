@@ -7,6 +7,7 @@ public class PieceFactory : MonoBehaviour {
 
 	private GridCtrl _gridCtrl;
 	private GameObject _piecesHolder;
+	private GameObject _previewHolder;
 	private int _nextIndex;
 	private int _nextRotation;
 	private bool _nextTranspose;
@@ -14,6 +15,7 @@ public class PieceFactory : MonoBehaviour {
 	// Use this for initialization
 	void Awake() {
 		_piecesHolder = GameObject.Find("piecesHolder");
+		_previewHolder = GameObject.Find("previewHolder");
 		_gridCtrl = GetComponent<GridCtrl>();
 		RollNext();
 	}
@@ -30,7 +32,7 @@ public class PieceFactory : MonoBehaviour {
 		if (ctrl.Columns() % 2 == 1) {
 			x -= _gridCtrl.PieceSize * 0.5f;
 		}
-		var y = _gridCtrl.Height * 0.5f - (ctrl.Rows() - 1) * _gridCtrl.PieceSize;
+		var y = _gridCtrl.Height * 0.5f - 0.5f - (ctrl.Rows() - 1) * _gridCtrl.PieceSize;
 
 		piece.transform.Translate(new Vector3(x, y, 0));
 		piece.transform.localScale = new Vector3(_gridCtrl.PieceSize, _gridCtrl.PieceSize, 1);
@@ -43,6 +45,8 @@ public class PieceFactory : MonoBehaviour {
 		}
 
 		RollNext();
+
+		_previewHolder.GetComponent<PreviewCtrl>().ChangePiece(Templates[_nextIndex]);
 	}
 
 	void RollNext() {
