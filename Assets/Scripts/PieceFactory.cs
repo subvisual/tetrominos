@@ -46,7 +46,7 @@ public class PieceFactory : MonoBehaviour {
 
 		RollNext();
 
-		_previewHolder.GetComponent<PreviewCtrl>().ChangePiece(Templates[_nextIndex]);
+		_previewHolder.GetComponent<PreviewCtrl>().ChangePiece(Templates[_nextIndex], _nextTranspose, _nextRotation);
 	}
 
 	void RollNext() {
