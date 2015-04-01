@@ -30,25 +30,34 @@ public class InputCtrl : GridBehaviour {
 	}
 
 	public bool IsMovingRight() {
-		var result = Input.GetKeyDown(KeyCode.RightArrow) || (IsInSwipe() && SwipeDirection() == Vector2.right);
-		return UseSwipe(result);
+		Debug.Log(IsInShortTouch());
+		return Input.GetKeyDown(KeyCode.RightArrow) ||
+		       (IsInShortTouch() &&
+		        Input.mousePosition.x > Camera.main.pixelWidth * 0.5 &&
+		        Input.mousePosition.y < Camera.main.pixelHeight * 0.5) ||
+					(IsInSwipe() && SwipeDirection() == Vector3.right);
 	}
 
 	public bool IsMovingLeft() {
-		var result = Input.GetKeyDown(KeyCode.LeftArrow) || (IsInSwipe() && SwipeDirection() == - Vector2.right);
-		return UseSwipe(result);
+		return Input.GetKeyDown(KeyCode.LeftArrow) ||
+		       (IsInShortTouch() &&
+		        Input.mousePosition.x < Camera.main.pixelWidth * 0.5 &&
+		        Input.mousePosition.y < Camera.main.pixelHeight * 0.5) ||
+					(IsInSwipe() && SwipeDirection() == - Vector3.right);
 	}
 
 	public bool IsRotating() {
-		return Input.GetKeyDown(KeyCode.UpArrow) || HasShortTouch();
+		return Input.GetKeyDown(KeyCode.UpArrow) ||
+		       (IsInShortTouch() &&
+		        Input.mousePosition.y > Camera.main.pixelHeight * 0.4);
 	}
 
 	public bool IsInTurboMode() {
-		return Input.GetKey(KeyCode.DownArrow) || IsInLongTouch();
+		return Input.GetKey(KeyCode.DownArrow) || (IsInSwipe() && SwipeDirection() == Vector3.down);
 	}
 
-	Vector2 SwipeDirection() {
-		Vector2 delta = _touchEndCoords - _touchBeginCoords;
+	Vector3 SwipeDirection() {
+		Vector3 delta = _touchEndCoords - _touchBeginCoords;
 
 		// make the vector point to a straight direction (left, right, up and down)
 		if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y)) {
@@ -76,8 +85,8 @@ public class InputCtrl : GridBehaviour {
 		return (Input.mousePosition - _touchBeginCoords).magnitude;
 	}
 
-	bool HasShortTouch() {
-		return _touchFinished && !_isSwipe && !_isLongTouch;
+	public bool IsInShortTouch() {
+		return Input.GetMouseButtonUp(0) && !IsInLongTouch() && !IsInSwipe();
 	}
 
 	void StartTouch() {
@@ -104,12 +113,5 @@ public class InputCtrl : GridBehaviour {
 		} else if (TouchDuration() > LongTouchThreshold) {
 			_isLongTouch = true;
 		}
-	}
-
-	bool UseSwipe(bool use) {
-		if (use) {
-			_isNewSwipe = false;
-		}
-		return use;
 	}
 }
