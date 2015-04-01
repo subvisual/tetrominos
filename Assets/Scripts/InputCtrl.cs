@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.EventSystems;
+﻿using System.Xml;
+using UnityEngine;
 
 public class InputCtrl : GridBehaviour {
 
@@ -10,7 +9,6 @@ public class InputCtrl : GridBehaviour {
 	private bool _isSwipe;
 	private bool _isNewSwipe;
 	private bool _isLongTouch;
-	private bool _touchFinished;
 	private float _touchBeginTime;
 	private Vector3 _touchBeginCoords;
 	private Vector3 _touchEndCoords;
@@ -18,7 +16,6 @@ public class InputCtrl : GridBehaviour {
 	void Update() {
 		_isLongTouch = false;
 		_isSwipe = false;
-		_touchFinished = false;
 
 		if (Input.GetMouseButtonDown(0)) {
 			StartTouch();
@@ -30,26 +27,27 @@ public class InputCtrl : GridBehaviour {
 	}
 
 	public bool IsMovingRight() {
-		Debug.Log(IsInShortTouch());
-		return Input.GetKeyDown(KeyCode.RightArrow) ||
+		var ret = Input.GetKeyDown(KeyCode.RightArrow) ||
 		       (IsInShortTouch() &&
-		        Input.mousePosition.x > Camera.main.pixelWidth * 0.5 &&
-		        Input.mousePosition.y < Camera.main.pixelHeight * 0.5) ||
+		        Input.mousePosition.x > Camera.main.pixelWidth * 0.7) ||
 					(IsInSwipe() && SwipeDirection() == Vector3.right);
+		return UseSwipe(ret);
 	}
 
 	public bool IsMovingLeft() {
-		return Input.GetKeyDown(KeyCode.LeftArrow) ||
+		var ret = Input.GetKeyDown(KeyCode.LeftArrow) ||
 		       (IsInShortTouch() &&
-		        Input.mousePosition.x < Camera.main.pixelWidth * 0.5 &&
-		        Input.mousePosition.y < Camera.main.pixelHeight * 0.5) ||
+		        Input.mousePosition.x < Camera.main.pixelWidth * 0.3) ||
 					(IsInSwipe() && SwipeDirection() == - Vector3.right);
+		return UseSwipe(ret);
 	}
 
 	public bool IsRotating() {
-		return Input.GetKeyDown(KeyCode.UpArrow) ||
-		       (IsInShortTouch() &&
-		        Input.mousePosition.y > Camera.main.pixelHeight * 0.4);
+		var ret = Input.GetKeyDown(KeyCode.UpArrow) ||
+		       (IsInShortTouch() && !IsInSwipe() &&
+		        Input.mousePosition.x > Camera.main.pixelWidth * 0.3 &&
+						Input.mousePosition.x < Camera.main.pixelWidth * 0.7);
+		return UseSwipe(ret);
 	}
 
 	public bool IsInTurboMode() {
@@ -86,7 +84,7 @@ public class InputCtrl : GridBehaviour {
 	}
 
 	public bool IsInShortTouch() {
-		return Input.GetMouseButtonUp(0) && !IsInLongTouch() && !IsInSwipe();
+		return Input.GetMouseButtonUp(0) && !IsInLongTouch() && !_isSwipe;
 	}
 
 	void StartTouch() {
@@ -103,7 +101,6 @@ public class InputCtrl : GridBehaviour {
 
 	void EndTouch() {
 		_touchEndCoords = Input.mousePosition;
-		_touchFinished = true;
 		DetectTouchType();
 	}
 
@@ -113,5 +110,12 @@ public class InputCtrl : GridBehaviour {
 		} else if (TouchDuration() > LongTouchThreshold) {
 			_isLongTouch = true;
 		}
+	}
+
+	bool UseSwipe(bool use) {
+		if (use) {
+			_isNewSwipe = false;
+		}
+		return use;
 	}
 }

@@ -13,7 +13,7 @@ public class RowRemover : GridBehaviour {
 		_threshold = GetComponent<GridCtrl>().PieceSize * 0.5f;
 	}
 
-	public void Run() {
+	public int Run() {
 		var rows = FullCoords().Select(coord => coord.y).OrderBy(value => value);
 
 		var destroyedRows = new List<float>();
@@ -35,6 +35,7 @@ public class RowRemover : GridBehaviour {
 		}
 
 		CollapseParts(destroyedRows);
+		return destroyedRows.Count;
 	}
 
 	void DestroyRow(float y) {

@@ -14,6 +14,9 @@ public class FallRoutine : GridBehaviour {
 	private RowRemover _rowRemover;
 	private bool _isInTurbo;
 
+	private TextMesh _scoreView;
+	private int _score;
+
 	void Awake() {
 		_playing = true;
 		_isInTurbo = false;
@@ -21,9 +24,12 @@ public class FallRoutine : GridBehaviour {
 		_inputCtrl = GetComponent<InputCtrl>();
 		_rowRemover = GetComponent<RowRemover>();
 		_fallRoutine = FallAndWait();
+		_scoreView = GameObject.Find("text_ScoreValue").GetComponent<TextMesh>();
 	}
 
 	void Start () {
+		_score = 0;
+		IncreaseScore(0);
 		StartCoroutine(_fallRoutine);
 	}
 
@@ -47,7 +53,8 @@ public class FallRoutine : GridBehaviour {
 					current.Fall();
 				} else {
 					current.MakeFull();
-					_rowRemover.Run();
+					var destroyedRows = _rowRemover.Run();
+					IncreaseScore(destroyedRows);
 					GetComponent<PieceFactory>().AddNext();
 					yield return new WaitForSeconds(RespawnDelay);
 				}
@@ -60,5 +67,18 @@ public class FallRoutine : GridBehaviour {
 	void ResetCoroutine() {
 		StopCoroutine(_fallRoutine);
 		StartCoroutine(_fallRoutine);
+	}
+
+	void IncreaseScore(int inc) {
+		_score += Factorial(inc);
+		_scoreView.text = _score.ToString();
+	}
+
+	private int Factorial(int num) {
+		var result = num;
+		for (var i = 2; i < num; i++) {
+			result *= i;
+		}
+		return result;
 	}
 }
