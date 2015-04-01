@@ -15,7 +15,7 @@ public class GridCtrl : GridBehaviour {
 	}
 
 	private void Resize() {
-		Height = Camera.main.orthographicSize * 2f - 1;
+		Height = Camera.main.orthographicSize * 2f - 1f;
 		PieceSize = Height / (float) Rows;
 		Width = PieceSize * Columns;
 		transform.Translate(Vector3.down * 0.5f);

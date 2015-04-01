@@ -6,16 +6,24 @@ public class InputCtrl : GridBehaviour {
 	public float LongTouchThreshold;
 	public float SwipeDistanceThreshold;
 
+	private bool _isTouch;
 	private bool _isSwipe;
-	private bool _isNewSwipe;
-	private bool _isLongTouch;
-	private float _touchBeginTime;
+	private bool _wasSwipe;
+	private bool _swipeMuted;
+	private float _pieceWidth;
 	private Vector3 _touchBeginCoords;
+	private Vector3 _touchLastCoords;
 	private Vector3 _touchEndCoords;
 
-	void Update() {
-		_isLongTouch = false;
+	void Start() {
+		_pieceWidth = GetComponent<GridCtrl>().Columns;
 		_isSwipe = false;
+	}
+
+	void Update() {
+		_isTouch = false;
+		_swipeMuted = true;
+		_wasSwipe = false;
 
 		if (Input.GetMouseButtonDown(0)) {
 			StartTouch();
@@ -28,26 +36,19 @@ public class InputCtrl : GridBehaviour {
 
 	public bool IsMovingRight() {
 		var ret = Input.GetKeyDown(KeyCode.RightArrow) ||
-		       (IsInShortTouch() &&
-		        Input.mousePosition.x > Camera.main.pixelWidth * 0.7) ||
-					(IsInSwipe() && SwipeDirection() == Vector3.right);
+					(IsInNewSwipe() && SwipeDirection() == Vector3.right);
 		return UseSwipe(ret);
 	}
 
 	public bool IsMovingLeft() {
 		var ret = Input.GetKeyDown(KeyCode.LeftArrow) ||
-		       (IsInShortTouch() &&
-		        Input.mousePosition.x < Camera.main.pixelWidth * 0.3) ||
-					(IsInSwipe() && SwipeDirection() == - Vector3.right);
+					(IsInNewSwipe() && SwipeDirection() == - Vector3.right);
 		return UseSwipe(ret);
 	}
 
 	public bool IsRotating() {
-		var ret = Input.GetKeyDown(KeyCode.UpArrow) ||
-		       (IsInShortTouch() && !IsInSwipe() &&
-		        Input.mousePosition.x > Camera.main.pixelWidth * 0.3 &&
-						Input.mousePosition.x < Camera.main.pixelWidth * 0.7);
-		return UseSwipe(ret);
+		return Input.GetKeyDown(KeyCode.UpArrow) ||
+					IsInShortTouch();
 	}
 
 	public bool IsInTurboMode() {
@@ -55,7 +56,7 @@ public class InputCtrl : GridBehaviour {
 	}
 
 	Vector3 SwipeDirection() {
-		Vector3 delta = _touchEndCoords - _touchBeginCoords;
+		Vector3 delta = _touchEndCoords - _touchLastCoords;
 
 		// make the vector point to a straight direction (left, right, up and down)
 		if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y)) {
@@ -67,54 +68,49 @@ public class InputCtrl : GridBehaviour {
 		return delta.normalized;
 	}
 
-	bool IsInLongTouch() {
-		return _isLongTouch;
+	public bool IsInShortTouch() {
+		return Input.GetMouseButtonUp(0) && !_isSwipe && !_wasSwipe && _isTouch;
 	}
 
 	bool IsInSwipe() {
-		return _isSwipe && _isNewSwipe;
+		return _isSwipe;
 	}
 
-	float TouchDuration() {
-		return Time.time - _touchBeginTime;
+	bool IsInNewSwipe() {
+		return !_swipeMuted;
 	}
 
 	float TouchDistance() {
-		return (Input.mousePosition - _touchBeginCoords).magnitude;
-	}
-
-	public bool IsInShortTouch() {
-		return Input.GetMouseButtonUp(0) && !IsInLongTouch() && !_isSwipe;
+		return (Input.mousePosition - _touchLastCoords).magnitude;
 	}
 
 	void StartTouch() {
-		_touchBeginTime = Time.time;
 		_touchBeginCoords = Input.mousePosition;
-		_isNewSwipe = true;
+		_touchLastCoords = _touchBeginCoords;
 		DuringTouch();
 	}
 
 	void DuringTouch() {
+		_isTouch = true;
 		_touchEndCoords = Input.mousePosition;
-		DetectTouchType();
+
+		if (_isSwipe || TouchDistance() > SwipeDistanceThreshold) {
+			_isSwipe = true;
+			_wasSwipe = true;
+			if (TouchDistance() > Screen.width / _pieceWidth) {
+				_swipeMuted = false;
+			}
+		}
 	}
 
 	void EndTouch() {
-		_touchEndCoords = Input.mousePosition;
-		DetectTouchType();
-	}
-
-	void DetectTouchType() {
-		if (TouchDistance() > SwipeDistanceThreshold) {
-			_isSwipe = true;
-		} else if (TouchDuration() > LongTouchThreshold) {
-			_isLongTouch = true;
-		}
+		DuringTouch();
+		_isSwipe = false;
 	}
 
 	bool UseSwipe(bool use) {
 		if (use) {
-			_isNewSwipe = false;
+			_touchLastCoords = Input.mousePosition;
 		}
 		return use;
 	}
