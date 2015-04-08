@@ -23,8 +23,7 @@ public class GridCtrl : GridBehaviour {
 	}
 
 	private void PlaceUI() {
-		var ui = GameObject.Find("UI");
-
-		ui.transform.position = new Vector3(0, Height * 0.5f, 0);
+		var ui = GameObject.Find("previewHolder");
+		ui.transform.position = new Vector3(Width * - 0.25f, Height * 0.5f, 0);
 	}
 }

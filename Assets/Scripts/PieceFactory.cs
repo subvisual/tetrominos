@@ -37,6 +37,7 @@ public class PieceFactory : MonoBehaviour {
 		piece.transform.Translate(new Vector3(x, y, 0));
 		piece.transform.localScale = new Vector3(_gridCtrl.PieceSize, _gridCtrl.PieceSize, 1);
 		piece.transform.parent = _piecesHolder.transform;
+		piece.GetComponent<PieceBackgroundLayer>().enabled = true;
 
 		if (_nextTranspose) {
 			var newScale = piece.transform.localScale;

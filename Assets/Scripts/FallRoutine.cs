@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class FallRoutine : GridBehaviour {
 
@@ -14,7 +15,7 @@ public class FallRoutine : GridBehaviour {
 	private RowRemover _rowRemover;
 	private bool _isInTurbo;
 
-	private TextMesh _scoreView;
+	private Text _scoreView;
 	private int _score;
 
 	void Awake() {
@@ -24,7 +25,7 @@ public class FallRoutine : GridBehaviour {
 		_inputCtrl = GetComponent<InputCtrl>();
 		_rowRemover = GetComponent<RowRemover>();
 		_fallRoutine = FallAndWait();
-		_scoreView = GameObject.Find("text_ScoreValue").GetComponent<TextMesh>();
+		_scoreView = GameObject.Find("text_ScoreValue").GetComponent<Text>();
 	}
 
 	void Start () {

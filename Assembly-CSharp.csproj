@@ -54,7 +54,9 @@
      <Compile Include="Assets\Scripts\Lib\AspectRatioEnforcer.cs" />
      <Compile Include="Assets\Scripts\Lib\Constants.cs" />
      <Compile Include="Assets\Scripts\Lib\Tuples.cs" />
+     <Compile Include="Assets\Scripts\MenuCtrl.cs" />
      <Compile Include="Assets\Scripts\Movement.cs" />
+     <Compile Include="Assets\Scripts\PieceBackgroundLayer.cs" />
      <Compile Include="Assets\Scripts\PieceCtrl.cs" />
      <Compile Include="Assets\Scripts\PieceFactory.cs" />
      <Compile Include="Assets\Scripts\PreviewCtrl.cs" />
