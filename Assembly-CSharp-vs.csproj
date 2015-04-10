@@ -52,6 +52,7 @@
      <Compile Include="Assets\Scripts\GridSeparators.cs" />
      <Compile Include="Assets\Scripts\InputCtrl.cs" />
      <Compile Include="Assets\Scripts\Lib\AspectRatioEnforcer.cs" />
+     <Compile Include="Assets\Scripts\Lib\AutoFade.cs" />
      <Compile Include="Assets\Scripts\Lib\Constants.cs" />
      <Compile Include="Assets\Scripts\Lib\Tuples.cs" />
      <Compile Include="Assets\Scripts\MenuCtrl.cs" />

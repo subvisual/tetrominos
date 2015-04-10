@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 using UnityEngine.UI;
 
 public class FallRoutine : GridBehaviour {
@@ -57,12 +58,20 @@ public class FallRoutine : GridBehaviour {
 					var destroyedRows = _rowRemover.Run();
 					IncreaseScore(destroyedRows);
 					GetComponent<PieceFactory>().AddNext();
+					if (IsGameLost()) {
+						GetComponent<GridCtrl>().FinishGame();
+					}
 					yield return new WaitForSeconds(RespawnDelay);
 				}
 			}
 
 			yield return new WaitForSeconds(FallDelay);
 		}
+	}
+
+	bool IsGameLost() {
+		var coords = FullCoords();
+		return coords.Count() > coords.Distinct().Count();
 	}
 
 	void ResetCoroutine() {

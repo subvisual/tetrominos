@@ -3,8 +3,10 @@ using System.Collections;
 
 public class MenuCtrl : MonoBehaviour {
 
+	public Color fadeColor;
+
 	public void BtnNewGame() {
-		Application.LoadLevel("game");
+		AutoFade.LoadLevel("game", 1, 1, fadeColor);
 	}
 
 	public void BtnExit() {

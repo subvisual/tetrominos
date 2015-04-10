@@ -14,6 +14,13 @@ public class GridCtrl : GridBehaviour {
 		PlaceUI();
 	}
 
+	public void FinishGame() {
+		GetComponent<FallRoutine>().enabled = false;
+		GetComponent<PieceFactory>().enabled = false;
+		CurrentPiece().enabled = false;
+		AutoFade.LoadLevel("mainMenu", 2, 2, Camera.main.backgroundColor);
+	} 
+
 	private void Resize() {
 		Height = Camera.main.orthographicSize * 2f - 1f;
 		PieceSize = Height / (float) Rows;
@@ -24,6 +31,6 @@ public class GridCtrl : GridBehaviour {
 
 	private void PlaceUI() {
 		var ui = GameObject.Find("previewHolder");
-		ui.transform.position = new Vector3(Width * - 0.25f, Height * 0.5f, 0);
+		ui.transform.position = new Vector3(Width * -0.25f, Height * 0.5f, 0);
 	}
 }

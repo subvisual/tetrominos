@@ -15,7 +15,7 @@ public class PieceCtrl : MonoBehaviour {
 
 	void Awake() {
 		_rotated = false;
-		MakeCurrent();
+		MakeFull();
 	}
 
 	public bool CanFall(Rect boundaries, Func<Vector3, bool> isCoordFree) {
