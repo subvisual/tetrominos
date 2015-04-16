@@ -40,7 +40,7 @@ public class GridBehaviour : MonoBehaviour {
 		});
 	}
 
-	float CollisionThreshold() {
+	public float CollisionThreshold() {
 		return PiecesHolder().transform.GetChild(0).GetComponent<PieceCtrl>().Height() * 0.5f;
 	}
 

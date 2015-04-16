@@ -12,7 +12,7 @@ public class PreviewCtrl : MonoBehaviour {
 		_piece = Instantiate(prefab) as GameObject;
 		_piece.transform.parent = transform;
 		_piece.transform.localScale *= 0.2f;
-		_piece.transform.localPosition = Vector3.down * PieceHeight() * 0.5f + Vector3.left * 0.75f;
+		_piece.transform.localPosition = Vector3.down * PieceHeight() * 0.5f + Vector3.left;
 
 
 		if (transpose) {

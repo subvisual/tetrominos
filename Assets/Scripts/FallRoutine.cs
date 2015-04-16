@@ -58,9 +58,10 @@ public class FallRoutine : GridBehaviour {
 					var destroyedRows = _rowRemover.Run();
 					IncreaseScore(destroyedRows);
 					GetComponent<PieceFactory>().AddNext();
-					//if (IsGameLost()) {
-					//	GetComponent<GridCtrl>().FinishGame();
-					//}
+					if (IsGameLost()) {
+						StopAllCoroutines();
+						GetComponent<GridCtrl>().FinishGame();
+					}
 					yield return new WaitForSeconds(RespawnDelay);
 				}
 			}
@@ -70,8 +71,17 @@ public class FallRoutine : GridBehaviour {
 	}
 
 	bool IsGameLost() {
-		var coords = FullCoords();
-		return coords.Count() > coords.Distinct().Count();
+		var fullCoords = FullCoords();
+		var currentCoords = CurrentPiece().PartPositions();
+
+		foreach (var currentCoord in currentCoords) {
+			if (fullCoords.Any((fullCoord) => {
+				return Vector3.Distance(fullCoord, currentCoord) < CollisionThreshold();
+			})) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	void ResetCoroutine() {
