@@ -58,9 +58,9 @@ public class FallRoutine : GridBehaviour {
 					var destroyedRows = _rowRemover.Run();
 					IncreaseScore(destroyedRows);
 					GetComponent<PieceFactory>().AddNext();
-					if (IsGameLost()) {
-						GetComponent<GridCtrl>().FinishGame();
-					}
+					//if (IsGameLost()) {
+					//	GetComponent<GridCtrl>().FinishGame();
+					//}
 					yield return new WaitForSeconds(RespawnDelay);
 				}
 			}
