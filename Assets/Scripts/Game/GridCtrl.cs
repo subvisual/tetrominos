@@ -11,7 +11,6 @@ public class GridCtrl : GridBehaviour {
 
 	void Awake() {
 		Resize();
-		PlaceUI();
 	}
 
 	public void FinishGame() {
@@ -27,10 +26,5 @@ public class GridCtrl : GridBehaviour {
 		Width = PieceSize * Columns;
 		transform.Translate(Vector3.down * 0.5f);
 		Boundaries = new Rect(- Width * 0.5f, - Height * 0.5f - 0.5f, Width, Height );
-	}
-
-	private void PlaceUI() {
-		var ui = GameObject.Find("previewHolder");
-		ui.transform.position = new Vector3(Width * -0.25f, Height * 0.5f, 0);
 	}
 }
