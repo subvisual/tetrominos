@@ -115,7 +115,7 @@ public class PieceCtrl : MonoBehaviour {
 
 	Color PieceColor() {
 		if (IsCurrent()) {
-			return CurrentColor;
+			return Preferences.CurrentColor();
 		} else {
 			return FullColor;
 		}
