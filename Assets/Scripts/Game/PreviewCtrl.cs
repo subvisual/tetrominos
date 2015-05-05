@@ -21,7 +21,11 @@ public class PreviewCtrl : MonoBehaviour {
 			_piece.transform.localScale = newScale;
 		}
 		if (_piece.GetComponent<PieceCtrl>().Rows() % 2 == 0) {
-			_piece.transform.Translate(Vector3.up * PieceHeight() * 0.5f);
+			Debug.Log(PieceHeight());
+			Debug.Log(_piece.transform.position);
+			//_piece.transform.Translate(Vector3.up * PieceHeight() * 0.5f);
+			_piece.transform.localPosition = new Vector3(0f, PieceHeight() * 0.5f, 0f);
+			Debug.Log(_piece.transform.position);
 		}
 	}
 

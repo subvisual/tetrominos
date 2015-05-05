@@ -15,7 +15,7 @@ public class MenuCtrl : MonoBehaviour {
 	}
 
 	public void BtnNewGame() {
-		AutoFade.LoadLevel("game", 1, 1, fadeColor);
+		AutoFade.LoadLevel("game", 1, 1, Preferences.BgColor());
 	}
 
 	public void BtnExit() {
