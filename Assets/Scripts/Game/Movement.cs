@@ -50,14 +50,14 @@ public class Movement : GridBehaviour {
 		var currentCoords = _piece.PartPositions();
 		var nextCoords = currentCoords.Select(coord => coord + (Vector3.left * _piece.Width())).ToList();
 
-		return nextCoords.All(IsWithinBounds) && nextCoords.All(IsCoordFree);
+		return nextCoords.All(IsWithinSpawnBounds) && nextCoords.All(IsCoordFree);
 	}
 
 	bool CanMoveRight() {
 		var currentCoords = _piece.PartPositions();
 		var nextCoords = currentCoords.Select(coord => coord + (Vector3.right * _piece.Width())).ToList();
 
-		return nextCoords.All(IsWithinBounds) && nextCoords.All(IsCoordFree);
+		return nextCoords.All(IsWithinSpawnBounds) && nextCoords.All(IsCoordFree);
 	}
 
 	bool CanRotate(int offset = 0) {
@@ -65,6 +65,6 @@ public class Movement : GridBehaviour {
 		var nextCoords = _piece.PartPositions();
 		_piece.Unrotate(offset);
 
-		return nextCoords.All(IsWithinBounds) && nextCoords.All(IsCoordFree);
+		return nextCoords.All(IsWithinSpawnBounds) && nextCoords.All(IsCoordFree);
 	}
 }

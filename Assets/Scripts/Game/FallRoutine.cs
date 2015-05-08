@@ -51,7 +51,7 @@ public class FallRoutine : GridBehaviour {
 		while (_playing) {
 			PieceCtrl current = CurrentPiece();
 			if (current) {
-				if (current.CanFall(_gridCtrl.Boundaries, IsCoordFree)) {
+				if (current.CanFall(_gridCtrl.SpawnBoundaries, IsCoordFree)) {
 					current.Fall();
 				} else {
 					current.MakeFull();

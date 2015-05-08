@@ -18,7 +18,6 @@ public class PieceBackgroundLayer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		Bounds bounds = GetPieceBounds();
-		Debug.Log(bounds);
 		_background.transform.position = bounds.center;
 		_background.transform.localScale = new Vector3(bounds.extents.x * 0.5f, 1, 100);
 	}
@@ -30,7 +29,6 @@ public class PieceBackgroundLayer : MonoBehaviour {
 			if (child.gameObject.tag == "pieceBackground") {
 				continue;
 			}
-			Debug.Log("here");
 			var renderers = child.GetComponentsInChildren<Renderer>();
 
 			result.Encapsulate(renderers[0].bounds);

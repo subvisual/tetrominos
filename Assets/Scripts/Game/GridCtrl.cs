@@ -7,7 +7,8 @@ public class GridCtrl : GridBehaviour {
 	public float Width { get; private set; }
 	public float Height { get; private set; }
 	public float PieceSize { get; private set; }
-	public Rect Boundaries { get; private set; }
+	public Rect SpawnBoundaries { get; private set; }
+	public Rect GridBoundaries { get; private set; }
 
 	void Awake() {
 		Resize();
@@ -25,6 +26,8 @@ public class GridCtrl : GridBehaviour {
 		PieceSize = Height / (float) Rows;
 		Width = PieceSize * Columns;
 		transform.Translate(Vector3.down * 0.5f);
-		Boundaries = new Rect(- Width * 0.5f, - Height * 0.5f - 0.5f, Width, Height );
+		var extraHeight = Height * 0.5f;
+		SpawnBoundaries = new Rect(- Width * 0.5f, - Height * 0.5f - 0.5f, Width, Height + extraHeight);
+		GridBoundaries =  new Rect(- Width * 0.5f, - Height * 0.5f - 0.5f, Width, Height);
 	}
 }

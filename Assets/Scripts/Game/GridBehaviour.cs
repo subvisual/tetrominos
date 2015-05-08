@@ -44,7 +44,11 @@ public class GridBehaviour : MonoBehaviour {
 		return PiecesHolder().transform.GetChild(0).GetComponent<PieceCtrl>().Height() * 0.5f;
 	}
 
-	protected bool IsWithinBounds(Vector3 coord) {
-		return GetComponent<GridCtrl>().Boundaries.Contains(coord);
+	protected bool IsWithinGridBounds(Vector3 coord) {
+		return GetComponent<GridCtrl>().GridBoundaries.Contains(coord);
+	}
+
+	protected bool IsWithinSpawnBounds(Vector3 coord) {
+		return GetComponent<GridCtrl>().SpawnBoundaries.Contains(coord);
 	}
 }

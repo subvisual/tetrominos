@@ -32,7 +32,7 @@ public class PieceFactory : MonoBehaviour {
 		if (ctrl.Columns() % 2 == 1) {
 			x -= _gridCtrl.PieceSize;
 		}
-		var y = _gridCtrl.Height * 0.5f - 0.5f - (ctrl.Rows() - 1) * _gridCtrl.PieceSize;
+		var y = _gridCtrl.Height * 0.5f - 0.5f;
 
 		piece.transform.Translate(new Vector3(x, y, 0));
 		piece.transform.localScale = new Vector3(_gridCtrl.PieceSize, _gridCtrl.PieceSize, 1);
