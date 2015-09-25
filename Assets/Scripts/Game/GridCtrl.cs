@@ -18,7 +18,10 @@ public class GridCtrl : GridBehaviour {
 		GetComponent<FallRoutine>().enabled = false;
 		GetComponent<PieceFactory>().enabled = false;
 		CurrentPiece().enabled = false;
-		AutoFade.LoadLevel("mainMenu", 2, 2, Camera.main.backgroundColor);
+
+        CameraFade.StartAlphaFade(Preferences.BgColor(), false, 2f, 0f, () => {
+            Application.LoadLevel("mainMenu");
+        });
 	} 
 
 	private void Resize() {

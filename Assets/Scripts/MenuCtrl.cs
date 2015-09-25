@@ -15,8 +15,10 @@ public class MenuCtrl : MonoBehaviour {
 	}
 
 	public void BtnNewGame() {
-		AutoFade.LoadLevel("game", 1, 1, Preferences.BgColor());
-	}
+        CameraFade.StartAlphaFade(Preferences.BgColor(), false, 2f, 0f, () => {
+            Application.LoadLevel("game");
+        });
+    }
 
 	public void BtnExit() {
 		Application.Quit();
