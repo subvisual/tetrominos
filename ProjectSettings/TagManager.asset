@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - piecesHolder
+  - Grid
+  - scoreText
   layers:
   - Default
   - TransparentFX

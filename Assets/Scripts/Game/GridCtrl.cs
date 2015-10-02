@@ -19,6 +19,8 @@ public class GridCtrl : GridBehaviour {
 		GetComponent<PieceFactory>().enabled = false;
 		CurrentPiece().enabled = false;
 
+	  GetComponent<ScoreCtrl>().UpdateHighscore();
+
         CameraFade.StartAlphaFade(Preferences.BgColor(), false, 2f, 0f, () => {
             Application.LoadLevel("mainMenu");
         });
