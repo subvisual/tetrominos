@@ -5,6 +5,7 @@ public class InputCtrl : GridBehaviour {
 
 	public float LongTouchThreshold;
 	public float SwipeDistanceThreshold;
+  public float SwipeRespawnRatio;
 
 	private bool _isTouch;
 	private bool _isSwipe;
@@ -97,7 +98,7 @@ public class InputCtrl : GridBehaviour {
 		if (_isSwipe || TouchDistance() > SwipeDistanceThreshold) {
 			_isSwipe = true;
 			_wasSwipe = true;
-			if (TouchDistance() > Screen.width / _pieceWidth) {
+			if (TouchDistance() > (Screen.width / _pieceWidth) * SwipeRespawnRatio) {
 				_swipeMuted = false;
 			}
 		}

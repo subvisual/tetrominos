@@ -669,6 +669,7 @@ GameObject:
   - 114: {fileID: 1866650659}
   - 114: {fileID: 1866650660}
   - 114: {fileID: 1866650661}
+  - 114: {fileID: 1866650662}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Grid
@@ -733,7 +734,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LongTouchThreshold: .200000003
-  SwipeDistanceThreshold: 5
+  SwipeDistanceThreshold: 10
+  SwipeRespawnRatio: .5
 --- !u!114 &1866650658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -747,7 +749,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RespawnDelay: .600000024
   FallDelay: .400000006
-  FallTurbo: 10
+  FallTurbo: 25
 --- !u!114 &1866650659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -782,6 +784,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SeparatorPrefab: {fileID: 149314, guid: 5e7869faf1e966440afe998daf9e3de5, type: 2}
+--- !u!114 &1866650662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1866650653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 033af4eb5a5e5954393fc528f8f3717c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1872336349
 GameObject:
   m_ObjectHideFlags: 0

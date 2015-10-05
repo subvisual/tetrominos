@@ -1,27 +1,34 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ScoreCtrl : MonoBehaviour {
-
-  private int _score;
+  private int _currentScore;
+  private Text _scoreView;
 
   // Use this for initialization
   void Start() {
     _currentScore = 0;
+    _scoreView = GameObject.Find("text_ScoreValue").GetComponent<Text>();
   }
 
   void OnGUI() {
-    GameObject.FindGameObjectWithTag("scoreText");
+    _scoreView.text = CurrentHighScore().ToString();
   }
 
-  public void UpdateHighscore() {
+  public void IncrementCurrentScore(int inc) {
+    _currentScore += inc;
+    UpdateHighscore();
+  }
+
+  private void UpdateHighscore() {
+    Debug.Log(_currentScore);
     if (_currentScore > this.CurrentHighScore()) {
       PlayerPrefs.SetInt("highscore", _currentScore);
     }
   }
 
-  public int CurrentHighScore() {
+  private int CurrentHighScore() {
     return PlayerPrefs.GetInt("highscore");
   }
-
 }
