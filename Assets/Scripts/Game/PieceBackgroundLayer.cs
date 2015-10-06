@@ -14,7 +14,7 @@ public class PieceBackgroundLayer : MonoBehaviour {
 		_background.transform.Rotate(90, 0, 0);
 		_background.transform.Translate(0, 0, 2);
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		Bounds bounds = GetPieceBounds();
