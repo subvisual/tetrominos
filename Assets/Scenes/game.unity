@@ -734,7 +734,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LongTouchThreshold: .200000003
-  SwipeDistanceThreshold: 10
+  SwipeDistanceThreshold: 50
   SwipeRespawnRatio: .5
 --- !u!114 &1866650658
 MonoBehaviour:
