@@ -13,7 +13,7 @@ public class ScoreCtrl : MonoBehaviour {
   }
 
   void OnGUI() {
-    _scoreView.text = CurrentHighScore().ToString();
+    _scoreView.text = _currentScore.ToString();
   }
 
   public void IncrementCurrentScore(int inc) {
