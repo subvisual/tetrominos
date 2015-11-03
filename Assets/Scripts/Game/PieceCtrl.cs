@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,10 +8,13 @@ public class PieceCtrl : MonoBehaviour {
 
 	public PieceType Type;
 
-	public Color CurrentColor;
-	public Color FullColor;
 	private PieceState _state;
 	private bool _rotated;
+
+  public Material LightMaterial;
+  public Material DarkMaterial;
+  public Material ActiveLightMaterial;
+  public Material ActiveDarkMaterial;
 
 	void Awake() {
 		_rotated = false;
@@ -103,26 +106,22 @@ public class PieceCtrl : MonoBehaviour {
 	} 
 
 	void UpdateMaterial() {
-		var newColor = PieceColor();
-		var newDarkenedColor = DarkenedPieceColor();
+	  Material lightMaterial, darkMaterial;
+
+	  if (IsCurrent()) {
+	    lightMaterial = ActiveLightMaterial;
+	    darkMaterial = ActiveDarkMaterial;
+	  }
+	  else {
+      lightMaterial = LightMaterial;
+      darkMaterial = DarkMaterial;
+    }
 
 		foreach (Transform child in transform) {
 			var renderers = child.GetComponentsInChildren<Renderer>();
-			renderers[0].material.color = newColor;
-			renderers[1].material.color = newDarkenedColor;
+			renderers[0].material = lightMaterial;
+			renderers[1].material = darkMaterial;
 		}
-	}
-
-	Color PieceColor() {
-		if (IsCurrent()) {
-			return Preferences.CurrentColor();
-		} else {
-			return FullColor;
-		}
-	}
-
-	Color DarkenedPieceColor() {
-		return PieceColor() - new Color(0.05f, 0.05f, 0.05f);
 	}
 
 	public float Width() {
