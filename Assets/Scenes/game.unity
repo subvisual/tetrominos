@@ -772,6 +772,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba34208a6969cdc429b2d19c8d20be85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ExitAnimationDuration: .5
+  ExitAnimationOffset: 0
 --- !u!114 &1866650661
 MonoBehaviour:
   m_ObjectHideFlags: 0

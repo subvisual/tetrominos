@@ -1,9 +1,13 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 public class RowRemover : GridBehaviour {
+
+  public float ExitAnimationDuration = 0.3f;
+  public float ExitAnimationOffset = 0.05f;
 
 	private int _maxRows;
 	private float _threshold;
@@ -34,15 +38,18 @@ public class RowRemover : GridBehaviour {
 			}
 		}
 
-		CollapseParts(destroyedRows);
+    var fullAnimDuration = ExitAnimationDuration + ExitAnimationOffset * _maxRows;
+		StartCoroutine(DelayedCollapseParts(destroyedRows, fullAnimDuration));
 		return destroyedRows.Count;
 	}
 
 	void DestroyRow(float y) {
+    float animDelay = 0f;
 		foreach (Transform child in PiecesHolder().transform) {
 			foreach (Transform part in child) {
 				if (Mathf.Abs(part.position.y - y) < _threshold) {
-					Destroy(part.gameObject);
+          StartCoroutine(DestroyPart(part.gameObject, animDelay, ExitAnimationDuration));
+          animDelay += ExitAnimationOffset;
 				}
 			}
 			if (child.childCount == 0) {
@@ -50,6 +57,11 @@ public class RowRemover : GridBehaviour {
 			}
 		}
 	}
+
+  IEnumerator DelayedCollapseParts(List<float> rows, float delay) {
+    yield return new WaitForSeconds(delay);
+    CollapseParts(rows);
+  }
 
 	void CollapseParts(List<float> rows) {
 		foreach (Transform child in PiecesHolder().transform) {
@@ -60,4 +72,22 @@ public class RowRemover : GridBehaviour {
 			}
 		}
 	}
+
+  IEnumerator DestroyPart(GameObject obj, float animDelay, float killDelay) {
+    yield return new WaitForSeconds(animDelay);
+
+    Animator animator = obj.GetComponent<Animator>();
+    Destroyer destroyer = obj.GetComponent<Destroyer>();
+
+    if (animator) {
+      animator.enabled = true;
+      animator.SetTrigger("Exit");
+    }
+
+    if (destroyer) {
+      destroyer.DestroyAfter(killDelay);
+    } else {
+      Destroy(obj);
+    }
+  }
 }

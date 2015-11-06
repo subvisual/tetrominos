@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class MenuBtn : MonoBehaviour {
 
-	void OnGUI() {
-	}
+  private void OnGUI() {
+  }
 }
