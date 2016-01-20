@@ -38,7 +38,7 @@ public class RowRemover : GridBehaviour {
 			}
 		}
 
-    var fullAnimDuration = ExitAnimationDuration + ExitAnimationOffset * _maxRows;
+    var fullAnimDuration = (ExitAnimationDuration + ExitAnimationOffset * _maxRows) / this.CurrentSpeed();
 		StartCoroutine(DelayedCollapseParts(destroyedRows, fullAnimDuration));
 		return destroyedRows.Count;
 	}
@@ -48,8 +48,8 @@ public class RowRemover : GridBehaviour {
 		foreach (Transform child in PiecesHolder().transform) {
 			foreach (Transform part in child) {
 				if (Mathf.Abs(part.position.y - y) < _threshold) {
-          StartCoroutine(DestroyPart(part.gameObject, animDelay, ExitAnimationDuration));
-          animDelay += ExitAnimationOffset;
+          StartCoroutine(DestroyPart(part.gameObject, animDelay, ExitAnimationDuration / this.CurrentSpeed()));
+          animDelay += ExitAnimationOffset / this.CurrentSpeed();
 				}
 			}
 			if (child.childCount == 0) {
@@ -89,5 +89,9 @@ public class RowRemover : GridBehaviour {
     } else {
       Destroy(obj);
     }
+  }
+
+  private float CurrentSpeed() {
+    return this.GetComponent<FallRoutine>().CurrentSpeed;
   }
 }

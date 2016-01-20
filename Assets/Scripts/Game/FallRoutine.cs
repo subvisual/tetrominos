@@ -1,17 +1,23 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Linq;
 using UnityEngine.UI;
 
 public class FallRoutine : GridBehaviour {
 
+  public float CurrentSpeed = 1;
+  public float SpeedIncrement = 0.3f;
+  public float AudioSpeedIncrement = 0.05f;
+  public int SpeedUpDelay = 10;
+  public int SpeedUpDelayIncrement = 10;
 	public float RespawnDelay;
 	public float FallDelay;
 	public float FallTurbo;
 
 	private bool _playing;
 	private GridCtrl _gridCtrl;
-	private IEnumerator _fallRoutine;
+  private IEnumerator _fallRoutine;
+  private IEnumerator _speedUpRoutine;
 	private InputCtrl _inputCtrl;
 	private RowRemover _rowRemover;
 	private bool _isInTurbo;
@@ -23,12 +29,14 @@ public class FallRoutine : GridBehaviour {
 		_isInTurbo = false;
 		_gridCtrl = GetComponent<GridCtrl>();
 		_inputCtrl = GetComponent<InputCtrl>();
-		_rowRemover = GetComponent<RowRemover>();
+    _rowRemover = GetComponent<RowRemover>();
 		_fallRoutine = FallAndWait();
+    _speedUpRoutine = SpeedUpOverTime();
 	}
 
 	void Start () {
 		StartCoroutine(_fallRoutine);
+    //StartCoroutine(_speedUpRoutine);
 	}
 
 	void Update() {
@@ -58,13 +66,22 @@ public class FallRoutine : GridBehaviour {
 						StopAllCoroutines();
 						GetComponent<GridCtrl>().FinishGame();
 					}
-					yield return new WaitForSeconds(RespawnDelay);
+					yield return new WaitForSeconds(this.CurrentRespawnDelay());
 				}
 			}
 
-			yield return new WaitForSeconds(FallDelay);
+			yield return new WaitForSeconds(this.CurrentFallDelay());
 		}
 	}
+
+  IEnumerator SpeedUpOverTime() {
+    while (_playing) {
+      yield return new WaitForSeconds(this.SpeedUpDelay);
+      this.SpeedUpDelay += this.SpeedUpDelayIncrement;
+      this.GetComponent<AudioSource>().pitch += this.AudioSpeedIncrement;
+    }
+    yield return new WaitForSeconds(this.SpeedUpDelay);
+  }
 
 	bool IsGameLost() {
 		var fullCoords = FullCoords();
@@ -96,4 +113,12 @@ public class FallRoutine : GridBehaviour {
 		}
 		return result;
 	}
+
+  private float CurrentFallDelay() {
+    return this.FallDelay / this.CurrentSpeed;
+  }
+
+  private float CurrentRespawnDelay() {
+    return this.RespawnDelay / this.CurrentSpeed;
+  }
 }
