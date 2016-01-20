@@ -36,7 +36,7 @@ public class FallRoutine : GridBehaviour {
 
 	void Start () {
 		StartCoroutine(_fallRoutine);
-    //StartCoroutine(_speedUpRoutine);
+    StartCoroutine(_speedUpRoutine);
 	}
 
 	void Update() {
@@ -77,6 +77,7 @@ public class FallRoutine : GridBehaviour {
   IEnumerator SpeedUpOverTime() {
     while (_playing) {
       yield return new WaitForSeconds(this.SpeedUpDelay);
+      this.CurrentSpeed += this.SpeedIncrement;
       this.SpeedUpDelay += this.SpeedUpDelayIncrement;
       this.GetComponent<AudioSource>().pitch += this.AudioSpeedIncrement;
     }
