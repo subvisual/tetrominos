@@ -10,7 +10,6 @@ public class MenuCtrl : MonoBehaviour {
   }
 
   public void BtnExit() {
-    Debug.Log("asd");
 		Application.Quit();
 	}
 }

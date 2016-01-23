@@ -24,7 +24,7 @@ public class PieceCtrl : MonoBehaviour {
 	public bool CanFall(Rect boundaries, Func<Vector3, bool> isCoordFree) {
 		foreach (Transform piecePart in transform) {
 			var nextPosition = piecePart.position + (Vector3.down * Height());
-			
+			  
 			if (!boundaries.Contains(nextPosition) || !isCoordFree(nextPosition)) {
 				return false;
 			}
