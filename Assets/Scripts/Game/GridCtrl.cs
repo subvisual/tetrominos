@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class GridCtrl : GridBehaviour {
 
@@ -28,9 +28,15 @@ public class GridCtrl : GridBehaviour {
 		Height = Camera.main.orthographicSize * 2f - 1f;
 		PieceSize = Height / (float) Rows;
 		Width = PieceSize * Columns;
-		transform.Translate(Vector3.down * 0.5f);
+    transform.Translate(Vector3.down * 0.5f);
 		var extraHeight = Height * 0.5f;
 		SpawnBoundaries = new Rect(- Width * 0.5f, - Height * 0.5f - 0.5f, Width, Height + extraHeight);
-		GridBoundaries =  new Rect(- Width * 0.5f, - Height * 0.5f - 0.5f, Width, Height);
-	}
+    GridBoundaries = new Rect(-Width * 0.5f, -Height * 0.5f - 0.5f, Width, Height);
+
+    // Set background size
+    var bg = GameObject.FindGameObjectWithTag("InnerBackground");
+    var screenWidth = (float) Camera.main.orthographicSize * 2.0 * Screen.width / Screen.height;
+    bg.transform.localScale = new Vector3(PieceSize, 1, PieceSize / Columns * Rows);
+
+  }
 }
