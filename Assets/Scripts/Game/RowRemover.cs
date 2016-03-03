@@ -65,6 +65,10 @@ public class RowRemover : GridBehaviour {
 
 	void CollapseParts(List<float> rows) {
 		foreach (Transform child in PiecesHolder().transform) {
+      if (child.GetComponent<PieceCtrl>().IsCurrent()) {
+        continue;
+      }
+
 			foreach (Transform part in child) {
 				// count how many rows were destroyed below this part
 				var collapseMultiplier = rows.Count(row => row < part.position.y);

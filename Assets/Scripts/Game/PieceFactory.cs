@@ -34,16 +34,16 @@ public class PieceFactory : MonoBehaviour {
 		}
 		var y = _gridCtrl.Height * 0.5f - 0.5f;
 
-		piece.transform.Translate(new Vector3(x, y, 0));
-		piece.transform.localScale = new Vector3(_gridCtrl.PieceSize, _gridCtrl.PieceSize, 1);
-		piece.transform.parent = _piecesHolder.transform;
-		ctrl.MakeCurrent();
+    piece.transform.Translate(new Vector3(x, y, 0));
+    piece.transform.localScale = new Vector3(_gridCtrl.PieceSize, _gridCtrl.PieceSize, 1);
+    piece.transform.parent = _piecesHolder.transform;
+    ctrl.MakeCurrent();
 
-		if (_nextTranspose) {
-			var newScale = piece.transform.localScale;
-			newScale.x *= -1;
-			piece.transform.localScale = newScale;
-		}
+    if (_nextTranspose) {
+      var newScale = piece.transform.localScale;
+      newScale.x *= -1;
+      piece.transform.localScale = newScale;
+    }
 
 		RollNext();
 

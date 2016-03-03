@@ -68,9 +68,9 @@ public class FallRoutine : GridBehaviour {
 					}
 					yield return new WaitForSeconds(this.CurrentRespawnDelay());
 				}
-			}
+      }
 
-			yield return new WaitForSeconds(this.CurrentFallDelay());
+      yield return new WaitForSeconds(this.CurrentFallDelay());
 		}
 	}
 

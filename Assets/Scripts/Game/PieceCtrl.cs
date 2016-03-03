@@ -141,12 +141,12 @@ public class PieceCtrl : MonoBehaviour {
 	}
 
 	public void Rotate(int offset = 0) {
-		_rotated = !_rotated;
-		transform.Rotate(0, 0, 90);
+    _rotated = !_rotated;
+    transform.Rotate(0, 0, 90);
 	}
 
 	public void Unrotate(int offset = 0) {
-		_rotated = !_rotated;
-	  transform.Rotate(0, 0, -90);
+    _rotated = !_rotated;
+    transform.Rotate(0, 0, -90);
 	}
 }
