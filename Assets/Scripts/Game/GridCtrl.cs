@@ -14,7 +14,14 @@ public class GridCtrl : GridBehaviour {
 		Resize();
 	}
 
+  void Update() {
+    if (GetComponent<InputCtrl>().IsPausing()) {
+      Pause();
+    }
+  }
+
 	public void FinishGame() {
+    Time.timeScale = 1;
 		GetComponent<FallRoutine>().enabled = false;
 		GetComponent<PieceFactory>().enabled = false;
 		CurrentPiece().enabled = false;
@@ -37,6 +44,15 @@ public class GridCtrl : GridBehaviour {
     var bg = GameObject.FindGameObjectWithTag("InnerBackground");
     var screenWidth = (float) Camera.main.orthographicSize * 2.0 * Screen.width / Screen.height;
     bg.transform.localScale = new Vector3(PieceSize, 1, PieceSize / Columns * Rows);
+  }
 
+  public void Pause() {
+    Time.timeScale = 0;
+    GameObject.FindGameObjectWithTag("pauseMenu").GetComponent<Canvas>().enabled = true;
+  }
+
+  public void Unpause() {
+    GameObject.FindGameObjectWithTag("pauseMenu").GetComponent<Canvas>().enabled = false;
+    Time.timeScale = 1;
   }
 }

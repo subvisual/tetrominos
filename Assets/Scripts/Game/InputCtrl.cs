@@ -36,24 +36,40 @@ public class InputCtrl : GridBehaviour {
 	}
 
 	public bool IsMovingRight() {
+    if (Time.timeScale == 0) {
+      return false;
+    }
 		var ret = Input.GetKeyDown(KeyCode.RightArrow) ||
 					(IsInNewSwipe() && SwipeDirection() == Vector3.right);
 		return UseSwipe(ret);
 	}
 
 	public bool IsMovingLeft() {
-		var ret = Input.GetKeyDown(KeyCode.LeftArrow) ||
+    if (Time.timeScale == 0) {
+      return false;
+    }
+    var ret = Input.GetKeyDown(KeyCode.LeftArrow) ||
 					(IsInNewSwipe() && SwipeDirection() == - Vector3.right);
 		return UseSwipe(ret);
 	}
 
 	public bool IsRotating() {
-		return Input.GetKeyDown(KeyCode.UpArrow) ||
+    if (Time.timeScale == 0) {
+      return false;
+    }
+    return Input.GetKeyDown(KeyCode.UpArrow) ||
 					IsInShortTouch();
 	}
 
+  public bool IsPausing() {
+    return Input.GetKeyDown(KeyCode.Escape);
+  }
+
 	public bool IsInTurboMode() {
-		return Input.GetKey(KeyCode.DownArrow) || (IsInSwipe() && SwipeDirection() == Vector3.down);
+    if (Time.timeScale == 0) {
+      return false;
+    }
+    return Input.GetKey(KeyCode.DownArrow) || (IsInSwipe() && SwipeDirection() == Vector3.down);
 	}
 
 	Vector3 SwipeDirection() {

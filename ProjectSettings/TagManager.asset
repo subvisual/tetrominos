@@ -6,6 +6,9 @@ TagManager:
   tags:
   - InnerBackground
   - scoreText
+  - piecesHolder
+  - pauseMenu
+  - Grid
   layers:
   - Default
   - TransparentFX
