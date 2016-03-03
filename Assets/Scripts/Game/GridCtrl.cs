@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class GridCtrl : GridBehaviour {
 
@@ -49,10 +50,17 @@ public class GridCtrl : GridBehaviour {
   public void Pause() {
     Time.timeScale = 0;
     GameObject.FindGameObjectWithTag("pauseMenu").GetComponent<Canvas>().enabled = true;
+    GetComponent<InputCtrl>().paused = true;
   }
 
   public void Unpause() {
     GameObject.FindGameObjectWithTag("pauseMenu").GetComponent<Canvas>().enabled = false;
     Time.timeScale = 1;
+    StartCoroutine(EnableInput());
+  }
+
+  public IEnumerator EnableInput() {
+    yield return new WaitForSeconds(0.1f);
+    GetComponent<InputCtrl>().paused = false;
   }
 }

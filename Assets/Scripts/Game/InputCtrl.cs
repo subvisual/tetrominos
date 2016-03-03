@@ -1,4 +1,4 @@
-﻿using System.Xml;
+using System.Xml;
 using UnityEngine;
 
 public class InputCtrl : GridBehaviour {
@@ -6,6 +6,7 @@ public class InputCtrl : GridBehaviour {
 	public float LongTouchThreshold;
 	public float SwipeDistanceThreshold;
   public float SwipeRespawnRatio;
+  public bool paused;
 
 	private bool _isTouch;
 	private bool _isSwipe;
@@ -19,6 +20,7 @@ public class InputCtrl : GridBehaviour {
 	void Start() {
 		_pieceWidth = GetComponent<GridCtrl>().Columns;
 		_isSwipe = false;
+    paused = false;
 	}
 
 	void Update() {
@@ -36,7 +38,7 @@ public class InputCtrl : GridBehaviour {
 	}
 
 	public bool IsMovingRight() {
-    if (Time.timeScale == 0) {
+    if (paused) {
       return false;
     }
 		var ret = Input.GetKeyDown(KeyCode.RightArrow) ||
@@ -45,7 +47,7 @@ public class InputCtrl : GridBehaviour {
 	}
 
 	public bool IsMovingLeft() {
-    if (Time.timeScale == 0) {
+    if (paused) {
       return false;
     }
     var ret = Input.GetKeyDown(KeyCode.LeftArrow) ||
@@ -54,7 +56,7 @@ public class InputCtrl : GridBehaviour {
 	}
 
 	public bool IsRotating() {
-    if (Time.timeScale == 0) {
+    if (paused) {
       return false;
     }
     return Input.GetKeyDown(KeyCode.UpArrow) ||
@@ -66,7 +68,7 @@ public class InputCtrl : GridBehaviour {
   }
 
 	public bool IsInTurboMode() {
-    if (Time.timeScale == 0) {
+    if (paused) {
       return false;
     }
     return Input.GetKey(KeyCode.DownArrow) || (IsInSwipe() && SwipeDirection() == Vector3.down);
