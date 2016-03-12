@@ -481,7 +481,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 0
-  m_AspectRatio: 0.6248682
+  m_AspectRatio: 0.6248295
 --- !u!114 &625608222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1808,9 +1808,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2a6d22cc59191b4d86a31327e552414, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LongTouchThreshold: 0.2
   SwipeDistanceThreshold: 45
-  SwipeRespawnRatio: 1.2
+  SwipeRespawnRatio: 0.8
+  paused: 0
 --- !u!114 &1866650658
 MonoBehaviour:
   m_ObjectHideFlags: 0
