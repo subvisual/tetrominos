@@ -2,8 +2,7 @@ using System.Xml;
 using UnityEngine;
 
 public class InputCtrl : GridBehaviour {
-
-	public float LongTouchThreshold;
+  
 	public float SwipeDistanceThreshold;
   public float SwipeRespawnRatio;
   public bool paused;
