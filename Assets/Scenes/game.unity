@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -148,11 +148,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 129211518}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1866650656}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!1 &422433481
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,7 +481,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 0
-  m_AspectRatio: 0.6248295
+  m_AspectRatio: 0.6251749
 --- !u!114 &625608222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -625,7 +625,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1866650656}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!1 &689563482
 GameObject:
   m_ObjectHideFlags: 0
@@ -969,7 +969,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.21176471, g: 0.25882354, b: 0.28627452, a: 1}
+  m_BackGroundColor: {r: 0.13333334, g: 0.16862746, b: 0.1882353, a: 1}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -1138,7 +1138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &1075253738
 Light:
   m_ObjectHideFlags: 0
@@ -1149,7 +1149,7 @@ Light:
   serializedVersion: 6
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2
+  m_Intensity: 0.52
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -1168,7 +1168,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_Lightmapping: 4
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0.55
   m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_AreaSize: {x: 1, y: 1}
@@ -1178,8 +1178,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1075253737}
-  m_LocalRotation: {x: 0.40821794, y: -0.23456973, z: 0.109381676, w: 0.87542605}
-  m_LocalPosition: {x: 0.62448096, y: -0.97513866, z: -10}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1580,33 +1580,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!1 &1690493366
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1690493367}
-  m_Layer: 0
-  m_Name: Separators
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1690493367
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1690493366}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1866650656}
-  m_RootOrder: 2
 --- !u!1 &1765805383
 GameObject:
   m_ObjectHideFlags: 0
@@ -1739,7 +1712,6 @@ GameObject:
   - 114: {fileID: 1866650658}
   - 114: {fileID: 1866650659}
   - 114: {fileID: 1866650660}
-  - 114: {fileID: 1866650661}
   - 114: {fileID: 1866650662}
   - 82: {fileID: 1866650664}
   - 114: {fileID: 1866650663}
@@ -1792,7 +1764,6 @@ Transform:
   m_Children:
   - {fileID: 822082125}
   - {fileID: 1519096577}
-  - {fileID: 1690493367}
   - {fileID: 669283649}
   - {fileID: 129211519}
   m_Father: {fileID: 0}
@@ -1809,7 +1780,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SwipeDistanceThreshold: 45
-  SwipeRespawnRatio: 0.8
+  SwipeRespawnRatio: 1
   paused: 0
 --- !u!114 &1866650658
 MonoBehaviour:
@@ -1854,18 +1825,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ExitAnimationDuration: 0.5
   ExitAnimationOffset: 0
---- !u!114 &1866650661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1866650653}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 508a7a48b6a189f4bae05551862fe495, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SeparatorPrefab: {fileID: 149314, guid: 5e7869faf1e966440afe998daf9e3de5, type: 2}
 --- !u!114 &1866650662
 MonoBehaviour:
   m_ObjectHideFlags: 0

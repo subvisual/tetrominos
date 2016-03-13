@@ -34,11 +34,11 @@ public class Highlight : GridBehaviour {
     GameObject piece = Instantiate(HighlightTemplate, Vector3.zero, Quaternion.identity) as GameObject;
 
     var x = _grid.PieceSize * col + (_grid.PieceSize - _grid.Width ) * 0.5f;
-    var y = _grid.PieceSize * row + (- _grid.PieceSize - _grid.Height ) * 0.5f - 0.5f + _grid.PieceSize;
+    var y = _grid.PieceSize * row + (- _grid.PieceSize - _grid.Height ) * 0.5f + _grid.PieceSize;
 
-    piece.transform.Translate(new Vector3(x, y, 1));
-    piece.transform.localScale = new Vector3(0, 0, 1);
     piece.transform.parent = HighlightsHolder.transform;
+    piece.transform.localPosition = new Vector3(x, y, 0f);
+    piece.transform.localScale = new Vector3(0, 0, 1);
 
     if (!_pieces.ContainsKey(x)) {
       _pieces.Add(x, new List<GameObject>());
