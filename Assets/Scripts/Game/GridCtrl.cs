@@ -40,13 +40,12 @@ public class GridCtrl : GridBehaviour {
 	} 
 
 	private void Resize() {
-		Height = Camera.main.orthographicSize * 2f - 1f;
+		Height = Camera.main.orthographicSize * 2f;
 		PieceSize = Height / (float) Rows;
 		Width = PieceSize * Columns;
-    transform.Translate(Vector3.down * 0.5f);
 		var extraHeight = Height * 0.5f;
-		SpawnBoundaries = new Rect(- Width * 0.5f, - Height * 0.5f - 0.5f, Width, Height + extraHeight);
-    GridBoundaries = new Rect(-Width * 0.5f, -Height * 0.5f - 0.5f, Width, Height);
+		SpawnBoundaries = new Rect(- Width * 0.5f, - Height * 0.5f, Width, Height + extraHeight);
+    GridBoundaries = new Rect(-Width * 0.5f, -Height * 0.5f, Width, Height);
 
     // Set background size
     var bg = GameObject.FindGameObjectWithTag("InnerBackground");
