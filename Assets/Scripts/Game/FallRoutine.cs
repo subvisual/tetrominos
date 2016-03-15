@@ -107,14 +107,6 @@ public class FallRoutine : GridBehaviour {
 	  GetComponent<ScoreCtrl>().IncrementCurrentScore(inc * 2 - 1);
 	}
 
-	private int Factorial(int num) {
-		var result = num;
-		for (var i = 2; i < num; i++) {
-			result *= i;
-		}
-		return result;
-	}
-
   private float CurrentFallDelay() {
     return this.FallDelay / this.CurrentSpeed;
   }
