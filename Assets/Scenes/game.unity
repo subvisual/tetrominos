@@ -152,7 +152,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1866650656}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!1 &422433481
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,7 +613,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1866650656}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!1 &689563482
 GameObject:
   m_ObjectHideFlags: 0
@@ -1048,7 +1048,7 @@ RectTransform:
   - {fileID: 649116802}
   - {fileID: 1621000697}
   m_Father: {fileID: 1866650656}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -1101,12 +1101,12 @@ Canvas:
   serializedVersion: 2
   m_RenderMode: 1
   m_Camera: {fileID: 818081694}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 8
   m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1630491645
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!1 &1519096576
@@ -1138,7 +1138,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 0.8}
   m_Children: []
   m_Father: {fileID: 1866650656}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!23 &1519096578
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1517,10 +1517,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 822082125}
   - {fileID: 1519096577}
   - {fileID: 669283649}
   - {fileID: 129211519}
+  - {fileID: 822082125}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!114 &1866650657
