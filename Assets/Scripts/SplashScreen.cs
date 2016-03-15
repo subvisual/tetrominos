@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class SplashScreen : MonoBehaviour {
 
@@ -10,7 +11,7 @@ public class SplashScreen : MonoBehaviour {
         yield return new WaitForSeconds(secondsToWait);
 
         CameraFade.StartAlphaFade(Preferences.BgColor(), false, 2f, 0f, () => {
-            Application.LoadLevel(nextLevel);
+            SceneManager.LoadScene(nextLevel);
         });
     }
 }

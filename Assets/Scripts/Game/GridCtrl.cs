@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GridCtrl : GridBehaviour {
 
@@ -28,7 +29,7 @@ public class GridCtrl : GridBehaviour {
 		CurrentPiece().enabled = false;
 
     CameraFade.StartAlphaFade(Preferences.BgColor(), false, 2f, 0f, () => {
-        Application.LoadLevel("mainMenu");
+        SceneManager.LoadScene("mainMenu");
     });
 	} 
 
@@ -43,7 +44,6 @@ public class GridCtrl : GridBehaviour {
 
     // Set background size
     var bg = GameObject.FindGameObjectWithTag("InnerBackground");
-    var screenWidth = (float) Camera.main.orthographicSize * 2.0 * Screen.width / Screen.height;
     bg.transform.localScale = new Vector3(PieceSize, 1, PieceSize / Columns * Rows);
   }
 

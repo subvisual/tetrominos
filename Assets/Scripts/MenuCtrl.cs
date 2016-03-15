@@ -1,11 +1,10 @@
 using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MenuCtrl : MonoBehaviour {
 	public void BtnNewGame() {
     CameraFade.StartAlphaFade(Preferences.BgColor(), false, 0.5f, 0f, () => {
-      Application.LoadLevel("game");
+      SceneManager.LoadScene("game");
     });
   }
 
