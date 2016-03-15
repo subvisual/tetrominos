@@ -104,7 +104,9 @@ public class FallRoutine : GridBehaviour {
 	}
 
 	void IncreaseScore(int inc) {
-	  GetComponent<ScoreCtrl>().IncrementCurrentScore(inc * 2 - 1);
+    if (inc > 0) {
+      GetComponent<ScoreCtrl>().IncrementCurrentScore(inc * 2 - 1);
+    }
 	}
 
   private float CurrentFallDelay() {
