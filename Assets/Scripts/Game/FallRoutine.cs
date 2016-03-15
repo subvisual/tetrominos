@@ -104,7 +104,7 @@ public class FallRoutine : GridBehaviour {
 	}
 
 	void IncreaseScore(int inc) {
-	  GetComponent<ScoreCtrl>().IncrementCurrentScore(Factorial(inc));
+	  GetComponent<ScoreCtrl>().IncrementCurrentScore(inc * 2 - 1);
 	}
 
 	private int Factorial(int num) {
