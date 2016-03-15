@@ -30,14 +30,16 @@ public class GridCtrl : GridBehaviour {
 
 	public void FinishGame() {
     Time.timeScale = 1;
-		GetComponent<FallRoutine>().enabled = false;
-		GetComponent<PieceFactory>().enabled = false;
-		CurrentPiece().enabled = false;
+    GetComponent<FallRoutine>().StopAllCoroutines();
+    GetComponent<InputCtrl>().paused = true;
+    GetComponent<FallRoutine>().enabled = false;
+    GetComponent<PieceFactory>().enabled = false;
+    CurrentPiece().enabled = false;
 
     CameraFade.StartAlphaFade(Preferences.BgColor(), false, 2f, 0f, () => {
-        SceneManager.LoadScene("mainMenu");
+      SceneManager.LoadScene("mainMenu");
     });
-	} 
+  } 
 
 	private void Resize() {
 		Height = Camera.main.orthographicSize * 2f;
