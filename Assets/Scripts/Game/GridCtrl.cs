@@ -22,6 +22,12 @@ public class GridCtrl : GridBehaviour {
     }
   }
 
+  void OnApplicationPause(bool pauseStatus) {
+    if (pauseStatus) {
+      Pause();
+    }
+  }
+
 	public void FinishGame() {
     Time.timeScale = 1;
 		GetComponent<FallRoutine>().enabled = false;
