@@ -4,11 +4,13 @@ using UnityEngine.UI;
 
 public class ScoreViewer : MonoBehaviour {
 
+  public string key = "highscore";
+
 	void OnGUI () {
-    GetComponent<Text>().text = CurrentHighScore().ToString();
+    GetComponent<Text>().text = CurrentScore().ToString();
   }
 
-  public int CurrentHighScore() {
-    return PlayerPrefs.GetInt("highscore");
+  public int CurrentScore() {
+    return PlayerPrefs.GetInt(key);
   }
 }

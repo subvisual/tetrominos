@@ -22,6 +22,7 @@ public class ScoreCtrl : MonoBehaviour {
   }
 
   private void UpdateHighscore() {
+    PlayerPrefs.SetInt("lastScore", _currentScore);
     if (_currentScore > this.CurrentHighScore()) {
       PlayerPrefs.SetInt("highscore", _currentScore);
     }
