@@ -21,7 +21,7 @@ RenderSettings:
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
-  m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
+  m_AmbientEquatorColor: {r: 0.5514706, g: 0.125, b: 0.05147059, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 3
@@ -433,7 +433,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!1 &625608219
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,7 +481,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 0
-  m_AspectRatio: 0.62513196
+  m_AspectRatio: 0.5989011
 --- !u!114 &625608222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -568,7 +568,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 460cc8d2847c3c846a5138090279781e, type: 3}
+    m_Font: {fileID: 12800000, guid: 3132faae6a790654b97da521d1d99cab, type: 3}
     m_FontSize: 66
     m_FontStyle: 0
     m_BestFit: 0
@@ -920,6 +920,7 @@ GameObject:
   - 81: {fileID: 818081691}
   - 114: {fileID: 818081696}
   - 114: {fileID: 818081697}
+  - 114: {fileID: 818081698}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -956,8 +957,8 @@ Camera:
   m_GameObject: {fileID: 818081690}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.13333334, g: 0.16862746, b: 0.1882353, a: 1}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.21176471, g: 0.25882354, b: 0.28627452, a: 1}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -993,7 +994,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
 --- !u!114 &818081696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1016,6 +1017,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cbecc6d4acbb414c97cf2f71c3c47b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &818081698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 818081690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3820ca55355760d4c8f5441144bb87cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  topColor: {r: 0.2745098, g: 0.27450982, b: 0.3137255, a: 1}
+  bottomColor: {r: 0.21176471, g: 0.25882354, b: 0.28627452, a: 1}
+  gradientLayer: 7
+  breakpoint1: 0.2
+  breakpoint2: 0.6
 --- !u!1 &822082124
 GameObject:
   m_ObjectHideFlags: 0
@@ -1106,6 +1123,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: -1630491645
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -1309,6 +1327,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -1324,7 +1343,7 @@ RectTransform:
   m_Children:
   - {fileID: 125865526}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -1417,6 +1436,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
