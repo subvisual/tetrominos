@@ -13,6 +13,9 @@ public class GridCtrl : GridBehaviour {
 	public Rect GridBoundaries { get; private set; }
 
 	void Awake() {
+    if (PlayerPrefs.HasKey("soundEnabled") && PlayerPrefs.GetInt("soundEnabled") > 0) {
+      GetComponent<AudioSource>().enabled = true;
+    }
 		Resize();
 	}
 

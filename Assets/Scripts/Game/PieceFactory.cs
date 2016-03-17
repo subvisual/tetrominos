@@ -11,12 +11,14 @@ public class PieceFactory : MonoBehaviour {
 	private int _nextIndex;
 	private int _nextRotation;
 	private bool _nextTranspose;
+  private System.Random _rng;
 
 	// Use this for initialization
 	void Awake() {
 		_piecesHolder = GameObject.Find("piecesHolder");
 		_previewHolder = GameObject.Find("previewHolder");
 		_gridCtrl = GetComponent<GridCtrl>();
+    _rng = new System.Random();
 		RollNext();
 	}
 
@@ -51,8 +53,8 @@ public class PieceFactory : MonoBehaviour {
 	}
 
 	void RollNext() {
-		_nextIndex = Random.Range(0, Templates.GetLength(0));
-		_nextRotation = Random.Range (0, 4);
-		_nextTranspose = Random.value >= 0.5f;
+		_nextIndex = _rng.Next(0, Templates.GetLength(0));
+		_nextRotation = _rng.Next(0, 4);
+		_nextTranspose = _rng.NextDouble() >= 0.5f;
 	}
 }
