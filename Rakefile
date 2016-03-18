@@ -1,5 +1,3 @@
-require 'middleman-gh-pages'
-
 task default: %i[lint build]
 
 desc 'Build the app'
