@@ -35,6 +35,8 @@ html.Theme itemscope='' itemtype='http://schema.org/WebPage' lang=data.site.lang
     meta itemprop='description' content=""
     meta itemprop='image' content=""
 
+    link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'
+
     // Preferred URL (rel="canonical")
     - if current_page.data.preferred_url
       link rel='canonical' href=current_page.data.preferred_url
@@ -48,10 +50,15 @@ html.Theme itemscope='' itemtype='http://schema.org/WebPage' lang=data.site.lang
         | You are using an <strong>outdated</strong> browser. Please
         | <a href="http://browsehappy.com/">Upgrade your browser to improve your experience!</a>
 
-    = yield
+    .Layout
+      .Layout-content
+        = yield
 
-    script src="//use.typekit.net/xjo8cng.js"
-    javascript:
-      try{Typekit.load();}catch(e){}
+      .Layout-footer
+        .Footer
+          .Footer-credits
+            ' Handcrafted by
+            a.Footer-subvisual href=data.site.company_url Subvisual
+
     = javascript_include_tag 'all'
     = yield_content :javascripts

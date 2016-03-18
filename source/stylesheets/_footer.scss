@@ -1,47 +1,16 @@
 .Footer {
-  display: flex;
+  width: 100%;
 
-  background-color: $color-footer;
-}
-
-.Footer-credits,
-.Footer-work {
-  flex: 1 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  padding: $Theme-spacing-small $Theme-spacing-default;
-}
-
-.Footer-credits {
-  align-items: center;
-}
-
-.Footer-handcrafted {
-  @include font-properties(subvisual, small);
+  padding: 30px 20px;
 
   text-transform: uppercase;
+
+  letter-spacing: 1px;
 }
 
 .Footer-subvisual {
-  @include font-properties(subvisual, base);
-
-  text-transform: uppercase;
-
   color: inherit;
   text-decoration: none;
-}
 
-.Footer-copyright {
-  @include font-properties(bodyText, extraSmall);
-
-  opacity: 0.5;
-}
-
-@include media('>=tablet') {
-  .Footer-credits {
-    flex-basis: 70%;
-    align-items: flex-start;
-  }
+  font-weight: bold;
 }

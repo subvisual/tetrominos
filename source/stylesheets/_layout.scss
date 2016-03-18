@@ -1,0 +1,27 @@
+$color-bg-top: #364249;
+$color-bg-middle-1: #354148;
+$color-bg-middle-2: #293239;
+$color-bg-bottom: #222b30;
+
+.Layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  padding: 0 40px;
+
+  background-image: linear-gradient(to bottom, $color-bg-top, $color-bg-middle-1 10%, $color-bg-middle-2 30%, $color-bg-bottom);
+}
+
+.Layout-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Layout-content,
+.Layout-footer {
+  background-color: $color-bg-top;
+}

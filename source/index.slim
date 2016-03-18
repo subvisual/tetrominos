@@ -2,30 +2,25 @@
 title: Tetrominos by Subvisual
 ---
 
-.Layout
-  .Layout-content
+.Flex class="row@desktop"
+  div
     .Text.title Tetrominos
-    .Text.subtitle
-      ' by
-      a href=data.site.company_url target="_blank" Subvisual
-
-    .Space-large
-
+    .Separator
+    .Text.subtitle The Perfect Time Killer
+    .Text
+      | Every company has boring meetings,
+      br
+      | here is the solution
+  div
     iframe width="835" height="480" src=data.site.video_url frameborder="0" allowfullscreen
 
-    .Space-large
+.Flex.center
+  .Text.strong Available On
 
-    ul.Store
-      li
-        a class="Store-link Store-link-appstore" href=data.site.appstore
-          img class="Store-img" src="/images/appstore.svg"
-      li
-        a class="Store-link Store-link-playstore" href=data.site.playstore
-          img class="Store-img" src="/images/playstore.svg"
-
-  .Layout-footer
-    .Footer
-      .Footer-credits
-        span.Footer-handcrafted Handcrafted by
-        a.Footer-subvisual href=data.site.company_url SUBVISUAL
-        span.Footer-copyright © 2016 Copyright by Subvisual
+  ul.Store
+    li
+      a class="Store-link Store-link-appstore" href=data.site.appstore App Store
+    li
+      a class="Store-link Store-link-playstore" href=data.site.playstore Google Play
+    li
+      a class="Store-link Store-link-playstore" href=data.site.playstore Your Browser
