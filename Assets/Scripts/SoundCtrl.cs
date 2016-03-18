@@ -25,6 +25,7 @@ public class SoundCtrl : MonoBehaviour {
     } else {
       PlayerPrefs.SetInt("soundEnabled", 1);
     }
+    SetMusic();
     SetSprite();
   }
 
@@ -38,4 +39,19 @@ public class SoundCtrl : MonoBehaviour {
     }
   }
 
+  private void SetMusic() {
+    var gridCtrl = GameObject.FindGameObjectWithTag("Grid");
+
+    if (!gridCtrl) {
+      return;
+    }
+
+    var audio = gridCtrl.GetComponent<AudioSource>();
+
+    if (IsSoundEnabled()) {
+      audio.Play();
+    } else {
+      audio.Stop();
+    }
+  }
 }
