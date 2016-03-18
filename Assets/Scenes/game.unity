@@ -789,8 +789,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 175fb3fcaffce0e49b823e0822cb87f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnSprite: {fileID: 21300000, guid: 0e83a13d1fc28a6428679e45c0ae8086, type: 3}
-  OffSprite: {fileID: 21300000, guid: 0651d160ad3f82b4e8c3c27322cf6781, type: 3}
+  OnSprite: {fileID: 21300000, guid: 0651d160ad3f82b4e8c3c27322cf6781, type: 3}
+  OffSprite: {fileID: 21300000, guid: 0e83a13d1fc28a6428679e45c0ae8086, type: 3}
 --- !u!82 &790813987
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1730,6 +1730,7 @@ MonoBehaviour:
   - {fileID: 197444, guid: 195fe53d4a9c2c44cb749ac3ab2398c9, type: 2}
   - {fileID: 185756, guid: 6de299f909dbf944d9d3136523d7b0e1, type: 2}
   - {fileID: 158886, guid: 8dc3de112ae7cfa48a5dbd5d93023994, type: 2}
+  _repeated: 
 --- !u!114 &1866650655
 MonoBehaviour:
   m_ObjectHideFlags: 0

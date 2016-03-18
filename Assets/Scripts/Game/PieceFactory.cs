@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using UnityEngine;
+using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
 public class PieceFactory : MonoBehaviour {
@@ -12,9 +14,11 @@ public class PieceFactory : MonoBehaviour {
 	private int _nextRotation;
 	private bool _nextTranspose;
   private System.Random _rng;
+  public List<int> _repeated;
 
 	// Use this for initialization
 	void Awake() {
+    _repeated = new List<int>();
 		_piecesHolder = GameObject.Find("piecesHolder");
 		_previewHolder = GameObject.Find("previewHolder");
 		_gridCtrl = GetComponent<GridCtrl>();
@@ -54,7 +58,15 @@ public class PieceFactory : MonoBehaviour {
 
 	void RollNext() {
 		_nextIndex = _rng.Next(0, Templates.GetLength(0));
+    _repeated.Add(_nextIndex);
 		_nextRotation = _rng.Next(0, 4);
-		_nextTranspose = _rng.NextDouble() >= 0.5f;
+    _nextTranspose = _rng.NextDouble() >= 0.5f;
+
+    _repeated.Add(_nextIndex);
+    if (_repeated.Count == 3 && _repeated.Distinct().ToList().Count == 1) {
+      RollNext();
+    } else {
+      _repeated.Clear();
+    }
 	}
 }
