@@ -10,6 +10,7 @@ public class FallRoutine : GridBehaviour {
   public float AudioSpeedIncrement = 0.05f;
   public int SpeedUpDelay = 10;
   public int SpeedUpDelayIncrement = 10;
+  public int SpeedUpDelayIncrementOnlyAfter = 4;
 	public float RespawnDelay;
 	public float FallDelay;
 	public float FallTurbo;
@@ -78,7 +79,11 @@ public class FallRoutine : GridBehaviour {
     while (_playing) {
       yield return new WaitForSeconds(this.SpeedUpDelay);
       this.CurrentSpeed += this.SpeedIncrement;
-      this.SpeedUpDelay += this.SpeedUpDelayIncrement;
+      if (this.SpeedUpDelayIncrementOnlyAfter == 0) {
+        this.SpeedUpDelay += this.SpeedUpDelayIncrement;
+      } else {
+        this.SpeedUpDelayIncrementOnlyAfter--;
+      }
       this.GetComponent<AudioSource>().pitch += this.AudioSpeedIncrement;
     }
     yield return new WaitForSeconds(this.SpeedUpDelay);

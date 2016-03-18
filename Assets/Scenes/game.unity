@@ -1277,7 +1277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 0
-  m_AspectRatio: 0.62534434
+  m_AspectRatio: 0.62552005
 --- !u!114 &1187831825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1788,7 +1788,8 @@ MonoBehaviour:
   SpeedIncrement: 0.3
   AudioSpeedIncrement: 0.03
   SpeedUpDelay: 30
-  SpeedUpDelayIncrement: 0
+  SpeedUpDelayIncrement: 10
+  SpeedUpDelayIncrementOnlyAfter: 6
   RespawnDelay: 0.6
   FallDelay: 0.4
   FallTurbo: 15
