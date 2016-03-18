@@ -1,0 +1,22 @@
+.Store
+  display: flex
+
+  @include media('<desktop')
+    flex-direction: column
+    align-items: center
+
+  @include media('>=desktop')
+    flex-direction: row
+
+.Store-link
+  display: inline-block
+
+.Store-link-playstore
+  max-width: 190px
+
+.Store-link-appstore
+  max-width: 215px
+
+.Store-img
+  max-width: 100%
+  min-height: 80px

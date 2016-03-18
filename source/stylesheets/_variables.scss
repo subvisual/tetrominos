@@ -1,0 +1,167 @@
+$color-footer: #2f3d45;
+
+// Points of reassembly
+@import 'include-media/dist/include-media';
+
+$breakpoints: (
+  'tablet': 650px,
+  'smallDesktop': 850px,
+  'desktop': 1024px
+);
+
+// Spacing
+$Theme-spacing-default: 50px;
+$Theme-spacing-large: 100px;
+$Theme-spacing-small: 25px;
+$Theme-spacing-xSmall: 10px;
+
+$Theme-grid-maxWidth: 1280px;
+$Theme-grid-singleColumn-maxWidth: 600px;
+
+// Typography
+$Theme-typography-fontWeight-bold: 700;
+$Theme-typography-fontWeight-medium: 500;
+$Theme-typography-fontWeight-regular: 400;
+
+$Theme-font-families: (
+  subvisual: ('futura-pt', sans-serif),
+  heading: ('pt-serif', serif),
+  bodyText: ('pt-serif', serif)
+);
+
+$Theme-font-sizes: (
+  mobile: (
+    subvisual: (
+      extraSmall: (
+        font-size: 12px,
+        line-height: 24px
+      ),
+      small: (
+        font-size: 12px,
+        line-height: 24px
+      ),
+      subBase: (
+        font-size: 16px,
+        line-height: 28px
+      ),
+      base: (
+        font-size: 20px,
+        line-height: 32px
+      ),
+      large: (
+        font-size: 24px,
+        line-height: 36px
+      )
+    ),
+    heading: (
+      small: (
+        font-size: 16px,
+        line-height: 28px
+      ),
+      base: (
+        font-size: 16px,
+        line-height: 28px
+      )
+    ),
+    bodyText: (
+      extraSmall: (
+        font-size: 12px,
+        line-height: 24px
+      ),
+      small: (
+        font-size: 16px,
+        line-height: 28px
+      ),
+      base: (
+        font-size: 16px,
+        line-height: 28px
+      ),
+      large: (
+        font-size: 20px,
+        line-height: 32px
+      ),
+      extraLarge: (
+        font-size: 20px,
+        line-height: 32px
+      )
+
+    )
+  ),
+  desktop: (
+    subvisual: (
+      extraSmall: (
+        font-size: 12px,
+        line-height: 24px
+      ),
+      small: (
+        font-size: 16px,
+        line-height: 28px
+      ),
+      subBase: (
+        font-size: 20px,
+        line-height: 32px
+      ),
+      base: (
+        font-size: 24px,
+        line-height: 36px
+      ),
+      large: (
+        font-size: 40px,
+        line-height: 52px
+      )
+    ),
+    heading: (
+      small: (
+        font-size: 20px,
+        line-height: 32px
+      ),
+      base: (
+        font-size: 24px,
+        line-height: 36px
+      )
+    ),
+    bodyText: (
+      extraSmall: (
+        font-size: 14px,
+        line-height: 26px
+      ),
+      small: (
+        font-size: 16px,
+        line-height: 28px
+      ),
+      base: (
+        font-size: 20px,
+        line-height: 32px
+      ),
+      large: (
+        font-size: 24px,
+        line-height: 36px
+      ),
+      extraLarge: (
+        font-size: 40px,
+        line-height: 52px
+      )
+    )
+  )
+);
+
+@mixin font-properties-on-resolution($family, $size: 'base', $resolution: 'mobile', $font-sizes: $Theme-font-sizes) {
+  font-size: map-get(map-get(map-get(map-get($font-sizes, $resolution), $family), $size), 'font-size');
+  line-height: map-get(map-get(map-get(map-get($font-sizes, $resolution), $family), $size), 'line-height');
+}
+
+@mixin font-properties($family, $size: 'base', $font-sizes: $Theme-font-sizes) {
+  $family-list: map-get($Theme-font-families, $family);
+
+  @include font-properties-on-resolution($family, $size, mobile, $font-sizes);
+
+  font-family: nth($family-list, length($family-list));
+
+  @at-root.wf-active & {
+    font-family: nth($family-list, 1);
+  }
+
+  @include media('>=tablet') {
+    @include font-properties-on-resolution($family, $size, desktop, $font-sizes);
+  }
+}
