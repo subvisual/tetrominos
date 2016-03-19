@@ -26,11 +26,11 @@
 }
 
 $pieces: (
-  square: (100px, 100px),
-  i: (50px, 200px),
-  l: (150px, 100px),
-  s: (150px, 100px),
-  t: (150px, 100px),
+  square: (100px, 100px, 50px, 50px),
+  i: (50px, 200px, 25px, 100px),
+  l: (150px, 100px, 75px, 50px),
+  s: (150px, 100px, 75px, 50px),
+  t: (150px, 100px, 75px, 50px),
 );
 
 @each $piece, $sizes in $pieces {
@@ -38,12 +38,22 @@ $pieces: (
     width: nth($sizes, 1);
     height: nth($sizes, 2);
     background-image: url('/images/pieces/#{$piece}@2x.png');
-    background-size: contain;
+    background-size: 100% 100%;
+
+    @include media('<desktop') {
+      width: nth($sizes, 3);
+      height: nth($sizes, 4);
+    }
   }
 
   .Anim-piece[data-name="#{$piece}"] {
     width: nth($sizes, 1);
     height: nth($sizes, 2);
+
+    @include media('<desktop') {
+      width: nth($sizes, 3);
+      height: nth($sizes, 4);
+    }
   }
 
   // .Anim-piece[data-rotated] {
