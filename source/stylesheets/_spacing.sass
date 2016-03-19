@@ -1,8 +1,15 @@
 .Space-base
   margin-bottom: $Theme-space-base
 
+.Space-base\@mobile
+  @include media('<desktop')
+    margin-bottom: $Theme-space-base
+
 .Space-small
   margin-bottom: $Theme-space-small
 
 .Space-huge
-  margin-bottom: 120px
+  @include media('<desktop')
+    margin-bottom: 60px
+  @include media('>=desktop')
+    margin-bottom: 120px
