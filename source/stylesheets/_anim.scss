@@ -1,0 +1,58 @@
+.Anim {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  padding: 0 40px;
+
+  overflow: hidden;
+
+  opacity: 0.6;
+}
+
+.Anim-column {
+  background-color: #3e4a51;
+  display: inline-block;
+  height: 100%;
+}
+
+.Anim-piece {
+  width: 100px;
+  height: 100px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+$pieces: (
+  square: (100px, 100px),
+  i: (50px, 200px),
+  l: (150px, 100px),
+  s: (150px, 100px),
+  t: (150px, 100px),
+);
+
+@each $piece, $sizes in $pieces {
+  .Anim-piece[data-name="#{$piece}"] .Anim-pieceImage {
+    width: nth($sizes, 1);
+    height: nth($sizes, 2);
+    background-image: url('/images/pieces/#{$piece}@2x.png');
+    background-size: contain;
+  }
+
+  .Anim-piece[data-name="#{$piece}"] {
+    width: nth($sizes, 1);
+    height: nth($sizes, 2);
+  }
+
+  // .Anim-piece[data-rotated] {
+  //   width: nth($sizes, 2);
+  //   height: nth($sizes, 1);
+  // }
+}
+// .Anim-piece[data-rotated] .Anim-pieceImage {
+//   transform: rotate(90deg);
+//   transform-origin: 50% 50%;
+// }
+

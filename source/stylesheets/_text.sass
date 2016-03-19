@@ -1,21 +1,25 @@
-$Text-size: 24px
-$Text-title-size: 40px
-$Text-subtitle-size: 32px
+$Text-size: 20px
+$Text-title-size: 32px
 $Text-small-size: 16px
+$Text-tiny-size: 12px
 
 .Text
   font-size: $Text-size
+  line-height: $Text-size + 10px
+  opacity: 0.9
 
 .Text.title
   font-size: $Text-title-size
+  line-height: $Text-title-size + 10px
   text-transform: uppercase
-
-.Text.subtitle
-  font-size: $Text-subtitle-size
-
-  a
-    color: inherit
-    text-decoration: none
 
 .Text.small
   font-size: $Text-small-size
+  line-height: $Text-small-size + 10px
+
+.Text.tiny
+  font-size: $Text-tiny-size
+  line-height: $Text-tiny-size + 10px
+
+.Text.strong
+  font-weight: bold

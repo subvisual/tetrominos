@@ -2,25 +2,40 @@
 title: Tetrominos by Subvisual
 ---
 
-.Flex class="row@desktop"
-  div
+.Anim
+  .Anim-column
+    .Anim-piece
+      .Anim-pieceImage
+
+.Flex.alignCenter class="row@desktop column@mobile"
+  .Cage.withGutters class="centered@mobile"
     .Text.title Tetrominos
+    .Space-base
     .Separator
-    .Text.subtitle The Perfect Time Killer
+    .Space-base
+    .Text.strong The Perfect Time Killer
+    .Space-small
     .Text
       | Every company has boring meetings,
       br
       | here is the solution
-  div
-    iframe width="835" height="480" src=data.site.video_url frameborder="0" allowfullscreen
+  .Cage.withGutters
+    iframe width="500" height="287" src=data.site.video_url frameborder="0" allowfullscreen
 
-.Flex.center
-  .Text.strong Available On
+.Space-huge
+
+.Flex.column.alignCenter.center
+  .Text.small.strong Available On
+  .Space-small
 
   ul.Store
     li
-      a class="Store-link Store-link-appstore" href=data.site.appstore App Store
+      a class="Store-link Store-link-appstore" target="_blank" href=data.site.appstore App Store
     li
-      a class="Store-link Store-link-playstore" href=data.site.playstore Google Play
+      a class="Store-link Store-link-playstore" target="_blank" href=data.site.playstore Google Play
     li
-      a class="Store-link Store-link-playstore" href=data.site.playstore Your Browser
+      a class="Store-link Store-link-browser" target="_blank" href=data.site.browser Your Browser
+
+- content_for :javascripts
+  javascript:
+    new Falling().start();

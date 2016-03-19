@@ -2,8 +2,18 @@
   display: flex;
 }
 
+.Flex.row {
+  flex-direction: row;
+}
+
 .Flex.column {
   flex-direction: column;
+}
+
+.Flex.column\@mobile {
+  @include media('<desktop') {
+    flex-direction: column;
+  }
 }
 
 .Flex.fullWidth {

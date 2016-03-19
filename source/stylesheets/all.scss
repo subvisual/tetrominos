@@ -1,6 +1,7 @@
 @charset 'utf-8';
 
 @import 'variables';
+@import 'include-media/dist/include-media';
 @import 'susy';
 @import 'color';
 @import 'footer';
@@ -12,3 +13,6 @@
 @import 'typography';
 @import 'text';
 @import 'flex';
+@import 'separator';
+@import 'cage';
+@import 'anim';

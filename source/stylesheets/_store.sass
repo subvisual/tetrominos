@@ -8,14 +8,32 @@
   @include media('>=desktop')
     flex-direction: row
 
+.Store li
+  &:not(:first-child)
+    @include media('>=desktop')
+      margin-left: 15px
+    @include media('<desktop')
+      margin-top: 15px
+
 .Store-link
   display: inline-block
+  width: 192px
+  height: 40px
+  line-height: 40px
+  font-size: 16px
+  color: white
+  text-decoration: none
+  font-weight: bold
+  text-align: center
 
 .Store-link-playstore
-  max-width: 190px
+  background: linear-gradient(to right bottom, #d88ed6 50%, #db81d9 50%)
 
 .Store-link-appstore
-  max-width: 215px
+  background: linear-gradient(to right bottom, #e77878 50%, #e26e6e 50%)
+
+.Store-link-browser
+  background: linear-gradient(to right bottom, #fecf6f 50%, #f9c863 50%)
 
 .Store-img
   max-width: 100%

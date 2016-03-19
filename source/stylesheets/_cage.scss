@@ -1,0 +1,10 @@
+.Cage.withGutters {
+  padding: 40px;
+}
+
+.Cage.centered\@mobile {
+  @include media('<desktop') {
+    text-align: center;
+    margin: auto;
+  }
+}

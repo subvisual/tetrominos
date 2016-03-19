@@ -2,4 +2,4 @@
 //= require velocity
 //= require fastclick
 //= require _fastclick_init
-//= require falling
+//= require falling.es6
