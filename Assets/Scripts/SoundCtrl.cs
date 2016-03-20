@@ -7,6 +7,7 @@ public class SoundCtrl : MonoBehaviour {
   public Sprite OffSprite;
 
   public void Awake() {
+    SetMusic();
     SetSprite();
   }
 

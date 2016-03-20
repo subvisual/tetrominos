@@ -63,7 +63,7 @@ public class PieceFactory : MonoBehaviour {
     _nextTranspose = _rng.NextDouble() >= 0.5f;
 
     _repeated.Add(_nextIndex);
-    if (_repeated.Count == 3 && _repeated.Distinct().ToList().Count == 1) {
+    if (_repeated.Count >= 3 && _repeated.Distinct().ToList().Count == 1) {
       RollNext();
     } else {
       _repeated.Clear();
