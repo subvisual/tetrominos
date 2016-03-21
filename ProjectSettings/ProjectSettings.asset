@@ -158,7 +158,7 @@ PlayerSettings:
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: C:/Users/mpalh/Documents/GitHub/tetris/user.keystore
+  AndroidKeystoreName: C:/Users/Miguel/Documents/GitHub/tetris/tetrominos.keystore
   AndroidKeyaliasName: tetrominos
   AndroidTVCompatibility: 1
   AndroidIsGame: 1
