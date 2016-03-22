@@ -59,16 +59,19 @@ public class PieceFactory : MonoBehaviour {
 	}
 
 	void RollNext() {
+    Debug.Log("rolling");
 		_nextIndex = _pieceRng.Next(0, Templates.GetLength(0));
     _repeated.Add(_nextIndex);
 		_nextRotation = _rotationRng.Next(0, 4);
     _nextTranspose = _rotationRng.NextDouble() >= 0.5f;
 
     _repeated.Add(_nextIndex);
-    if (_repeated.Count >= 3 && _repeated.Distinct().ToList().Count == 1) {
-      RollNext();
-    } else {
+    if (_repeated.Distinct().ToList().Count > 1) {
+      Debug.Log("clearing");
       _repeated.Clear();
+    } else if (_repeated.Count >= 3) {
+      Debug.Log("rolling another");
+      RollNext();
     }
 	}
 }
