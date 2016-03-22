@@ -1,0 +1,28 @@
+.Icon {
+  display: inline-block;
+  width: 25px;
+  height: 20px;
+  background-repeat: no-repeat;
+}
+
+.Icon.appstore {
+  background-image: url('/images/appstore.png');
+  background-size: 18px 21px;
+  margin-right: 10px;
+  height: 23px;
+}
+
+.Icon.playstore {
+  background-image: url('/images/playstore.png');
+  background-size: 18px 21px;
+  height: 21px;
+  margin-right: 10px;
+}
+
+.Icon.browser {
+  background-image: url('/images/browser.png');
+  margin-right: 15px;
+  height: 20px;
+  background-size: 25px 20px;
+}
+
