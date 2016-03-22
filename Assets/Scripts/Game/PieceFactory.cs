@@ -12,8 +12,9 @@ public class PieceFactory : MonoBehaviour {
 	private GameObject _previewHolder;
 	private int _nextIndex;
 	private int _nextRotation;
-	private bool _nextTranspose;
-  private System.Random _rng;
+  private bool _nextTranspose;
+  private System.Random _pieceRng;
+  private System.Random _rotationRng;
   public List<int> _repeated;
 
 	// Use this for initialization
@@ -22,7 +23,8 @@ public class PieceFactory : MonoBehaviour {
 		_piecesHolder = GameObject.Find("piecesHolder");
 		_previewHolder = GameObject.Find("previewHolder");
 		_gridCtrl = GetComponent<GridCtrl>();
-    _rng = new System.Random();
+    _pieceRng = new System.Random(Guid.NewGuid().GetHashCode());
+    _rotationRng = new System.Random(Guid.NewGuid().GetHashCode());
 		RollNext();
 	}
 
@@ -57,10 +59,10 @@ public class PieceFactory : MonoBehaviour {
 	}
 
 	void RollNext() {
-		_nextIndex = _rng.Next(0, Templates.GetLength(0));
+		_nextIndex = _pieceRng.Next(0, Templates.GetLength(0));
     _repeated.Add(_nextIndex);
-		_nextRotation = _rng.Next(0, 4);
-    _nextTranspose = _rng.NextDouble() >= 0.5f;
+		_nextRotation = _rotationRng.Next(0, 4);
+    _nextTranspose = _rotationRng.NextDouble() >= 0.5f;
 
     _repeated.Add(_nextIndex);
     if (_repeated.Count >= 3 && _repeated.Distinct().ToList().Count == 1) {
