@@ -110,7 +110,7 @@ public class FallRoutine : GridBehaviour {
 
 	void IncreaseScore(int inc) {
     if (inc > 0) {
-      GetComponent<ScoreCtrl>().IncrementCurrentScore(inc * 2 - 1);
+      GetComponent<ScoreCtrl>().IncrementCurrentScore(inc);
     }
 	}
 
