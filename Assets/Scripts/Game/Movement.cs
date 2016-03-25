@@ -9,7 +9,7 @@ public class Movement : GridBehaviour {
 	void Awake() {
 		_input = GetComponent<InputCtrl>();
 	}
-	
+
 	void Update() {
 		_piece = CurrentPiece();
 
@@ -39,10 +39,18 @@ public class Movement : GridBehaviour {
 	void Rotate() {
 		if (CanRotate()) {
 			_piece.Rotate();
-		} else if (CanRotate(-1)) {
-			_piece.Rotate(-1);
-		} else if (CanRotate(1)) {
-			_piece.Rotate(1);
+		} else {
+			for(var i = 1; i <= 2; ++i) {
+				if (CanRotate(-i)) {
+					_piece.Rotate(-i);
+					return;
+				}
+
+				if (CanRotate(i)) {
+					_piece.Rotate(i);
+					return;
+				}
+			}
 		}
 	}
 

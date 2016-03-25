@@ -24,7 +24,7 @@ public class PieceCtrl : MonoBehaviour {
 	public bool CanFall(Rect boundaries, Func<Vector3, bool> isCoordFree) {
 		foreach (Transform piecePart in transform) {
 			var nextPosition = piecePart.position + (Vector3.down * Height());
-			  
+
 			if (!boundaries.Contains(nextPosition) || !isCoordFree(nextPosition)) {
 				return false;
 			}
@@ -103,7 +103,7 @@ public class PieceCtrl : MonoBehaviour {
 		}
 
 		return new Pair<int, int>(colValues.Count, rowValues.Count);
-	} 
+	}
 
 	void UpdateMaterial() {
 	  Material lightMaterial, darkMaterial;
@@ -142,11 +142,13 @@ public class PieceCtrl : MonoBehaviour {
 
 	public void Rotate(int offset = 0) {
     _rotated = !_rotated;
+		transform.Translate(Vector3.right * Width() * offset);
     transform.Rotate(0, 0, 90);
 	}
 
 	public void Unrotate(int offset = 0) {
     _rotated = !_rotated;
     transform.Rotate(0, 0, -90);
+		transform.Translate(Vector3.left * Width() * offset);
 	}
 }
