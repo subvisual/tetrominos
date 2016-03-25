@@ -468,7 +468,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 7e7b19cd8e0d77644bb182a24edb4c81, type: 2}
+  - {fileID: 2100000, guid: 1fbae856113c18742b48ed357ca23745, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -573,14 +573,14 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
-    m_MaxSize: 140
+    m_MaxSize: 185
     m_Alignment: 5
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: 1000
 --- !u!222 &649116804
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -946,7 +946,6 @@ GameObject:
   - 92: {fileID: 818081693}
   - 124: {fileID: 818081692}
   - 81: {fileID: 818081691}
-  - 114: {fileID: 818081696}
   - 114: {fileID: 818081697}
   m_Layer: 0
   m_Name: Main Camera
@@ -1022,17 +1021,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
---- !u!114 &818081696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 818081690}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 115cacbea01b9dd4d8d05882f8a13a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &818081697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1277,7 +1265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 0
-  m_AspectRatio: 0.6257862
+  m_AspectRatio: 0.6254296
 --- !u!114 &1187831825
 MonoBehaviour:
   m_ObjectHideFlags: 0
