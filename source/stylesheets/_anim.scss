@@ -1,3 +1,5 @@
+$Anim-column-bg: rgba(#77F4FF, 0.25);
+
 .Anim {
   position: absolute;
   top: 0;
@@ -13,7 +15,7 @@
 }
 
 .Anim-column {
-  background-color: #3e4a51;
+  background-color: $Anim-column-bg;
   display: inline-block;
   height: 100%;
 }

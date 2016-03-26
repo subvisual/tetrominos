@@ -1,4 +1,4 @@
-$color-bg-top: #364249;
+$color-bg-top: rgba(#364249, 0.2);
 $color-bg-middle-1: #354148;
 $color-bg-middle-2: #293239;
 $color-bg-bottom: #222b30;
@@ -10,7 +10,9 @@ $color-bg-bottom: #222b30;
 
   padding: 0 40px;
 
-  background-image: linear-gradient(to bottom, $color-bg-top, $color-bg-middle-1 10%, $color-bg-middle-2 30%, $color-bg-bottom);
+  background-image: url("/images/bg-pattern-blue.png");
+  background-repeat: repeat-x;
+  background-size: 1px 100%;
 
   position: relative;
 }

@@ -2,47 +2,12 @@
 title: Tetrominos by Subvisual
 ---
 
-.Anim
-  .Anim-column
-    .Anim-piece
-      .Anim-pieceImage
-
+= partial "anim"
 .Flex.alignCenter class="row@desktop column@mobile"
   .Cage.withGutters class="centered@mobile"
-    .Text.title Tetrominos
-    .Space-base
-    .Separator
-    .Space-base
-    .Text.strong The Perfect Time Killer
-    .Space-small
-    .Text
-      | Every company has boring meetings,
-      br
-      | here is the solution
+    = partial "header"
   .Cage.withGutters
-    .Video
-      iframe width="500" height="287" src=data.site.video_url frameborder="0" allowfullscreen=""
-
+    = partial "video"
 .Space-base
+= partial "download"
 
-.Flex.column.alignCenter.center
-  .Text.small.strong Available On
-  .Space-small
-
-  ul.Store
-    li
-      a class="Store-link Store-link-appstore" target="_blank" href=data.site.appstore 
-        i.Icon.appstore
-        App Store
-    li
-      a class="Store-link Store-link-playstore" target="_blank" href=data.site.playstore 
-        i.Icon.playstore
-        Google Play
-    li
-      a class="Store-link Store-link-browser" target="_blank" href=data.site.browser 
-        i.Icon.browser
-        Your Browser
-
-- content_for :javascripts
-  javascript:
-    new Falling().start();

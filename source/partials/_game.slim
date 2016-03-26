@@ -1,0 +1,13 @@
+.IPhone.large
+  canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" height="640" width="400"
+- content_for :javascripts
+  javascript:
+    var Module = {
+      TOTAL_MEMORY: 268435456,
+      errorhandler: null,			// arguments: err, url, line. This function must return 'true' if the error is handled, otherwise 'false'
+      compatibilitycheck: null,
+      dataUrl: "/play/web.data",
+      codeUrl: "/play/web.js",
+      memUrl: "/play/web.mem",
+    };
+  script src="/play/UnityLoader.js"
