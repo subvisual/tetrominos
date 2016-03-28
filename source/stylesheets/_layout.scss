@@ -1,6 +1,6 @@
 $color-bg-top: rgba(#364249, 0.2);
-$color-bg-middle-1: #354148;
-$color-bg-middle-2: #293239;
+$color-bg-start: #2f5e76;
+$color-bg-end: #0d2f44;
 $color-bg-bottom: #222b30;
 
 .Layout {
@@ -8,11 +8,8 @@ $color-bg-bottom: #222b30;
   flex-direction: column;
   min-height: 100%;
 
-  padding: 0 40px;
-
-  background-image: url("/images/bg-pattern-blue.png");
-  background-repeat: repeat-x;
-  background-size: 1px 100%;
+  background-image: radial-gradient(circle at 69% 29%, $color-bg-start, $color-bg-end);
+  background-size: 100% 100%;
 
   position: relative;
 }
@@ -24,11 +21,6 @@ $color-bg-bottom: #222b30;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.Layout-content,
-.Layout-footer {
-  background-color: $color-bg-top;
 }
 
 .Layout-content > :not(.Anim) {

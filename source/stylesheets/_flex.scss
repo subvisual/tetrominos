@@ -52,10 +52,18 @@
   align-items: center;
 }
 
+.Flex-footer {
+  margin-top: auto;
+}
+
 .Flex.wrap {
   flex-wrap: wrap;
 }
 
 .Flex-growable {
   flex-grow: 1;
+}
+
+.Flex-alignSelfEnd {
+  align-self: flex-end
 }

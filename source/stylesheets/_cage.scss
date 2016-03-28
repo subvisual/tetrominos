@@ -2,6 +2,14 @@
   padding: 40px;
 }
 
+.Cage.large {
+  max-width: 300px;
+}
+
+.Cage.large {
+  max-width: 600px;
+}
+
 .Cage.centered\@mobile {
   @include media('<desktop') {
     text-align: center;

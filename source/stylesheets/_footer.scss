@@ -2,23 +2,10 @@
   display: flex;
   justify-content: space-between;
 
-  @include media('>=desktop') {
-    flex-direction: row;
-    align-items: flex-end;
-  }
-
-  @include media('<desktop') {
-    flex-direction: column;
-  }
+  flex-direction: column;
 
   width: 100%;
 
-  padding: 30px 20px;
-
-  letter-spacing: 1px;
-}
-
-.Footer-credits {
   text-transform: uppercase;
 }
 
@@ -32,12 +19,4 @@
 
 .Footer-notice {
   max-width: 500px;
-}
-
-.Footer-credits,
-.Footer-notice {
-  @include media('<desktop') {
-    align-self: center;
-    text-align: center;
-  }
 }

@@ -3,11 +3,16 @@ title: Tetrominos by Subvisual
 ---
 
 = partial "anim"
-.Flex.alignCenter class="row@desktop column@mobile"
-  .Cage.withGutters class="centered@mobile"
-    = partial "header"
-  .Cage.withGutters
-    = partial "video"
-.Space-base
-= partial "download"
-
+.Space-huge
+.Flex-growable.Flex.column
+  .Flex class="column@mobile"
+    .Cage.withGutters
+      = partial "header"
+      .Space-base
+      = partial "download"
+    .Cage.withGutters
+      .Flex.justifyCenter
+        = partial "video"
+  .Flex-footer
+    .Cage.withGutters.large
+      = partial "footer"
