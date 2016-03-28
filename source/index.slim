@@ -3,9 +3,9 @@ title: Tetrominos by Subvisual
 ---
 
 = partial "anim"
-.Space-huge
+.Space-large
 .Flex-growable.Flex.column
-  .Flex class="column@mobile"
+  .Flex.alignCenter class="column@mobile"
     .Cage.withGutters
       = partial "header"
       .Space-base
@@ -13,6 +13,6 @@ title: Tetrominos by Subvisual
     .Cage.withGutters
       .Flex.justifyCenter
         = partial "video"
-  .Flex-footer
+  .Flex-footer.margin-auto
     .Cage.withGutters.large
       = partial "footer"

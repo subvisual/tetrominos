@@ -1,0 +1,84 @@
+$Loader-bg-color: rgba(#fff, 0.8);
+$Loader-bg-color-inactive: rgba(#fff, 0);
+$Loader-circle-color: rgba(#fff, 0.2);
+$Loader-width: 8em;
+$Loader-blur: 2px;
+
+.Loader,
+.Loader-circle {
+  transition: all 0.2s linear;
+}
+
+.Loader {
+  position: relative;
+  z-index: 10;
+
+  flex: 1;
+  display: flex;
+  flex-direction: center;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+}
+
+.Loader.Loader--inline {
+  flex-grow: 0;
+}
+
+.Loader.Loader--autoWidth {
+  width: auto;
+}
+
+// scss-lint:disable all
+// Shameless copy & paste from the web
+.Loader-content {
+  width: 100%;
+
+  transition: all 0.2s ease-out;
+}
+
+.Loader-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.Loader-circle {
+  font-size: 10px;
+  position: relative;
+  text-indent: -9999em;
+  border: 1.1em solid $Loader-circle-color;
+  border-left-color: #fff;
+  transform: translateZ(0);
+  animation: load8 1.1s infinite linear;
+
+  top: 50%;
+  left: 50%;
+
+  margin-top: - $Loader-width * 0.5;
+  margin-left: - $Loader-width * 0.5;
+}
+
+.Loader-circle,
+.Loader-circle:after {
+  width: $Loader-width;
+  height: $Loader-width;
+
+  border-radius: 50%;
+}
+
+@keyframes load8 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+// scss-lint:enable all

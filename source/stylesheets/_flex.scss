@@ -16,6 +16,12 @@
   }
 }
 
+.Flex.justifyCenter\@mobile {
+  @include media('<desktop') {
+    justify-content: center;
+  }
+}
+
 .Flex.fullWidth {
   width: 100%;
 }
@@ -66,4 +72,8 @@
 
 .Flex-alignSelfEnd {
   align-self: flex-end
+}
+
+.margin-auto {
+  margin: auto;
 }

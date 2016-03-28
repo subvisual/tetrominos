@@ -1,6 +1,8 @@
-$Text-size: 20px
-$Text-title-size: 32px
-$Text-small-size: 16px
+$Text-size: 16px
+$Text-large-size: 18px
+$Text-title-size: 40px
+$Text-subtitle-size: 24px
+$Text-small-size: 14px
 $Text-tiny-size: 12px
 $Text-title-underline-color: #5888a1
 
@@ -8,12 +10,22 @@ $Text-title-underline-color: #5888a1
   font-size: $Text-size
   line-height: $Text-size + 10px
   opacity: 0.9
+  @include media('<desktop')
+    text-align: center
+
+.Text.large
+  font-size: $Text-large-size
 
 .Text.title
   font-size: $Text-title-size
   line-height: $Text-title-size + 10px
   text-transform: uppercase
+  padding-bottom: 10px
   border-bottom: solid 1px $Text-title-underline-color
+
+.Text.subtitle
+  font-size: $Text-subtitle-size
+  font-weight: bold
 
 .Text.small
   font-size: $Text-small-size
