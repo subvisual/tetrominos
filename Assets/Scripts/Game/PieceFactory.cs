@@ -42,9 +42,9 @@ public class PieceFactory : MonoBehaviour {
 		}
 		var y = _gridCtrl.Height * 0.5f - 0.5f;
 
-    piece.transform.Translate(new Vector3(x, y, 0));
-    piece.transform.localScale = new Vector3(_gridCtrl.PieceSize, _gridCtrl.PieceSize, 1);
     piece.transform.parent = _piecesHolder.transform;
+		piece.transform.localPosition = new Vector3(x, y, 0);
+		piece.transform.localScale = new Vector3(_gridCtrl.PieceSize, _gridCtrl.PieceSize, 1);
     ctrl.MakeCurrent();
 
     if (_nextTranspose) {
