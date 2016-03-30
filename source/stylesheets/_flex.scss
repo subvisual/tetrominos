@@ -74,6 +74,8 @@
   align-self: flex-end
 }
 
-.margin-auto {
-  margin: auto;
+.margin-auto-mobile {
+  @include media('<desktop') {
+    margin: auto;
+  }
 }

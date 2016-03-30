@@ -1,6 +1,6 @@
 .IPhone {
   max-width: 100%;
-  background-image: url("/images/iphone-frame.png");
+  background-image: url("/images/white-iphone.png");
   background-repeat: no-repeat;
   position: relative;
 
@@ -11,25 +11,25 @@
 
 .IPhone.small {
   background-size: contain;
-  width: 290px;
-  height: 611px;
+  width: 248px;
+  height: 439px;
 
   > * {
-    top: 88px;
-    left: 24px;
-    width: 245px;
-    height: 435px;
+    top: 62px;
+    left: 45px;
+    width: 157px;
+    height: 282px;
   }
 }
 
 .IPhone.large {
   background-size: 100% 100%;
-  width: 471px;
-  height: 896px;
+  width: 625px;
+  height: 986px;
 
   > * {
-    top: 128px;
-    left: 38px;
+    top: 141px;
+    left: 111px;
     width: 400px;
     height: 640px;
   }
