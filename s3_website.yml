@@ -1,0 +1,21 @@
+s3_id: <%= ENV["AWS_ACCESS_KEY"] %>
+s3_secret: <%= ENV["AWS_ACCESS_SECRET"] %>
+s3_bucket: tetrominos.subvisual.co
+cloudfront_distribution_id: E3RHQT4PZNWG5B
+s3_endpoint: eu-west-1
+
+site: build
+
+index_document: index.html
+error_document: 404/index.html
+
+cache_control:
+  "stylesheets/*": public, max-age=60000000
+  "javascripts/*": public, max-age=60000000
+  "images/*": public, max-age=60000000
+  "play/*": public, max-age=60000000
+  "*": no-cache, no-store
+
+gzip: true
+
+cloudfront_wildcard_invalidation: true
